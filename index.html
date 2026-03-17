@@ -714,6 +714,77 @@
         .dir-call { background: rgba(0,230,118,0.1); color: var(--call-color); border: 1px solid var(--call-color); }
         .dir-put { background: rgba(255,23,68,0.1); color: var(--put-color); border: 1px solid var(--put-color); }
 
+        /* ===================== MARKET CLOSED BANNER ===================== */
+        .market-closed-banner {
+            background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(180,30,30,0.06));
+            border: 1px solid rgba(248,113,113,0.3);
+            border-radius: 14px;
+            padding: 22px 18px 18px;
+            text-align: center;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .market-closed-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            animation: closedPulse 2s ease-in-out infinite;
+        }
+        @keyframes closedPulse {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        .market-closed-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #F87171;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .market-closed-msg {
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .market-closed-msg strong { color: #FFD700; }
+        .market-closed-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            background: linear-gradient(135deg, rgba(243,156,18,0.15), rgba(241,196,15,0.25));
+            border: 1px solid rgba(241,196,15,0.4);
+            border-radius: 12px;
+            color: #FFD700;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .market-closed-btn:hover {
+            background: linear-gradient(135deg, rgba(243,156,18,0.28), rgba(241,196,15,0.4));
+            box-shadow: 0 4px 18px rgba(241,196,15,0.25);
+            transform: translateY(-1px);
+        }
+        /* Badge dot red state for weekends */
+        .badge-dot.closed {
+            background: #F87171;
+            box-shadow: 0 0 8px #F87171;
+            animation: closedDotPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes closedDotPulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.6); }
+        }
+        /* Disable tab-widget button on weekends */
+        .tab-disabled {
+            opacity: 0.4 !important;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
         /* ===================== GUIDE ACCORDION ===================== */
         .guide-accordion {
             margin: 8px 0 12px;
@@ -914,10 +985,21 @@
 
             <!-- ---- PANEL 1: Widget ---- -->
             <div id="panel-widget" class="mode-panel glass-card active" style="padding:20px;">
+
+                <!-- Weekend Closed Overlay -->
+                <div id="market-closed-banner" style="display:none;" class="market-closed-banner">
+                    <div class="market-closed-icon">🔴</div>
+                    <div class="market-closed-title" id="market-closed-title">السوق حاليًا مغلق</div>
+                    <div class="market-closed-msg" id="market-closed-msg">يمكنك التداول على السوق خارج البورصة لمنصة <strong>كيوتكس</strong></div>
+                    <button class="market-closed-btn" onclick="switchMode('signals')" id="market-closed-btn">
+                        <i class="fas fa-microchip"></i> الانتقال لمولّد الإشارات
+                    </button>
+                </div>
+
                 <!-- Currency Badge -->
                 <div style="text-align:center; margin-bottom:10px;">
                     <div class="currency-badge" id="current-currency">
-                        <span class="badge-dot"></span>
+                        <span class="badge-dot" id="badge-dot"></span>
                         <span id="currency-badge-text">USD/JPY</span>
                     </div>
                 </div>
@@ -976,12 +1058,14 @@
                 <!-- hidden compat -->
                 <span id="usage-title" style="display:none;"></span>
                 <span id="usage-rely-signal" style="display:none;"></span>
+                <div id="widget-live-content">
                 <div class="widget-container">
                     <iframe id="investingWidget" src="https://ssltsw.investing.com?notChosenTab=%230d7ffa&borderColor=%23ff0f0f&dateFont=%23637a11&lang=1&forex=3&commodities=8830,8836,8831,8849,8833,8862,8832&indices=175,166,172,27,179,170,174&stocks=345,346,347,348,349,350,352&tabs=1,2,3,4" title="Investing.com Technical Summary Widget"></iframe>
                     <div class="widget-top-cover"></div>
                     <button class="refresh-btn" onclick="refreshWidget()" aria-label="Refresh">⟳</button>
                 </div>
                 <div id="countdown-timer" class="countdown-timer"></div>
+                </div>
             </div>
 
             <!-- ---- PANEL 2: Signal Generator ---- -->
@@ -1264,6 +1348,77 @@
         }
     }
 
+    // ===================== WEEKEND / MARKET HOURS =====================
+    function isWeekend() {
+        const now = new Date();
+        const day = now.getUTCDay(); // 0=Sun, 6=Sat — UTC/Greenwich always
+        console.log('[KingSignals] UTC:', now.toUTCString(), '| UTCDay:', day, '| isWeekend:', day === 0 || day === 6);
+        return day === 0 || day === 6;
+    }
+
+    function applyMarketStatus() {
+        const weekend = isWeekend();
+        const banner = document.getElementById('market-closed-banner');
+        const dot = document.getElementById('badge-dot');
+        const widgetContent = document.getElementById('widget-live-content');
+
+        // Badge dot — always update regardless of panel visibility
+        if (dot) {
+            if (weekend) {
+                dot.style.background = '#F87171';
+                dot.style.boxShadow = '0 0 8px #F87171';
+                dot.classList.add('closed');
+            } else {
+                dot.style.background = '';
+                dot.style.boxShadow = '';
+                dot.classList.remove('closed');
+            }
+        }
+
+        if (weekend) {
+            if (banner) banner.style.display = 'block';
+            if (widgetContent) widgetContent.style.display = 'none';
+        } else {
+            if (banner) banner.style.display = 'none';
+            if (widgetContent) widgetContent.style.display = 'block';
+        }
+
+        // Tab widget indicator
+        const tabWidget = document.getElementById('tab-widget');
+        if (tabWidget) {
+            if (weekend) {
+                tabWidget.style.position = 'relative';
+                // Add red dot if not already there
+                if (!tabWidget.querySelector('.tab-closed-dot')) {
+                    const tdot = document.createElement('span');
+                    tdot.className = 'tab-closed-dot';
+                    tdot.style.cssText = `
+                        position:absolute; top:6px; right:6px;
+                        width:7px; height:7px; border-radius:50%;
+                        background:#F87171; box-shadow:0 0 6px #F87171;
+                        animation:closedDotPulse 1.5s ease-in-out infinite;
+                    `;
+                    tabWidget.appendChild(tdot);
+                }
+            } else {
+                const tdot = tabWidget.querySelector('.tab-closed-dot');
+                if (tdot) tdot.remove();
+            }
+        }
+
+        // Update banner text with current language
+        const titleEl = document.getElementById('market-closed-title');
+        const msgEl = document.getElementById('market-closed-msg');
+        const btnEl = document.getElementById('market-closed-btn');
+        if (titleEl) titleEl.textContent = isEnglish ? 'Market is Currently Closed' : 'السوق حاليًا مغلق';
+        if (msgEl) msgEl.innerHTML = isEnglish
+            ? `You can trade on the OTC market on <strong>Quotex</strong> platform`
+            : `يمكنك التداول على السوق خارج البورصة لمنصة <strong>كيوتكس</strong>`;
+        if (btnEl) btnEl.innerHTML = isEnglish
+            ? `<i class="fas fa-microchip"></i> Go to Signal Generator`
+            : `<i class="fas fa-microchip"></i> الانتقال لمولّد الإشارات`;
+    }
+
     // ===================== NAV =====================
     function showLoginScreen() {
         document.getElementById('login-container').style.display = 'flex';
@@ -1276,8 +1431,97 @@
         renderOTCPairs();
         updateAppUI();
         startClock();
+        const weekend = isWeekend();
+        // Always reset widget-live-content visibility first
+        const wlc = document.getElementById('widget-live-content');
+        if (wlc) wlc.style.display = weekend ? 'none' : 'block';
+        // Auto-open signals tab on weekends
+        if (weekend) {
+            switchModeForce('signals');
+        } else {
+            switchModeForce('widget');
+        }
+        applyMarketStatus();
     }
     function switchMode(mode) {
+        // On weekends: block widget tab, show warning toast
+        if (mode === 'widget' && isWeekend()) {
+            showWeekendWarning();
+            return;
+        }
+        currentMode = mode;
+        document.getElementById('panel-widget').classList.toggle('active', mode==='widget');
+        document.getElementById('panel-signals').classList.toggle('active', mode==='signals');
+        document.getElementById('tab-widget').classList.toggle('active', mode==='widget');
+        document.getElementById('tab-signals').classList.toggle('active', mode==='signals');
+    }
+
+    function showWeekendWarning() {
+        // Remove any existing warning modal
+        const existing = document.getElementById('weekend-modal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'weekend-modal';
+        modal.style.cssText = `
+            position:fixed; inset:0; z-index:3000;
+            display:flex; align-items:center; justify-content:center;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(4px);
+            animation:fadeInUp 0.25s ease-out;
+            padding:20px;
+        `;
+        modal.innerHTML = `
+            <div style="
+                background:rgba(10,16,28,0.98);
+                border:1px solid rgba(248,113,113,0.35);
+                border-radius:18px;
+                padding:28px 22px 22px;
+                max-width:320px; width:100%;
+                text-align:center;
+                box-shadow:0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(248,113,113,0.15);
+                animation:fadeInUp 0.3s ease-out;
+            ">
+                <div style="font-size:2.5rem;margin-bottom:12px;animation:closedPulse 2s ease-in-out infinite;">🔴</div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:0.95rem;font-weight:700;color:#F87171;margin-bottom:10px;letter-spacing:1px;" id="wm-title">
+                    ${isEnglish ? 'Market is Closed' : 'السوق مغلق حاليًا'}
+                </div>
+                <div style="font-size:13px;color:#999;line-height:1.7;margin-bottom:20px;">
+                    ${isEnglish
+                        ? 'The forex market is closed on weekends.<br>You can trade OTC markets on <strong style="color:#FFD700;">Quotex</strong> platform.'
+                        : 'السوق مغلق أيام السبت والأحد.<br>يمكنك التداول على السوق خارج البورصة لمنصة <strong style="color:#FFD700;">كيوتكس</strong>.'}
+                </div>
+                <button onclick="document.getElementById('weekend-modal').remove(); switchModeForce('signals');" style="
+                    display:inline-flex; align-items:center; gap:8px;
+                    padding:12px 22px;
+                    background:linear-gradient(135deg,rgba(243,156,18,0.18),rgba(241,196,15,0.28));
+                    border:1px solid rgba(241,196,15,0.45);
+                    border-radius:12px; color:#FFD700;
+                    font-family:'Cairo',sans-serif; font-size:14px; font-weight:700;
+                    cursor:pointer; width:100%; justify-content:center;
+                    transition:all 0.25s; margin-bottom:10px;
+                ">
+                    <i class="fas fa-microchip"></i>
+                    ${isEnglish ? 'Go to Signal Generator' : 'الانتقال لمولّد الإشارات'}
+                </button>
+                <button onclick="document.getElementById('weekend-modal').remove();" style="
+                    display:block; width:100%; padding:9px;
+                    background:rgba(255,255,255,0.04);
+                    border:1px solid rgba(255,255,255,0.08);
+                    border-radius:10px; color:#666;
+                    font-family:'Cairo',sans-serif; font-size:13px;
+                    cursor:pointer;
+                ">
+                    ${isEnglish ? 'Close' : 'إغلاق'}
+                </button>
+            </div>
+        `;
+        // Close on backdrop click
+        modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
+        document.body.appendChild(modal);
+    }
+
+    // Force switch without weekend check (used from modal button)
+    function switchModeForce(mode) {
         currentMode = mode;
         document.getElementById('panel-widget').classList.toggle('active', mode==='widget');
         document.getElementById('panel-signals').classList.toggle('active', mode==='signals');
@@ -1557,7 +1801,7 @@
         document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
         if (userSession) { userSession.language=isEnglish?'en':'ar'; localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession)); }
         if (document.getElementById('login-container').style.display!=='none') updateLoginUI();
-        else { updateAppUI(); generateCurrencyDropdown(); updateUserDetailsDisplay(); }
+        else { updateAppUI(); generateCurrencyDropdown(); updateUserDetailsDisplay(); applyMarketStatus(); }
     }
     function updateLoginUI() {
         const licEl = document.getElementById('license-key');
@@ -1610,6 +1854,11 @@
         isEnglish = userSession ? userSession.language==='en' : false;
         document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
         document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+
+        // *** Weekend check runs FIRST before any screen logic ***
+        // isWeekend() uses UTC — result stored globally for all functions to use
+        console.log('[KingSignals] UTC day:', new Date().getUTCDay(), '| isWeekend:', isWeekend());
+
         checkSession();
         initSwipe();
         initSidebarAutoClose();
