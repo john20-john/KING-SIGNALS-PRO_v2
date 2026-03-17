@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingSignals Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        accent: '#00FF00',
+                        danger: '#F87171',
+                        success: '#34D399',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary-gold: #f39c12;
+            --light-gold: #f1c40f;
+            --primary-blue: #3498db;
+            --dark-bg: #0b0f19;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --call-color: #00e676;
+            --put-color: #ff1744;
+            --accent-green: #00FF00;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #1a233a 0%, var(--dark-bg) 60%);
+            color: #ecf0f1;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        /* Glow circles */
+        .glow-circle { position: fixed; border-radius: 50%; filter: blur(80px); z-index: 0; opacity: 0.25; pointer-events: none; }
+        .glow-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: var(--primary-blue); }
+        .glow-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: var(--primary-gold); }
+        .glow-3 { top: 50%; left: 50%; width: 300px; height: 300px; background: rgba(0,255,0,0.3); transform: translate(-50%,-50%); }
+
+        /* Glass card */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #FFD700, #00FF00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-text-blue {
+            background: linear-gradient(90deg, #3498db, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===================== LOGIN SCREEN ===================== */
+        #login-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .login-form::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,255,0,0.08) 0%, transparent 70%);
+            animation: rotateSlow 15s linear infinite;
+            z-index: -1;
+        }
+        @keyframes rotateSlow { to { transform: rotate(360deg); } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-form input {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 10px 0;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,255,0,0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            text-align: left;
+            direction: ltr;
+        }
+        .login-form input:focus {
+            outline: none;
+            border-color: #00FF00;
+            box-shadow: 0 0 15px rgba(0,255,0,0.4);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            margin: 20px 0 10px;
+            background: linear-gradient(135deg, #00FF00, #FFD700);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .login-btn:hover:not(:disabled) {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0,255,0,0.6);
+        }
+        .login-btn:disabled { background: rgba(0,255,0,0.2); cursor: not-allowed; color: #666; }
+        .lang-toggle-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,255,0,0.2);
+            border-radius: 12px;
+            color: #aaa;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+        .lang-toggle-btn:hover { background: rgba(0,255,0,0.1); color: #fff; border-color: rgba(0,255,0,0.4); }
+        .error-msg { color: #F87171; text-align: center; font-size: 13px; min-height: 20px; margin-top: 8px; display: none; }
+        .success-msg { color: #34D399; }
+
+        /* ===================== APP SCREEN ===================== */
+        #app-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: none;
+            padding: 20px;
+            padding-top: 70px;
+        }
+        /* Mode Tabs */
+        .mode-tabs {
+            display: flex;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 6px;
+            gap: 6px;
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .mode-tab {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .mode-tab.active {
+            background: linear-gradient(135deg, rgba(0,255,0,0.15), rgba(255,215,0,0.15));
+            border: 1px solid rgba(0,255,0,0.4);
+            color: #00FF00;
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+        .mode-tab:not(.active):hover { background: rgba(255,255,255,0.05); color: #ccc; }
+
+        /* Mode panels */
+        .mode-panel { display: none; animation: fadeInUp 0.4s ease-out; }
+        .mode-panel.active { display: block; }
+
+        /* ===================== SIDEBAR ===================== */
+        .sidebar {
+            position: fixed;
+            top: 0; right: -300px;
+            width: 300px; height: 100%;
+            background: rgba(5, 10, 20, 0.97);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            padding: 20px;
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.5);
+        }
+        .sidebar.open { transform: translateX(-300px); }
+        .hamburger {
+            position: fixed;
+            top: 16px; right: 16px;
+            z-index: 1100;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            border: 1px solid rgba(0,255,0,0.3);
+            cursor: pointer;
+        }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #00FF00; margin: 5px 0; transition: 0.3s; }
+        .sidebar-btn {
+            display: block; width: 100%;
+            padding: 12px 16px; margin: 8px 0;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0,255,0,0.2);
+            border-radius: 10px;
+            color: #ddd; font-family: 'Cairo', sans-serif; font-size: 14px;
+            text-align: center; cursor: pointer;
+            transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .sidebar-btn:hover {
+            background: rgba(0,255,0,0.1);
+            border-color: rgba(0,255,0,0.5);
+            color: #fff;
+            transform: translateX(-4px);
+        }
+        .sidebar-btn.active {
+            background: linear-gradient(135deg, rgba(0,255,0,0.2), rgba(255,215,0,0.2));
+            border-color: rgba(0,255,0,0.6);
+            color: #00FF00;
+        }
+        .user-details-box {
+            display: none;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(0,255,0,0.15);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 8px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .user-details-box.open { display: block; animation: fadeInUp 0.3s ease-out; }
+        .key-input-field {
+            width: 100%;
+            padding: 8px 36px 8px 8px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #aaa;
+            font-size: 11px;
+            direction: ltr; text-align: left;
+        }
+        .currency-dropdown-wrap { position: relative; width: 100%; margin: 10px 0; }
+        .currency-dropdown-toggle {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 14px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,0,0.3);
+            border-radius: 10px;
+            color: #fff; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .currency-dropdown-toggle:hover { background: rgba(0,255,0,0.1); border-color: rgba(0,255,0,0.6); }
+        .currency-dropdown-menu {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: rgba(5,10,20,0.98);
+            border: 1px solid rgba(0,255,0,0.3);
+            border-top: none; border-radius: 0 0 10px 10px;
+            max-height: 260px; overflow-y: auto;
+            z-index: 100; display: none;
+        }
+        .currency-dropdown-menu.open { display: block; }
+        .currency-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px; cursor: pointer; transition: background 0.2s; font-size: 14px;
+        }
+        .currency-item:hover { background: rgba(0,255,0,0.1); }
+        .currency-item.active { background: linear-gradient(90deg, rgba(0,255,0,0.2), rgba(255,215,0,0.2)); font-weight: 700; }
+        .favorite-star { font-size: 1.1em; margin-left: 6px; }
+        .favorite-star.favorited::after { content: '★'; color: #FFD700; }
+        .favorite-star:not(.favorited)::after { content: '☆'; color: #666; }
+        .auto-update-row { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+        .interval-input {
+            width: 60px; padding: 8px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,255,0,0.3);
+            border-radius: 8px; color: #fff; text-align: center; font-size: 13px;
+        }
+
+        /* ===================== MAIN WIDGET PANEL ===================== */
+        .widget-container {
+            width: 100%; max-width: 317px; height: 467px;
+            border-radius: 14px; overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle, rgba(255,255,255,0.05), #000);
+            box-shadow: 0 0 0 1px rgba(0,255,0,0.2), 0 0 30px rgba(0,255,0,0.15);
+            margin: 20px auto;
+            animation: glowPulse 3s ease-in-out infinite alternate;
+        }
+        @keyframes glowPulse {
+            from { box-shadow: 0 0 15px rgba(0,255,0,0.2), 0 0 0 1px rgba(0,255,0,0.2); }
+            to { box-shadow: 0 0 40px rgba(0,255,0,0.5), 0 0 0 1px rgba(0,255,0,0.5); }
+        }
+        .widget-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .widget-top-cover { position: absolute; top: 0; left: 0; width: 100%; height: 38px; background: #000; z-index: 5; }
+        .refresh-btn {
+            position: absolute; top: 8px; left: 8px;
+            padding: 6px 10px;
+            background: rgba(0,255,0,0.1);
+            border: 1px solid rgba(0,255,0,0.3);
+            border-radius: 6px; cursor: pointer; z-index: 10;
+            color: #00FF00; font-size: 16px;
+            transition: all 0.3s;
+        }
+        .refresh-btn:hover { background: rgba(0,255,0,0.3); }
+        /* ---- Instructions redesign ---- */
+        .instructions-box {
+            margin: 12px 0 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .instr-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 2.5px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .instr-header::before,
+        .instr-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.25));
+        }
+        .instr-header::before { background: linear-gradient(270deg, transparent, rgba(0,255,0,0.25)); }
+
+        /* Top tip strip */
+        .instr-tip {
+            background: rgba(0,255,0,0.03);
+            border: 1px solid rgba(0,255,0,0.1);
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-size: 12px;
+            color: #7a8a7a;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* The two signal explanation cards */
+        .instr-signals-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .signal-card {
+            border-radius: 14px;
+            padding: 14px 10px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .signal-card:hover { transform: translateY(-2px); }
+        .signal-card.buy {
+            background: linear-gradient(160deg, rgba(52,211,153,0.08) 0%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(52,211,153,0.28);
+            box-shadow: inset 0 1px 0 rgba(52,211,153,0.15), 0 4px 20px rgba(52,211,153,0.08);
+        }
+        .signal-card.sell {
+            background: linear-gradient(160deg, rgba(248,113,113,0.08) 0%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(248,113,113,0.28);
+            box-shadow: inset 0 1px 0 rgba(248,113,113,0.15), 0 4px 20px rgba(248,113,113,0.08);
+        }
+        .sig-arrow {
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+        .signal-card.buy .sig-arrow {
+            color: #34D399;
+            text-shadow: 0 0 16px rgba(52,211,153,0.7), 0 0 32px rgba(52,211,153,0.3);
+        }
+        .signal-card.sell .sig-arrow {
+            color: #F87171;
+            text-shadow: 0 0 16px rgba(248,113,113,0.7), 0 0 32px rgba(248,113,113,0.3);
+        }
+        .sig-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+        .signal-card.buy .sig-name { color: #34D399; }
+        .signal-card.sell .sig-name { color: #F87171; }
+
+        /* Signal detail rows inside card */
+        .sig-details {
+            width: 100%;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sig-detail-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 11px;
+            color: #888;
+            background: rgba(0,0,0,0.25);
+            border-radius: 6px;
+            padding: 4px 8px;
+        }
+        .signal-card.buy .sig-detail-row .sig-tag {
+            color: #34D399;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .signal-card.sell .sig-detail-row .sig-tag {
+            color: #F87171;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .sig-sep { color: rgba(255,255,255,0.15); }
+
+        /* Entry point row */
+        .instr-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,215,0,0.04);
+            border: 1px solid rgba(255,215,0,0.12);
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+        .instr-entry .entry-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .instr-entry .entry-text { font-size: 12px; color: #999; line-height: 1.5; text-align: right; }
+
+        /* Currency badge */
+        .currency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.07), rgba(0,255,0,0.07));
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 50px;
+            padding: 7px 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.82rem;
+            color: #FFD700;
+            margin: 0 auto 2px;
+            width: fit-content;
+            box-shadow: 0 0 20px rgba(255,215,0,0.08);
+        }
+        .badge-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #00FF00;
+            box-shadow: 0 0 8px #00FF00;
+            animation: dotPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.6); }
+        }
+
+        /* ===================== SIGNAL GENERATOR PANEL ===================== */
+        #live-clock {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px var(--primary-blue);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .pairs-grid {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 10px;
+            margin-bottom: 24px;
+        }
+        .pair-chip {
+            padding: 10px 16px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #ddd; font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+        .pair-chip:hover { border-color: var(--light-gold); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(241,196,15,0.15); }
+        .pair-chip.selected {
+            background: linear-gradient(135deg, rgba(243,156,18,0.15), rgba(241,196,15,0.3));
+            border-color: var(--light-gold);
+            color: var(--light-gold);
+            box-shadow: 0 0 15px rgba(241,196,15,0.3);
+        }
+        .gen-btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary-gold), #d35400);
+            border: none; border-radius: 12px;
+            color: #fff; font-weight: 700;
+            font-family: 'Cairo', sans-serif; font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(230,126,34,0.4);
+            transition: all 0.3s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .gen-btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 25px rgba(211,84,0,0.6); }
+        .gen-btn:disabled { background: #333; cursor: not-allowed; box-shadow: none; transform: none; }
+        .copy-gen-btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            border: none; border-radius: 12px;
+            color: #fff; font-weight: 700;
+            font-family: 'Cairo', sans-serif; font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(52,152,219,0.4);
+            transition: all 0.3s;
+            display: none; align-items: center; gap: 10px;
+        }
+        .copy-gen-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(52,152,219,0.6); }
+        /* Progress bar */
+        #loading-container { display: none; margin: 24px auto; width: 100%; max-width: 400px; text-align: center; }
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light-gold); margin-bottom: 10px;
+            letter-spacing: 2px; font-size: 13px;
+            animation: textPulse 1s infinite alternate;
+        }
+        @keyframes textPulse { from { opacity: 0.5; } to { opacity: 1; } }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-gold), var(--primary-blue)); border-radius: 10px; transition: width 0.1s linear; }
+        /* Trade cards */
+        #trades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px; margin-top: 24px;
+        }
+        .trade-card {
+            background: rgba(0,0,0,0.45);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--light-gold);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex; flex-direction: column; gap: 7px;
+            opacity: 0;
+            animation: cardSlideUp 0.4s ease-out forwards;
+        }
+        @keyframes cardSlideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .trade-card .pair-name { font-weight: 700; font-size: 13px; color: #fff; }
+        .trade-card .trade-time { color: #aaa; font-family: 'Orbitron', sans-serif; font-size: 12px; }
+        .trade-card .direction-badge {
+            font-weight: 700; padding: 4px 10px;
+            border-radius: 6px; text-align: center;
+            font-size: 12px; letter-spacing: 1px;
+        }
+        .dir-call { background: rgba(0,230,118,0.1); color: var(--call-color); border: 1px solid var(--call-color); }
+        .dir-put { background: rgba(255,23,68,0.1); color: var(--put-color); border: 1px solid var(--put-color); }
+
+        /* ===================== COUNTDOWN ===================== */
+        .countdown-timer {
+            margin-top: 10px; text-align: center;
+            font-weight: 700; font-size: 14px;
+            color: #FFD700; display: none;
+        }
+
+        /* ===================== TOAST ===================== */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
+        .toast {
+            background: rgba(15,25,40,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 12px 20px;
+            border-radius: 10px; margin-top: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            display: flex; align-items: center; gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+            border-left: 4px solid var(--primary-blue);
+            font-family: 'Cairo', sans-serif; font-size: 14px;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #e74c3c; }
+        .toast.success { border-left-color: #2ecc71; }
+        .toast.warning { border-left-color: #f1c40f; }
+
+        /* ===================== CUSTOM SCROLLBAR ===================== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,255,0,0.3); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,0,0.5); }
+
+        /* ===================== MISC ===================== */
+        .section-divider {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, transparent, #00FF00, transparent);
+            margin: 20px auto;
+        }
+        .powered-by { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
+        .powered-by a { color: #FFD700; text-decoration: none; }
+        .powered-by a:hover { color: #00FF00; }
+
+        @media (max-width: 480px) {
+            .mode-tab { font-size: 11px; padding: 10px 8px; }
+            #trades-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background glow effects -->
+    <div class="glow-circle glow-1"></div>
+    <div class="glow-circle glow-2"></div>
+    <div class="glow-circle glow-3"></div>
+
+    <!-- ==================== LOGIN SCREEN ==================== -->
+    <div id="login-container">
+        <h1 style="font-family:'Orbitron',sans-serif; font-size:2.2rem; margin-bottom:8px;" class="gradient-text">KingSignals Pro</h1>
+        <p style="color:#666; font-size:13px; margin-bottom:30px; letter-spacing:1px;">PROFESSIONAL TRADING PLATFORM</p>
+        <div class="glass-card login-form">
+            <p style="text-align:center; color:#888; font-size:13px; margin-bottom:16px;">🔐 أدخل مفتاح الترخيص للدخول</p>
+            <input type="text" id="license-key" placeholder="أدخل مفتاح الترخيص" required autocomplete="off">
+            <button class="login-btn" id="login-button" onclick="validateAndLogin()">دخول</button>
+            <button class="lang-toggle-btn" id="language-toggle-login" onclick="toggleLanguage()">Switch to English</button>
+            <p id="error-message" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- ==================== APP SCREEN ==================== -->
+    <div id="app-container">
+        <!-- Hamburger -->
+        <div class="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <h2 style="font-family:'Orbitron',sans-serif; font-size:1rem; margin-bottom:16px;" class="gradient-text">KING SIGNALS PRO</h2>
+            <button class="sidebar-btn" id="user-details-toggle" onclick="toggleUserDetails()">تفاصيل الاشتراك</button>
+            <div id="user-details-content" class="user-details-box">
+                <p id="user-username"></p>
+                <p id="user-subscription"></p>
+                <p id="user-expiry"></p>
+                <p id="license-key-label" class="mt-2" style="font-weight:700; font-size:12px;">مفتاح الترخيص:</p>
+                <div style="position:relative;">
+                    <input type="password" id="license-key-display" class="key-input-field" readonly>
+                    <button onclick="toggleKeyVisibility()" id="toggle-key-visibility" style="position:absolute;top:50%;left:6px;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#888;">
+                        <svg id="eye-icon-open" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.022 7-9.542 7-4.478 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg id="eye-icon-closed" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;display:none;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7C3.732 7.943 7.522 5 12 5c1.26 0 2.463.14 3.598.4M6.228 6.228A10.014 10.014 0 0012 17c4.478 0 8.268-2.943 9.542-7a10.014 10.014 0 00-4.641-5.662M3 3l18 18"/></svg>
+                    </button>
+                </div>
+                <button class="sidebar-btn" id="copy-key" onclick="copyKeyToClipboard()" style="font-size:12px;padding:8px;margin-top:8px;">نسخ المفتاح</button>
+                <p id="copy-key-feedback" style="font-size:11px;text-align:center;display:none;margin-top:4px;"></p>
+            </div>
+            <button class="sidebar-btn" id="favorites-toggle" onclick="toggleFavorites()">عرض العملات المفضلة</button>
+            <!-- Currency Dropdown (for widget panel) -->
+            <div class="currency-dropdown-wrap">
+                <div class="currency-dropdown-toggle" onclick="toggleDropdown()">
+                    <span id="dropdown-selected">اختر عملة</span><span>▼</span>
+                </div>
+                <div id="currencyDropdownMenu" class="currency-dropdown-menu"></div>
+            </div>
+            <div class="auto-update-row">
+                <input type="number" id="updateInterval" class="interval-input" placeholder="ثواني" min="1" value="5">
+                <button class="sidebar-btn" id="autoUpdateButton" onclick="toggleAutoUpdate()" style="flex:1;">تشغيل/إيقاف</button>
+            </div>
+            <button class="sidebar-btn" id="pauseResumeButton" onclick="pauseResumeAutoUpdate()" style="display:none;">إيقاف مؤقت</button>
+            <button class="sidebar-btn" id="language-toggle" onclick="toggleLanguage()">Switch to English</button>
+            <button class="sidebar-btn" onclick="logout()" style="margin-top:16px; border-color:rgba(248,113,113,0.3); color:#F87171;">تسجيل الخروج</button>
+        </div>
+
+        <!-- Main content -->
+        <div style="max-width:600px; margin:0 auto; width:100%;">
+            <!-- App Header -->
+            <div style="text-align:center; margin-bottom:20px;">
+                <h1 style="font-family:'Orbitron',sans-serif; font-size:1.8rem;" class="gradient-text">KingSignals Pro</h1>
+                <div id="live-clock">00:00:00</div>
+            </div>
+
+            <!-- Mode Tabs -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" id="tab-widget" onclick="switchMode('widget')">
+                    <i class="fas fa-chart-bar"></i> <span id="tab-widget-label">التحليل الفوري</span>
+                </button>
+                <button class="mode-tab" id="tab-signals" onclick="switchMode('signals')">
+                    <i class="fas fa-microchip"></i> <span id="tab-signals-label">مولّد الإشارات</span>
+                </button>
+            </div>
+
+            <!-- ---- PANEL 1: Widget ---- -->
+            <div id="panel-widget" class="mode-panel glass-card active" style="padding:20px;">
+                <!-- Currency Badge -->
+                <div style="text-align:center; margin-bottom:12px;">
+                    <div class="currency-badge" id="current-currency">
+                        <span class="badge-dot"></span>
+                        <span id="currency-badge-text">USD/JPY</span>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div id="usage-instructions" class="instructions-box">
+                    <div class="instr-header" id="usage-title">دليل القراءة</div>
+
+                    <div class="instr-tip" id="usage-select-duration">
+                        اختر مدة الصفقة المناسبة وانتظر حتى تظهر الإشارة بوضوح قبل الدخول
+                    </div>
+
+                    <div class="instr-signals-row">
+                        <!-- BUY card -->
+                        <div class="signal-card buy">
+                            <div class="sig-arrow">↑</div>
+                            <div class="sig-name" id="usage-buy-label">CALL · شراء</div>
+                            <div class="sig-details">
+                                <div class="sig-detail-row">
+                                    <span class="sig-tag" id="strong-buy-tag">Strong Buy</span>
+                                    <span class="sig-sep">|</span>
+                                    <span id="usage-buy">سهم أخضر</span>
+                                </div>
+                                <div class="sig-detail-row" id="buy-direction-row">
+                                    <span>📈</span>
+                                    <span id="buy-trend-text">اتجاه صاعد</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SELL card -->
+                        <div class="signal-card sell">
+                            <div class="sig-arrow">↓</div>
+                            <div class="sig-name" id="usage-sell-label">PUT · بيع</div>
+                            <div class="sig-details">
+                                <div class="sig-detail-row">
+                                    <span class="sig-tag" id="strong-sell-tag">Strong Sell</span>
+                                    <span class="sig-sep">|</span>
+                                    <span id="usage-sell">سهم أحمر</span>
+                                </div>
+                                <div class="sig-detail-row" id="sell-direction-row">
+                                    <span>📉</span>
+                                    <span id="sell-trend-text">اتجاه هابط</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="instr-entry">
+                        <span class="entry-icon">🎯</span>
+                        <span class="entry-text" id="usage-entry-point">افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح</span>
+                    </div>
+                </div>
+                <!-- hidden elements for JS compat -->
+                <span id="usage-rely-signal" style="display:none;"></span>
+                <div class="widget-container">
+                    <iframe id="investingWidget" src="https://ssltsw.investing.com?notChosenTab=%230d7ffa&borderColor=%23ff0f0f&dateFont=%23637a11&lang=1&forex=3&commodities=8830,8836,8831,8849,8833,8862,8832&indices=175,166,172,27,179,170,174&stocks=345,346,347,348,349,350,352&tabs=1,2,3,4" title="Investing.com Technical Summary Widget"></iframe>
+                    <div class="widget-top-cover"></div>
+                    <button class="refresh-btn" onclick="refreshWidget()" aria-label="Refresh">⟳</button>
+                </div>
+                <div id="countdown-timer" class="countdown-timer"></div>
+                <div class="powered-by">Powered by <a href="https://t.me/KingTraDe28" target="_blank" rel="noopener noreferrer">KING TRADING</a></div>
+            </div>
+
+            <!-- ---- PANEL 2: Signal Generator ---- -->
+            <div id="panel-signals" class="mode-panel glass-card" style="padding:24px;">
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR</h2>
+                <p style="text-align:center; color:#888; font-size:13px; margin-bottom:20px;" id="sig-subtitle">
+                    <i class="fas fa-crosshairs"></i> <span id="sig-subtitle-text">اختر 4 أزواج لتوليد إشارات الساعة القادمة</span>
+                </p>
+                <div class="pairs-grid" id="currency-list"></div>
+                <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                    <button class="gen-btn" id="generate-btn" onclick="generateTrades()">
+                        <i class="fas fa-microchip"></i> <span id="gen-btn-text">توليد الإشارات</span>
+                    </button>
+                    <button class="copy-gen-btn" id="copy-btn" onclick="copyTrades()">
+                        <i class="fas fa-copy"></i> <span id="copy-btn-text">نسخ الإشارات</span>
+                    </button>
+                </div>
+                <div id="loading-container">
+                    <div class="loading-text">جاري تحليل الخوارزمية <span id="loading-percent">0%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                </div>
+                <div id="trades-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-container"></div>
+
+    <script>
+    // ===================== CONFIG =====================
+    const _OBFUSCATED_SECRET = "TXlLaW5nU2lnbmFsc1NlY3JldDEyMw==";
+
+    const currencyMap = {
+        '3':'USD/JPY','1':'EUR/USD','2':'GBP/USD','5':'AUD/USD','7':'USD/CAD',
+        '9':'EUR/JPY','10':'EUR/CHF','47':'AUD/CAD','6':'EUR/GBP','51':'CAD/JPY',
+        '48':'AUD/CHF','49':'AUD/JPY','4':'USD/CHF','12':'GBP/CHF','16':'EUR/CAD'
+    };
+    const sortedCurrencies = Object.entries(currencyMap).sort((a,b)=>a[1].localeCompare(b[1]));
+
+    const OTC_PAIRS = [
+        "CAD/CHF (OTC)","CAD/JPY (OTC)","CHF/JPY (OTC)","USD/BDT (OTC)",
+        "USD/BRL (OTC)","USD/COP (OTC)","USD/DZD (OTC)","USD/EGP (OTC)"
+    ];
+
+    // ===================== STATE =====================
+    let currentIndex = 0, intervalId = null, isAutoUpdating = false, isPaused = false;
+    let favorites = [], showFavorites = false, countdownInterval = null;
+    let currentCurrencyId = '3', isEnglish = false, isDropdownOpen = false;
+    let userSession = null;
+    let currentMode = 'widget';
+    // Signal generator state
+    const selectedPairs = new Set();
+    let generatedSignalsText = [];
+
+    // ===================== TRANSLATIONS =====================
+    const T = {
+        ar: {
+            selectCurrency:'اختر العملة', appSubject:'KingSignals Pro',
+            usageTitle:'دليل القراءة',
+            usageSelectDuration:'اختر مدة الصفقة المناسبة وانتظر حتى تظهر الإشارة بوضوح قبل الدخول',
+            usageRelySignal:'',
+            usageBuy:'سهم أخضر',
+            usageSell:'سهم أحمر',
+            usageEntryPoint:'افتح الصفقة فقط عند ظهور Strong Buy أو Strong Sell لضمان أفضل نسبة نجاح',
+            buyLabel:'CALL · شراء', sellLabel:'PUT · بيع',
+            strongBuyTag:'Strong Buy', strongSellTag:'Strong Sell',
+            buyTrend:'اتجاه صاعد', sellTrend:'اتجاه هابط',
+            autoUpdate:'تشغيل/إيقاف', pauseResume:'إيقاف مؤقت', resume:'استئناف',
+            languageToggle:'Switch to English', favoritesToggle:'عرض المفضلة', allCurrencies:'عرض الكل',
+            currentCurrency:'العملة الحالية', userDetailsToggle:'تفاصيل الاشتراك',
+            userUsername:'المستخدم', userSubscription:'المدة المتبقية', userExpiry:'تاريخ الانتهاء',
+            day:'يوم', days:'أيام', hour:'ساعة', hours:'ساعات', minute:'دقيقة', minutes:'دقائق',
+            invalidInterval:'يرجى إدخال فاصل زمني صحيح (رقم أكبر من 0).',
+            nextUpdateIn:'التحديث القادم في', seconds:'ثوانٍ',
+            licenseKeyPlaceholder:'أدخل مفتاح الترخيص', loginButton:'دخول',
+            loginSuccess:'تم تسجيل الدخول بنجاح. جاري التحميل...',
+            enterLicenseKey:'يرجى إدخال مفتاح الترخيص.',
+            invalidLicense:'مفتاح الترخيص غير صالح أو تالف.',
+            licenseExpired:'انتهت صلاحية مفتاح الترخيص.',
+            licenseKeyLabel:'مفتاح الترخيص:', copyKeyButton:'نسخ المفتاح',
+            copyKeySuccess:'تم نسخ المفتاح!', copyKeyFail:'فشل النسخ.',
+            showKeyLabel:'إظهار المفتاح', hideKeyLabel:'إخفاء المفتاح',
+            tabWidget:'التحليل الفوري', tabSignals:'مولّد الإشارات',
+            sigSubtitle:'اختر 4 أزواج لتوليد إشارات الساعة القادمة',
+            genBtn:'توليد الإشارات', copyBtn:'نسخ الإشارات',
+            loadingText:'جاري تحليل الخوارزمية',
+            select4:'يجب اختيار 4 أزواج بالضبط.', max4:'يمكنك اختيار 4 أزواج فقط.',
+            sigGenSuccess:'تم توليد الإشارات بنجاح!', sigCopied:'تم نسخ الإشارات!', sigCopyErr:'خطأ في النسخ.',
+            logout:'تسجيل الخروج'
+        },
+        en: {
+            selectCurrency:'Select Currency', appSubject:'KingSignals Pro',
+            usageTitle:'READING GUIDE',
+            usageSelectDuration:'Choose the right trade duration and wait for the signal to appear clearly before entering',
+            usageRelySignal:'',
+            usageBuy:'Green arrow',
+            usageSell:'Red arrow',
+            usageEntryPoint:'Open the trade only when Strong Buy or Strong Sell appears for best win rate',
+            buyLabel:'CALL · BUY', sellLabel:'PUT · SELL',
+            strongBuyTag:'Strong Buy', strongSellTag:'Strong Sell',
+            buyTrend:'Uptrend', sellTrend:'Downtrend',
+            autoUpdate:'On/Off', pauseResume:'Pause', resume:'Resume',
+            languageToggle:'التحويل إلى العربية', favoritesToggle:'Show Favorites', allCurrencies:'Show All',
+            currentCurrency:'Current Currency', userDetailsToggle:'Subscription Details',
+            userUsername:'User', userSubscription:'Time Remaining', userExpiry:'Expiry Date',
+            day:'day', days:'days', hour:'hour', hours:'hours', minute:'minute', minutes:'minutes',
+            invalidInterval:'Please enter a valid interval (number > 0).',
+            nextUpdateIn:'Next update in', seconds:'seconds',
+            licenseKeyPlaceholder:'Enter License Key', loginButton:'Login',
+            loginSuccess:'Login successful. Loading...',
+            enterLicenseKey:'Please enter a license key.',
+            invalidLicense:'License key is invalid or corrupt.',
+            licenseExpired:'License key has expired.',
+            licenseKeyLabel:'License Key:', copyKeyButton:'Copy Key',
+            copyKeySuccess:'Key copied!', copyKeyFail:'Copy failed.',
+            showKeyLabel:'Show Key', hideKeyLabel:'Hide Key',
+            tabWidget:'Live Analysis', tabSignals:'Signal Generator',
+            sigSubtitle:'Select exactly 4 pairs to generate signals for the next hour.',
+            genBtn:'Generate Signals', copyBtn:'Copy Signals',
+            loadingText:'Analyzing Algorithm',
+            select4:'You must select exactly 4 pairs.', max4:'You can select only 4 pairs.',
+            sigGenSuccess:'Signals generated successfully!', sigCopied:'Signals copied!', sigCopyErr:'Error copying signals.',
+            logout:'Logout'
+        }
+    };
+    function t(key) { return (isEnglish ? T.en : T.ar)[key] || key; }
+
+    // ===================== TOAST =====================
+    function showToast(message, type='info') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        const icons = {error:'fa-exclamation-circle', success:'fa-check-circle', warning:'fa-exclamation-triangle', info:'fa-info-circle'};
+        toast.innerHTML = `<i class="fas ${icons[type]||icons.info}"></i><span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(()=>toast.classList.add('show'), 10);
+        setTimeout(()=>{ toast.classList.remove('show'); setTimeout(()=>toast.remove(),400); }, 3000);
+    }
+
+    // ===================== LICENSE =====================
+    function validateLicense(licenseKey) {
+        if (!licenseKey || typeof licenseKey !== 'string') return {valid:false, message:'invalidLicense'};
+        const parts = licenseKey.split('::');
+        if (parts.length !== 3) return {valid:false, message:'invalidLicense'};
+        const [userData, timestampStr, hashFromKey] = parts;
+        const expirationTimestamp = parseInt(timestampStr, 10);
+        if (isNaN(expirationTimestamp)) return {valid:false, message:'invalidLicense'};
+        if (Date.now() > expirationTimestamp) return {valid:false, message:'licenseExpired'};
+        let secret;
+        try { secret = atob(_OBFUSCATED_SECRET); }
+        catch(e) { return {valid:false, message:'invalidLicense'}; }
+        const expectedHash = sha256(`${userData}::${timestampStr}::${secret}`);
+        if (expectedHash !== hashFromKey) return {valid:false, message:'invalidLicense'};
+        return {valid:true, user:userData, expires:expirationTimestamp};
+    }
+
+    function showError(msgKey) {
+        const el = document.getElementById('error-message');
+        if (el) { el.textContent = t(msgKey); el.style.display='block'; el.classList.remove('success-msg'); }
+    }
+    function showSuccessMsg(msgKey) {
+        const el = document.getElementById('error-message');
+        if (el) { el.textContent = t(msgKey); el.style.display='block'; el.classList.add('success-msg'); }
+    }
+
+    function validateAndLogin() {
+        const key = document.getElementById('license-key').value.trim();
+        const btn = document.getElementById('login-button');
+        if (!key) { showError('enterLicenseKey'); return; }
+        btn.disabled = true;
+        btn.textContent = isEnglish ? 'Validating...' : 'جاري التحقق...';
+        const v = validateLicense(key);
+        if (!v.valid) { btn.disabled=false; btn.textContent=t('loginButton'); showError(v.message); return; }
+        showSuccessMsg('loginSuccess');
+        userSession = { licenseKey:key, username:v.user, expiresAt:v.expires, language:isEnglish?'en':'ar', lastCurrencyId:'3', favorites:[] };
+        localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession));
+        currentCurrencyId = '3'; favorites = [];
+        setTimeout(()=>{
+            showAppScreen(); generateCurrencyDropdown(); updateWidget(currentCurrencyId);
+            startSessionExpiryTimer(); updateUserDetailsDisplay();
+            document.getElementById('error-message').style.display='none';
+            btn.disabled=false; btn.textContent=t('loginButton');
+        }, 900);
+    }
+
+    function checkSession() {
+        userSession = JSON.parse(localStorage.getItem('kingSignalsUserSession')) || null;
+        if (!userSession || !userSession.licenseKey) { userSession=null; showLoginScreen(); return; }
+        const v = validateLicense(userSession.licenseKey);
+        if (!v.valid) {
+            localStorage.removeItem('kingSignalsUserSession'); userSession=null;
+            showLoginScreen(); showError(v.message); return;
+        }
+        userSession.username = v.user; userSession.expiresAt = v.expires;
+        isEnglish = userSession.language === 'en';
+        document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
+        document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+        showAppScreen();
+        favorites = userSession.favorites || [];
+        currentCurrencyId = userSession.lastCurrencyId || '3';
+        generateCurrencyDropdown(); updateWidget(currentCurrencyId);
+        startSessionExpiryTimer(); updateUserDetailsDisplay();
+    }
+
+    function startSessionExpiryTimer() {
+        setInterval(()=>{
+            if (!userSession) return;
+            const v = validateLicense(userSession.licenseKey);
+            if (!v.valid) {
+                alert(t(v.message));
+                localStorage.removeItem('kingSignalsUserSession'); userSession=null;
+                stopAutoUpdate(); showLoginScreen();
+            } else { updateUserDetailsDisplay(); }
+        }, 60000);
+    }
+
+    function updateUserDetailsDisplay() {
+        if (!userSession || !document.getElementById('user-username')) return;
+        const v = validateLicense(userSession.licenseKey);
+        if (!v.valid) return;
+        const locale = isEnglish ? 'en-US' : 'ar-EG';
+        const expiryDate = new Date(v.expires).toLocaleString(locale, {dateStyle:'medium', timeStyle:'short'});
+        const rem = Math.max(0, v.expires - Date.now());
+        const days=Math.floor(rem/(86400000)), hours=Math.floor((rem%86400000)/3600000), mins=Math.floor((rem%3600000)/60000);
+        let dur = days>0 ? `${days} ${t(days===1?'day':'days')}` : hours>0 ? `${hours} ${t(hours===1?'hour':'hours')}` : `${mins} ${t(mins===1?'minute':'minutes')}`;
+        document.getElementById('user-username').textContent = `${t('userUsername')}: ${v.user}`;
+        document.getElementById('user-subscription').textContent = `${t('userSubscription')}: ${dur}`;
+        document.getElementById('user-expiry').textContent = `${t('userExpiry')}: ${expiryDate}`;
+        const kd = document.getElementById('license-key-display');
+        if (kd) { kd.value = userSession.licenseKey; kd.type='password'; }
+    }
+
+    function logout() {
+        stopAutoUpdate();
+        localStorage.removeItem('kingSignalsUserSession');
+        userSession = null;
+        showLoginScreen();
+    }
+
+    // ===================== KEY DISPLAY =====================
+    function toggleKeyVisibility() {
+        const input = document.getElementById('license-key-display');
+        const eyeOpen = document.getElementById('eye-icon-open');
+        const eyeClosed = document.getElementById('eye-icon-closed');
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        eyeOpen.style.display = isPass ? 'none' : 'block';
+        eyeClosed.style.display = isPass ? 'block' : 'none';
+    }
+    function copyKeyToClipboard() {
+        if (!userSession) return;
+        const ta = document.createElement('textarea');
+        ta.value = userSession.licenseKey;
+        ta.style.cssText = 'position:absolute;left:-9999px;';
+        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,99999);
+        try { document.execCommand('copy'); showAppNotification('copyKeySuccess', true); }
+        catch(e) { showAppNotification('copyKeyFail', false); }
+        document.body.removeChild(ta);
+    }
+    function showAppNotification(msgKey, isSuccess=true) {
+        const el = document.getElementById('copy-key-feedback');
+        if (el) {
+            el.textContent = t(msgKey);
+            el.style.color = isSuccess ? '#34D399' : '#F87171';
+            el.style.display = 'block';
+            setTimeout(()=>el.style.display='none', 2000);
+        }
+    }
+
+    // ===================== NAV =====================
+    function showLoginScreen() {
+        document.getElementById('login-container').style.display = 'flex';
+        document.getElementById('app-container').style.display = 'none';
+        updateLoginUI();
+    }
+    function showAppScreen() {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('app-container').style.display = 'block';
+        renderOTCPairs();
+        updateAppUI();
+        startClock();
+    }
+    function switchMode(mode) {
+        currentMode = mode;
+        document.getElementById('panel-widget').classList.toggle('active', mode==='widget');
+        document.getElementById('panel-signals').classList.toggle('active', mode==='signals');
+        document.getElementById('tab-widget').classList.toggle('active', mode==='widget');
+        document.getElementById('tab-signals').classList.toggle('active', mode==='signals');
+    }
+
+    // ===================== SIDEBAR =====================
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        sb.classList.toggle('open');
+        if (!sb.classList.contains('open') && isDropdownOpen) toggleDropdown();
+    }
+    function toggleUserDetails() {
+        document.getElementById('user-details-content').classList.toggle('open');
+    }
+
+    // ===================== CURRENCY DROPDOWN =====================
+    function generateCurrencyDropdown() {
+        const menu = document.getElementById('currencyDropdownMenu');
+        if (!menu) return;
+        menu.innerHTML = '';
+        const list = showFavorites && favorites.length > 0
+            ? sortedCurrencies.filter(([id])=>favorites.includes(id))
+            : sortedCurrencies;
+        if (!list.length && showFavorites) {
+            const el = document.createElement('div');
+            el.className = 'currency-item'; el.style.color='#666'; el.style.fontStyle='italic';
+            el.textContent = isEnglish ? 'No favorites selected' : 'لا توجد عملات مفضلة';
+            menu.appendChild(el);
+        } else {
+            list.forEach(([id, name])=>{
+                const item = document.createElement('div');
+                item.className = `currency-item ${currentCurrencyId===id?'active':''}`;
+                item.setAttribute('data-currency-id', id);
+                const nameSpan = document.createElement('span'); nameSpan.textContent = name;
+                const star = document.createElement('span');
+                star.className = `favorite-star ${favorites.includes(id)?'favorited':''}`;
+                star.onclick = (e)=>{ e.stopPropagation(); toggleFavorite(id); star.classList.toggle('favorited', favorites.includes(id)); if(showFavorites && !favorites.includes(id)) generateCurrencyDropdown(); };
+                item.onclick = ()=>{ if(isAutoUpdating) stopAutoUpdate(); updateWidget(id); document.getElementById('dropdown-selected').textContent=name; toggleDropdown(); };
+                item.appendChild(nameSpan); item.appendChild(star);
+                menu.appendChild(item);
+            });
+        }
+        document.getElementById('dropdown-selected').textContent = currencyMap[currentCurrencyId] || t('selectCurrency');
+    }
+    function toggleDropdown() {
+        const menu = document.getElementById('currencyDropdownMenu');
+        isDropdownOpen = !isDropdownOpen;
+        menu.classList.toggle('open', isDropdownOpen);
+    }
+    function toggleFavorite(id) {
+        const idx = favorites.indexOf(id);
+        idx > -1 ? favorites.splice(idx,1) : favorites.push(id);
+        localStorage.setItem('kingSignalsFavorites', JSON.stringify(favorites));
+        if (userSession) { userSession.favorites=favorites; localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession)); }
+    }
+    function toggleFavorites() {
+        showFavorites = !showFavorites;
+        document.getElementById('favorites-toggle').textContent = showFavorites ? t('allCurrencies') : t('favoritesToggle');
+        generateCurrencyDropdown();
+    }
+
+    // ===================== WIDGET =====================
+    function updateWidget(id, isAuto=false) {
+        const iframe = document.getElementById('investingWidget');
+        if (!iframe) return;
+        const base = "https://ssltsw.investing.com?notChosenTab=%230d7ffa&borderColor=%23ff0f0f&dateFont=%23637a11&lang=1";
+        const extra = "&commodities=8830,8836,8831,8849,8833,8862,8832&indices=175,166,172,27,179,170,174&stocks=345,346,347,348,349,350,352&tabs=1,2,3,4";
+        iframe.src = `${base}&forex=${id}${extra}`;
+        currentCurrencyId = id;
+        if (userSession) { userSession.lastCurrencyId=id; localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession)); }
+        document.querySelectorAll('.currency-item').forEach(el => el.classList.toggle('active', el.getAttribute('data-currency-id')===id));
+        // Update badge
+        const badge = document.getElementById('currency-badge-text');
+        if (badge) badge.textContent = currencyMap[id] || id;
+        // Keep legacy element for JS compat
+        const legacyEl = document.getElementById('current-currency');
+        if (legacyEl) legacyEl.setAttribute('data-currency', id);
+        document.getElementById('dropdown-selected').textContent = currencyMap[id];
+    }
+    function refreshWidget() { updateWidget(currentCurrencyId); }
+
+    // ===================== AUTO UPDATE =====================
+    function toggleAutoUpdate() {
+        const sec = parseInt(document.getElementById('updateInterval').value);
+        if (isNaN(sec)||sec<1) { showToast(t('invalidInterval'), 'warning'); return; }
+        if (isAutoUpdating) { stopAutoUpdate(); return; }
+        const list = showFavorites && favorites.length > 0 ? sortedCurrencies.filter(([id])=>favorites.includes(id)) : sortedCurrencies;
+        if (!list.length) { showToast('لا توجد عملات للتنقل بينها.', 'warning'); return; }
+        isAutoUpdating=true; isPaused=false;
+        document.getElementById('autoUpdateButton').classList.add('active');
+        document.getElementById('pauseResumeButton').style.display='block';
+        document.getElementById('pauseResumeButton').textContent = t('pauseResume');
+        currentIndex = list.findIndex(([id])=>id===currentCurrencyId);
+        if (currentIndex===-1) currentIndex=0;
+        updateWidget(list[currentIndex][0], true); startCountdown(sec);
+        intervalId = setInterval(()=>{ if(!isPaused){ currentIndex=(currentIndex+1)%list.length; updateWidget(list[currentIndex][0],true); startCountdown(sec); } }, sec*1000);
+    }
+    function pauseResumeAutoUpdate() {
+        isPaused=!isPaused;
+        document.getElementById('pauseResumeButton').textContent = isPaused ? t('resume') : t('pauseResume');
+        if (isPaused) { clearInterval(countdownInterval); document.getElementById('countdown-timer').style.display='none'; }
+        else { const s=parseInt(document.getElementById('updateInterval').value); if(!isNaN(s)&&s>=1) startCountdown(s); }
+    }
+    function stopAutoUpdate() {
+        clearInterval(intervalId); clearInterval(countdownInterval);
+        intervalId=countdownInterval=null; isAutoUpdating=isPaused=false;
+        document.getElementById('autoUpdateButton').classList.remove('active');
+        document.getElementById('pauseResumeButton').style.display='none';
+        document.getElementById('countdown-timer').style.display='none';
+    }
+    function startCountdown(total) {
+        clearInterval(countdownInterval);
+        let left=total;
+        const el=document.getElementById('countdown-timer');
+        el.style.display='block';
+        el.textContent = `${t('nextUpdateIn')}: ${left} ${t('seconds')}`;
+        countdownInterval = setInterval(()=>{ left--; if(left<0) left=total; el.textContent=`${t('nextUpdateIn')}: ${left} ${t('seconds')}`; },1000);
+    }
+
+    // ===================== CLOCK =====================
+    let clockInterval = null;
+    function startClock() {
+        if (clockInterval) return;
+        clockInterval = setInterval(()=>{
+            const el=document.getElementById('live-clock');
+            if(el) el.textContent = new Date().toLocaleTimeString('en-US', {hour12:false});
+        },1000);
+    }
+
+    // ===================== SIGNAL GENERATOR =====================
+    function renderOTCPairs() {
+        const container = document.getElementById('currency-list');
+        if (!container || container.children.length > 0) return;
+        OTC_PAIRS.forEach(pair=>{
+            const chip = document.createElement('div');
+            chip.className = 'pair-chip';
+            chip.innerHTML = `<i class="fas fa-chart-line"></i> ${pair}`;
+            chip.onclick = ()=>{
+                if (selectedPairs.has(pair)) { selectedPairs.delete(pair); chip.classList.remove('selected'); }
+                else if (selectedPairs.size < 4) { selectedPairs.add(pair); chip.classList.add('selected'); }
+                else showToast(t('max4'), 'warning');
+            };
+            container.appendChild(chip);
+        });
+    }
+
+    function generateTrades() {
+        if (selectedPairs.size !== 4) { showToast(t('select4'), 'error'); return; }
+        const genBtn=document.getElementById('generate-btn');
+        const copyBtn=document.getElementById('copy-btn');
+        const loadingCont=document.getElementById('loading-container');
+        const progressFill=document.getElementById('progress-fill');
+        const loadingPct=document.getElementById('loading-percent');
+        const tradesGrid=document.getElementById('trades-grid');
+        tradesGrid.innerHTML=''; generatedSignalsText=[]; copyBtn.style.display='none';
+        genBtn.disabled=true; loadingCont.style.display='block';
+        const loadingTextEl = loadingCont.querySelector('.loading-text');
+        if (loadingTextEl) loadingTextEl.innerHTML = `${t('loadingText')} <span id="loading-percent">0%</span>`;
+
+        const now=new Date(), end=new Date(now.getTime()+3600000);
+        const signals=[], selected=Array.from(selectedPairs);
+        let cur=new Date(now.getTime());
+        while(cur<end) {
+            const pair=selected[Math.floor(Math.random()*selected.length)];
+            const ts=cur.toTimeString().slice(0,5);
+            const dir=cur.getMinutes()%2===0?'PUT':'CALL';
+            signals.push({pair,ts,dir});
+            generatedSignalsText.push(`${pair} ➪ ${ts} ${dir}`);
+            cur.setMinutes(cur.getMinutes()+Math.floor(Math.random()*10)+1);
+        }
+        let prog=0;
+        const pFill = document.getElementById('progress-fill');
+        const pPct = document.getElementById('loading-percent');
+        const pInterval = setInterval(()=>{
+            prog += 100/(15000/50);
+            if(prog>=100) prog=100;
+            if(pFill) pFill.style.width=`${prog}%`;
+            if(pPct) pPct.innerText=`${Math.floor(prog)}%`;
+        },50);
+        setTimeout(()=>{
+            clearInterval(pInterval);
+            loadingCont.style.display='none';
+            if(pFill) pFill.style.width='0%';
+            genBtn.disabled=false;
+            copyBtn.style.display='inline-flex';
+            showToast(t('sigGenSuccess'), 'success');
+            signals.forEach((sig,i)=>{
+                const card=document.createElement('div');
+                card.className='trade-card';
+                card.style.animationDelay=`${i*0.05}s`;
+                const dClass=sig.dir==='CALL'?'dir-call':'dir-put';
+                const icon=sig.dir==='CALL'?'fa-arrow-trend-up':'fa-arrow-trend-down';
+                card.innerHTML=`<div class="pair-name">${sig.pair}</div><div class="trade-time"><i class="far fa-clock"></i> ${sig.ts}</div><div class="direction-badge ${dClass}"><i class="fas ${icon}"></i> ${sig.dir}</div>`;
+                tradesGrid.appendChild(card);
+            });
+        },15000);
+    }
+
+    function copyTrades() {
+        if (!generatedSignalsText.length) return;
+        navigator.clipboard.writeText(generatedSignalsText.join('\n'))
+            .then(()=>showToast(t('sigCopied'),'success'))
+            .catch(()=>showToast(t('sigCopyErr'),'error'));
+    }
+
+    // ===================== LANGUAGE =====================
+    function toggleLanguage() {
+        isEnglish = !isEnglish;
+        document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
+        document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+        if (userSession) { userSession.language=isEnglish?'en':'ar'; localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession)); }
+        if (document.getElementById('login-container').style.display!=='none') updateLoginUI();
+        else { updateAppUI(); generateCurrencyDropdown(); updateUserDetailsDisplay(); }
+    }
+    function updateLoginUI() {
+        document.getElementById('license-key').placeholder = t('licenseKeyPlaceholder');
+        document.getElementById('login-button').textContent = t('loginButton');
+        document.getElementById('language-toggle-login').textContent = t('languageToggle');
+    }
+    function updateAppUI() {
+        const el = (id)=>document.getElementById(id);
+        el('user-details-toggle').textContent = t('userDetailsToggle');
+        el('favorites-toggle').textContent = showFavorites ? t('allCurrencies') : t('favoritesToggle');
+        el('autoUpdateButton').textContent = t('autoUpdate');
+        el('language-toggle').textContent = t('languageToggle');
+        const prb = el('pauseResumeButton');
+        if (prb && prb.style.display!=='none') prb.textContent = isPaused ? t('resume') : t('pauseResume');
+        // Currency badge
+        const badge = el('currency-badge-text');
+        if (badge) badge.textContent = currencyMap[currentCurrencyId] || '';
+        // Instructions
+        el('usage-title').textContent = t('usageTitle');
+        el('usage-select-duration').textContent = t('usageSelectDuration');
+        el('usage-buy').textContent = t('usageBuy');
+        el('usage-sell').textContent = t('usageSell');
+        el('usage-entry-point').innerHTML = isEnglish
+            ? `Open the trade only when <strong style="color:#FFD700;">Strong Buy</strong> or <strong style="color:#FFD700;">Strong Sell</strong> appears for best win rate`
+            : `افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح`;
+        el('usage-buy-label').textContent = t('buyLabel');
+        el('usage-sell-label').textContent = t('sellLabel');
+        el('strong-buy-tag').textContent = t('strongBuyTag');
+        el('strong-sell-tag').textContent = t('strongSellTag');
+        el('buy-trend-text').textContent = t('buyTrend');
+        el('sell-trend-text').textContent = t('sellTrend');
+        // Other UI
+        el('license-key-label').textContent = t('licenseKeyLabel');
+        el('copy-key').textContent = t('copyKeyButton');
+        el('tab-widget-label').textContent = t('tabWidget');
+        el('tab-signals-label').textContent = t('tabSignals');
+        el('sig-subtitle-text').textContent = t('sigSubtitle');
+        el('gen-btn-text').textContent = t('genBtn');
+        el('copy-btn-text').textContent = t('copyBtn');
+    }
+
+    // ===================== INIT =====================
+    document.addEventListener('DOMContentLoaded', ()=>{
+        userSession = JSON.parse(localStorage.getItem('kingSignalsUserSession')) || null;
+        // Arabic is always the default language for new sessions
+        isEnglish = userSession ? userSession.language==='en' : false;
+        document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
+        document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+        checkSession();
+
+        // Close sidebar on outside click
+        document.addEventListener('click', (e)=>{
+            const sb=document.getElementById('sidebar');
+            const hb=document.querySelector('.hamburger');
+            const dm=document.getElementById('currencyDropdownMenu');
+            const dt=document.querySelector('.currency-dropdown-toggle');
+            if(sb&&hb&&sb.classList.contains('open')&&!sb.contains(e.target)&&!hb.contains(e.target)) toggleSidebar();
+            else if(dm&&dt&&isDropdownOpen&&!dm.contains(e.target)&&!dt.contains(e.target)) toggleDropdown();
+        });
+    });
+    </script>
+
+    <!-- Anti-debugging protection -->
+    <script>
+        document.addEventListener("contextmenu", e=>{ if(e.target.tagName!=='INPUT'||e.target.type!=='text') e.preventDefault(); });
+        document.addEventListener("keydown", e=>{
+            if(e.ctrlKey&&(e.key==="u"||e.key==="U")) e.preventDefault();
+            if(e.ctrlKey&&e.shiftKey&&"ICJicj".includes(e.key)) e.preventDefault();
+            if(e.keyCode===123) e.preventDefault();
+        });
+        (function(){
+            function detect(){ const s=performance.now(); debugger; return performance.now()-s>300; }
+            setTimeout(()=>{ setInterval(()=>{ if(detect()){ document.body.innerHTML=''; window.location.href="about:blank"; } },500); },3000);
+        })();
+        window.addEventListener('resize', ()=>{
+            if(window.outerHeight-window.innerHeight>400||window.outerWidth-window.innerWidth>400){
+                document.body.innerHTML=''; window.location.href="about:blank";
+            }
+        });
+    </script>
+</body>
+</html>
