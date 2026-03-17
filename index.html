@@ -181,6 +181,7 @@
             max-width: 560px;
             margin-left: auto;
             margin-right: auto;
+            direction: ltr;
         }
         .tabs-row .mode-tabs {
             flex: 1;
@@ -188,6 +189,7 @@
             max-width: none;
             margin-left: 0;
             margin-right: 0;
+            direction: rtl;
         }
         /* Mode Tabs */
         .mode-tabs {
@@ -295,26 +297,37 @@
         .menu-fab.is-open .menu-fab-lines span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .menu-fab.is-open .menu-fab-lines span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         .sidebar-btn {
-            display: block; width: 100%;
-            padding: 12px 16px; margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 11px 14px;
+            margin: 5px 0;
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0,255,0,0.2);
+            border: 1px solid rgba(0,255,0,0.15);
             border-radius: 10px;
-            color: #ddd; font-family: 'Cairo', sans-serif; font-size: 14px;
-            text-align: center; cursor: pointer;
-            transition: all 0.3s;
-            position: relative; overflow: hidden;
+            color: #ccc;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.25s;
+            gap: 8px;
         }
         .sidebar-btn:hover {
-            background: rgba(0,255,0,0.1);
-            border-color: rgba(0,255,0,0.5);
+            background: rgba(0,255,0,0.08);
+            border-color: rgba(0,255,0,0.4);
             color: #fff;
-            transform: translateX(-4px);
         }
         .sidebar-btn.active {
-            background: linear-gradient(135deg, rgba(0,255,0,0.2), rgba(255,215,0,0.2));
-            border-color: rgba(0,255,0,0.6);
+            background: linear-gradient(135deg, rgba(0,255,0,0.15), rgba(255,215,0,0.12));
+            border-color: rgba(0,255,0,0.5);
             color: #00FF00;
+        }
+        .sidebar-btn i {
+            font-size: 13px;
+            opacity: 0.7;
+            flex-shrink: 0;
         }
         .user-details-box {
             display: none;
@@ -879,9 +892,140 @@
         .powered-by a:hover { color: #00FF00; }
 
         @media (max-width: 480px) {
-            .mode-tab { font-size: 11px; padding: 10px 8px; }
+            .mode-tab { font-size: 10px; padding: 9px 4px; gap: 4px; }
+            .mode-tab i { font-size: 12px; }
+            .mode-tab span { display: none; }  /* hide label, show only icon on very small screens */
+            .tabs-row { gap: 6px; }
             #trades-grid { grid-template-columns: 1fr 1fr; }
+            .mm-input { font-size: 0.85rem; padding: 9px 10px; }
         }
+        @media (max-width: 380px) {
+            .mode-tab span { display: none; }
+            .mode-tab { padding: 10px 8px; }
+        }
+        @media (min-width: 481px) {
+            .mode-tab span { display: inline; }
+        }
+            50% { opacity:1; transform:scale(1.2); }
+        }
+        .sig-strength-dots { display:flex; gap:3px; }
+        .sig-dot { width:8px; height:8px; border-radius:2px; background:rgba(255,255,255,0.15); transition:all 0.3s; }
+        .sig-dot.active-buy  { background:#34D399; box-shadow:0 0 6px #34D399; }
+        .sig-dot.active-sell { background:#F87171; box-shadow:0 0 6px #F87171; }
+        /* ══ USER STATS ══ */
+        .stats-modal {
+            position:fixed; inset:0; z-index:3000;
+            background:rgba(0,0,0,0.8); backdrop-filter:blur(6px);
+            display:flex; align-items:center; justify-content:center;
+            padding:20px; opacity:0; visibility:hidden;
+            transition:opacity 0.3s,visibility 0s linear 0.3s;
+        }
+        .stats-modal.open { opacity:1; visibility:visible; transition:opacity 0.3s; }
+        .stats-modal-card {
+            background:rgba(5,10,20,0.98); border:1px solid rgba(0,255,0,0.2);
+            border-radius:18px; padding:24px; width:100%; max-width:380px;
+            max-height:85vh; overflow-y:auto;
+            box-shadow:0 12px 50px rgba(0,0,0,0.6);
+            animation:fadeInUp 0.3s ease-out;
+        }
+        .stat-tile {
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+            border-radius:12px; padding:14px; text-align:center;
+        }
+        .stat-tile .st-val { font-family:'Orbitron',sans-serif; font-size:1.4rem; font-weight:800; }
+        .stat-tile .st-lbl { font-size:11px; color:#64748b; margin-top:4px; }
+        @keyframes confettiFall {
+            0%   { transform: translateY(-10px) rotate(0deg);   opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        /* ===================== MONEY MANAGEMENT ===================== */
+        .mm-input-group { display:flex; flex-direction:column; gap:5px; }
+        .mm-label { font-size:12px; color:#94a3b8; font-weight:500; }
+        .mm-input {
+            background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1);
+            border-radius:10px; padding:11px 14px; color:#f1f5f9;
+            font-family:'Orbitron',sans-serif; font-size:0.95rem; font-weight:600;
+            outline:none; transition:border-color 0.3s, box-shadow 0.3s;
+            -webkit-user-select:text; user-select:text;
+        }
+        .mm-input:focus { border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,0.15); }
+        .mm-start-btn {
+            width:100%; padding:15px; border:none; border-radius:12px;
+            background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+            color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700;
+            cursor:pointer; display:flex; align-items:center; justify-content:center;
+            gap:8px; box-shadow:0 4px 20px rgba(59,130,246,0.3);
+            transition:all 0.3s;
+        }
+        .mm-start-btn:hover { box-shadow:0 6px 30px rgba(59,130,246,0.5); transform:translateY(-1px); }
+        .mm-stat-card {
+            background:rgba(17,24,39,0.7); border:1px solid rgba(255,255,255,0.06);
+            border-radius:14px; padding:16px; position:relative; overflow:hidden;
+        }
+        .mm-stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:3px 3px 0 0; }
+        .mm-gold::before { background:#f59e0b; }
+        .mm-profit::before { background:linear-gradient(90deg,#10b981,#06b6d4); }
+        .mm-win::before { background:#10b981; }
+        .mm-lose::before { background:#ef4444; }
+        .mm-stat-label { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:6px; }
+        .mm-stat-value { font-family:'Orbitron',sans-serif; font-size:1.4rem; font-weight:700; color:#f1f5f9; }
+        .mm-stat-sub { font-size:12px; color:#64748b; margin-top:4px; }
+        .mm-stat-sub.pos { color:#10b981; }
+        .mm-stat-sub.neg { color:#ef4444; }
+        .mm-seq-dot {
+            width:26px; height:26px; border-radius:6px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:10px; font-weight:700; font-family:'Orbitron',sans-serif;
+            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+            color:#475569; transition:all 0.3s;
+        }
+        .mm-seq-dot.win { background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.35); color:#10b981; }
+        .mm-seq-dot.lose { background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.35); color:#ef4444; }
+        .mm-seq-dot.cur { border-color:#3b82f6; color:#3b82f6; animation:dotPulse 1.5s ease-in-out infinite; }
+        .mm-win-btn {
+            padding:18px; border:none; border-radius:12px;
+            background:linear-gradient(135deg,#059669,#10b981); color:#fff;
+            font-family:'Cairo',sans-serif; font-size:1rem; font-weight:700;
+            cursor:pointer; box-shadow:0 4px 20px rgba(16,185,129,0.3);
+            transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px;
+        }
+        .mm-win-btn:hover { box-shadow:0 6px 28px rgba(16,185,129,0.5); transform:translateY(-2px); }
+        .mm-lose-btn {
+            padding:18px; border:none; border-radius:12px;
+            background:linear-gradient(135deg,#dc2626,#ef4444); color:#fff;
+            font-family:'Cairo',sans-serif; font-size:1rem; font-weight:700;
+            cursor:pointer; box-shadow:0 4px 20px rgba(239,68,68,0.3);
+            transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px;
+        }
+        .mm-lose-btn:hover { box-shadow:0 6px 28px rgba(239,68,68,0.5); transform:translateY(-2px); }
+        .mm-win-btn:disabled, .mm-lose-btn:disabled { opacity:0.3; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
+        .mm-risk-btn {
+            padding:10px 6px; border-radius:10px; cursor:pointer;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);
+            color:#94a3b8; font-family:'Cairo',sans-serif; text-align:center;
+            transition:all 0.25s;
+        }
+        .mm-risk-btn:hover { background:rgba(59,130,246,0.1); border-color:rgba(59,130,246,0.3); color:#f1f5f9; }
+        .mm-risk-btn.active {
+            background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));
+            border-color:rgba(59,130,246,0.5); color:#f1f5f9;
+            box-shadow:0 0 16px rgba(59,130,246,0.2);
+        }
+        .mm-risk-btn.active-safe  { background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1)); border-color:rgba(16,185,129,0.4); }
+        .mm-risk-btn.active-mid   { background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(251,191,36,0.1)); border-color:rgba(245,158,11,0.4); }
+        .mm-risk-btn.active-high  { background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(248,113,113,0.1));  border-color:rgba(239,68,68,0.4); }
+        .mm-warning-badge {
+            display:inline-flex; align-items:center; gap:5px; padding:4px 10px;
+            background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25);
+            border-radius:20px; font-size:11px; color:#ef4444; font-weight:600;
+        }
+        .mm-badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+        .mm-badge.win { background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.25); }
+        .mm-badge.lose { background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.25); }
+        .mm-td { padding:11px 12px; font-family:'Orbitron',sans-serif; font-size:12px; font-weight:500; }
+        .mm-pos { color:#10b981; }
+        .mm-neg { color:#ef4444; }
+
     </style>
 </head>
 <body>
@@ -889,7 +1033,6 @@
     <div class="glow-circle glow-1"></div>
     <div class="glow-circle glow-2"></div>
     <div class="glow-circle glow-3"></div>
-
     <!-- ==================== LOGIN SCREEN ==================== -->
     <div id="login-container">
         <h1 style="font-family:'Orbitron',sans-serif; font-size:2.2rem; margin-bottom:8px;" class="gradient-text">KingSignals Pro</h1>
@@ -909,42 +1052,93 @@
 
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
-            <h2 style="font-family:'Orbitron',sans-serif; font-size:1rem; margin-bottom:16px;" class="gradient-text">KING SIGNALS PRO</h2>
-            <button class="sidebar-btn" id="user-details-toggle" onclick="toggleUserDetails()">تفاصيل الاشتراك</button>
+
+            <!-- Header -->
+            <div style="text-align:center; padding-bottom:16px; border-bottom:1px solid rgba(0,255,0,0.1); margin-bottom:16px;">
+                <div style="font-family:'Orbitron',sans-serif; font-size:0.85rem; letter-spacing:2px;" class="gradient-text">KING SIGNALS PRO</div>
+            </div>
+
+            <!-- Subscription Details -->
+            <button class="sidebar-btn" id="user-details-toggle" onclick="toggleUserDetails()">
+                <i class="fas fa-id-card" style="margin-left:8px;"></i>
+                <span id="sidebar-subscription-label">تفاصيل الاشتراك</span>
+            </button>
             <div id="user-details-content" class="user-details-box">
-                <p id="user-username"></p>
-                <p id="user-subscription"></p>
-                <p id="user-expiry"></p>
-                <p id="license-key-label" class="mt-2" style="font-weight:700; font-size:12px;">مفتاح الترخيص:</p>
+                <p id="user-username" style="font-size:13px;"></p>
+                <p id="user-subscription" style="font-size:13px;"></p>
+                <p id="user-expiry" style="font-size:13px;"></p>
+                <p id="license-key-label" style="font-weight:700; font-size:11px; color:#64748b; margin-top:10px; margin-bottom:4px;">مفتاح الترخيص</p>
                 <div style="position:relative;">
                     <input type="password" id="license-key-display" class="key-input-field" readonly>
                     <button onclick="toggleKeyVisibility()" id="toggle-key-visibility" style="position:absolute;top:50%;left:6px;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#888;">
-                        <svg id="eye-icon-open" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.022 7-9.542 7-4.478 0-8.268-2.943-9.542-7z"/></svg>
-                        <svg id="eye-icon-closed" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;display:none;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7C3.732 7.943 7.522 5 12 5c1.26 0 2.463.14 3.598.4M6.228 6.228A10.014 10.014 0 0012 17c4.478 0 8.268-2.943 9.542-7a10.014 10.014 0 00-4.641-5.662M3 3l18 18"/></svg>
+                        <svg id="eye-icon-open" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.022 7-9.542 7-4.478 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg id="eye-icon-closed" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;display:none;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7C3.732 7.943 7.522 5 12 5c1.26 0 2.463.14 3.598.4M6.228 6.228A10.014 10.014 0 0012 17c4.478 0 8.268-2.943 9.542-7a10.014 10.014 0 00-4.641-5.662M3 3l18 18"/></svg>
                     </button>
                 </div>
-                <button class="sidebar-btn" id="copy-key" onclick="copyKeyToClipboard()" style="font-size:12px;padding:8px;margin-top:8px;">نسخ المفتاح</button>
-                <p id="copy-key-feedback" style="font-size:11px;text-align:center;display:none;margin-top:4px;"></p>
+                <button class="sidebar-btn" id="copy-key" onclick="copyKeyToClipboard()" style="font-size:12px; padding:8px; margin-top:8px;">
+                    <i class="fas fa-copy" style="margin-left:6px;"></i>
+                    <span id="sidebar-copy-key-label">نسخ المفتاح</span>
+                </button>
+                <p id="copy-key-feedback" style="font-size:11px;text-align:center;display:none;margin-top:4px;color:#34D399;"></p>
             </div>
-            <button class="sidebar-btn" id="favorites-toggle" onclick="toggleFavorites()">عرض العملات المفضلة</button>
-            <!-- Currency Dropdown (for widget panel) -->
+
+            <!-- Divider -->
+            <div style="height:1px; background:rgba(255,255,255,0.05); margin:12px 0;"></div>
+
+            <!-- Favorites -->
+            <button class="sidebar-btn" id="favorites-toggle" onclick="toggleFavorites()">
+                <i class="fas fa-star" style="margin-left:8px;color:#FFD700;"></i>
+                <span id="sidebar-fav-label">عرض العملات المفضلة</span>
+            </button>
+
+            <!-- Currency Dropdown -->
             <div class="currency-dropdown-wrap">
                 <div class="currency-dropdown-toggle" onclick="toggleDropdown()">
-                    <span id="dropdown-selected">اختر عملة</span><span>▼</span>
+                    <span id="dropdown-selected">اختر عملة</span>
+                    <span style="font-size:10px; opacity:0.6;">▼</span>
                 </div>
                 <div id="currencyDropdownMenu" class="currency-dropdown-menu"></div>
             </div>
-            <div class="auto-update-row">
-                <input type="number" id="updateInterval" class="interval-input" placeholder="ثواني" min="1" value="5">
-                <button class="sidebar-btn" id="autoUpdateButton" onclick="toggleAutoUpdate()" style="flex:1;">تشغيل/إيقاف</button>
+
+            <!-- Auto Update -->
+            <div style="margin-top:8px;">
+                <div style="font-size:11px; color:#64748b; margin-bottom:6px; padding-right:2px;" id="sidebar-autoupdate-label">تحديث تلقائي (ثواني)</div>
+                <div class="auto-update-row">
+                    <input type="number" id="updateInterval" class="interval-input" placeholder="5" min="1" value="5">
+                    <button class="sidebar-btn" id="autoUpdateButton" onclick="toggleAutoUpdate()" style="flex:1; margin:0;">
+                        <span id="sidebar-toggle-label">تشغيل</span>
+                    </button>
+                </div>
+                <button class="sidebar-btn" id="pauseResumeButton" onclick="pauseResumeAutoUpdate()" style="display:none; margin-top:6px;">
+                    <i class="fas fa-pause" style="margin-left:6px;"></i>
+                    <span id="sidebar-pause-label">إيقاف مؤقت</span>
+                </button>
             </div>
-            <button class="sidebar-btn" id="pauseResumeButton" onclick="pauseResumeAutoUpdate()" style="display:none;">إيقاف مؤقت</button>
-            <button class="sidebar-btn" id="language-toggle" onclick="toggleLanguage()">Switch to English</button>
-            <button class="sidebar-btn" onclick="logout()" style="margin-top:16px; border-color:rgba(248,113,113,0.3); color:#F87171;">تسجيل الخروج</button>
+
+            <!-- Divider -->
+            <div style="height:1px; background:rgba(255,255,255,0.05); margin:12px 0;"></div>
+
+            <!-- Language -->
+            <button class="sidebar-btn" id="language-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-globe" style="margin-left:8px;"></i>
+                <span id="sidebar-lang-label">Switch to English</span>
+            </button>
+
+            <!-- Stats -->
+            <button class="sidebar-btn" onclick="openStatsModal()" style="border-color:rgba(6,182,212,0.3); color:#06b6d4;">
+                <i class="fas fa-chart-pie" style="margin-left:8px;"></i>
+                <span id="sidebar-stats-label">إحصائياتي</span>
+            </button>
+
+            <!-- Logout -->
+            <button class="sidebar-btn" onclick="logout()" style="border-color:rgba(248,113,113,0.3); color:#F87171;">
+                <i class="fas fa-sign-out-alt" style="margin-left:8px;"></i>
+                <span id="sidebar-logout-label">تسجيل الخروج</span>
+            </button>
 
             <!-- Social Links -->
             <div class="sidebar-social">
-                <p class="sidebar-social-title">تابعنا</p>
+                <p class="sidebar-social-title" id="sidebar-follow-label">تابعنا</p>
                 <a href="https://t.me/KingTraDe28" target="_blank" rel="noopener noreferrer" class="sidebar-social-link telegram">
                     <i class="fab fa-telegram"></i>
                     <span>Telegram</span>
@@ -959,7 +1153,7 @@
         </div>
 
         <!-- Main content -->
-        <div style="max-width:600px; margin:0 auto; width:100%;">
+        <div style="max-width:600px; margin:0 auto; width:100%; box-sizing:border-box;">
             <!-- App Header -->
             <div style="text-align:center; margin-bottom:20px;">
                 <h1 style="font-family:'Orbitron',sans-serif; font-size:1.8rem;" class="gradient-text">KingSignals Pro</h1>
@@ -974,6 +1168,9 @@
                     </button>
                     <button class="mode-tab" id="tab-signals" onclick="switchMode('signals')">
                         <i class="fas fa-microchip"></i> <span id="tab-signals-label">مولّد الإشارات</span>
+                    </button>
+                    <button class="mode-tab" id="tab-money" onclick="switchMode('money')">
+                        <i class="fas fa-wallet"></i> <span id="tab-money-label">الإدارة المالية</span>
                     </button>
                 </div>
                 <button class="menu-fab" id="menu-fab" onclick="toggleSidebar()" aria-label="القائمة">
@@ -1070,7 +1267,7 @@
 
             <!-- ---- PANEL 2: Signal Generator ---- -->
             <div id="panel-signals" class="mode-panel glass-card" style="padding:24px;">
-                <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR OF QUOTEX</h2>
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR</h2>
                 <p style="text-align:center; color:#888; font-size:13px; margin-bottom:20px;" id="sig-subtitle">
                     <i class="fas fa-crosshairs"></i> <span id="sig-subtitle-text">اختر 4 أزواج لتوليد إشارات الساعة القادمة</span>
                 </p>
@@ -1087,7 +1284,229 @@
                     <div class="loading-text">جاري تحليل الخوارزمية <span id="loading-percent">0%</span></div>
                     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
                 </div>
+                <div style="display:flex;justify-content:center;margin-top:12px;" id="export-btn-wrap" style="display:none;">
+                    <button onclick="exportSignalsAsImage()" style="padding:10px 20px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:10px;color:#8b5cf6;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;" id="export-img-btn">
+                        <i class="fas fa-image"></i> تصدير كصورة
+                    </button>
+                </div>
                 <div id="trades-grid"></div>
+            </div>
+
+            <!-- ---- PANEL 3: Money Management ---- -->
+            <div id="panel-money" class="mode-panel" style="padding-bottom:20px;">
+
+                <!-- Config -->
+                <div id="mm-config-section" class="glass-card" style="padding:22px; margin-bottom:16px;">
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <div style="font-family:'Orbitron',sans-serif; font-size:0.9rem; letter-spacing:2px; color:#f1f5f9; margin-bottom:4px;">إدارة رأس المال</div>
+                        <div style="font-size:12px; color:#64748b;">أدخل بياناتك وسيحسب النظام كل شيء تلقائياً</div>
+                    </div>
+                    <div style="margin-bottom:18px;">
+                        <div class="mm-label" style="margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">1</span>
+                            رأس المال الذي ستتداول به ($)
+                        </div>
+                        <input type="number" id="mm-capital" class="mm-input" value="500" min="1" step="1" style="width:100%;font-size:1.3rem;text-align:center;padding:14px;" oninput="mmUpdatePreview()">
+                    </div>
+                    <div style="margin-bottom:18px;">
+                        <div class="mm-label" style="margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">2</span>
+                            نسبة ربح كل صفقة ناجحة (مثال: 82% → اكتب 1.82)
+                        </div>
+                        <input type="number" id="mm-payout" class="mm-input" value="1.82" min="1.01" step="0.01" style="width:100%;font-size:1.3rem;text-align:center;padding:14px;" oninput="mmUpdatePreview()">
+                        <div id="mm-payout-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:5px;">= ربح +82% على كل صفقة رابحة</div>
+                    </div>
+
+                    <!-- Daily Profit Target -->
+                    <div style="margin-bottom:18px;">
+                        <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#6ee7b7;">🎯</span>
+                            هدف الربح اليومي ($) — اختياري
+                        </div>
+                        <input type="number" id="mm-daily-target" class="mm-input" value="" min="0" step="1" style="width:100%;text-align:center;padding:11px;" placeholder="مثال: 50 — اتركه فارغ لإلغائه" oninput="mmUpdatePreview()">
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <div class="mm-label" style="margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">3</span>
+                            مستوى المخاطرة
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                            <button class="mm-risk-btn" id="mm-risk-safe" onclick="mmSetRisk('safe')">
+                                <div style="font-size:1.4rem;margin-bottom:4px;">🛡️</div>
+                                <div style="font-weight:700;font-size:13px;color:#10b981;">محافظ</div>
+                                <div style="font-size:10px;color:#64748b;margin-top:2px;">خسارة أقل</div>
+                            </button>
+                            <button class="mm-risk-btn active" id="mm-risk-mid" onclick="mmSetRisk('mid')">
+                                <div style="font-size:1.4rem;margin-bottom:4px;">⚖️</div>
+                                <div style="font-weight:700;font-size:13px;color:#f59e0b;">متوازن</div>
+                                <div style="font-size:10px;color:#64748b;margin-top:2px;">مُوصى به</div>
+                            </button>
+                            <button class="mm-risk-btn" id="mm-risk-high" onclick="mmSetRisk('high')">
+                                <div style="font-size:1.4rem;margin-bottom:4px;">🔥</div>
+                                <div style="font-weight:700;font-size:13px;color:#ef4444;">جريء</div>
+                                <div style="font-size:10px;color:#64748b;margin-top:2px;">ربح أعلى</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="mm-preview-box" style="margin-bottom:18px;">جاري الحساب...</div>
+                    <button class="mm-start-btn" onclick="mmStart()">
+                        <i class="fas fa-play"></i> ابدأ الجلسة
+                    </button>
+                </div>
+
+                <!-- Active Session -->
+                <div id="mm-session" style="display:none;">
+                    <div id="mm-summary" class="glass-card" style="padding:12px 16px;margin-bottom:14px;font-size:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                        <div class="mm-stat-card mm-gold">
+                            <div class="mm-stat-label">الرصيد الحالي</div>
+                            <div class="mm-stat-value" id="mm-stat-balance">$500</div>
+                            <div class="mm-stat-sub" id="mm-stat-pnl">+$0.00</div>
+                        </div>
+                        <div class="mm-stat-card mm-profit">
+                            <div class="mm-stat-label">الربح المتوقع</div>
+                            <div class="mm-stat-value" id="mm-stat-expected">—</div>
+                            <div class="mm-stat-sub" id="mm-stat-ratio">+0%</div>
+                        </div>
+                        <div class="mm-stat-card mm-win">
+                            <div class="mm-stat-label">صفقات رابحة</div>
+                            <div class="mm-stat-value" id="mm-stat-wins">0</div>
+                            <div class="mm-stat-sub" id="mm-stat-winpct">نسبة الفوز 0%</div>
+                        </div>
+                        <div class="mm-stat-card mm-lose">
+                            <div class="mm-stat-label">صفقات خاسرة</div>
+                            <div class="mm-stat-value" id="mm-stat-losses">0</div>
+                            <div class="mm-stat-sub" id="mm-stat-losspct">نسبة الخسارة 0%</div>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding:20px;margin-bottom:14px;">
+                        <div id="mm-cycle-complete" style="display:none;border-radius:12px;margin-bottom:16px;"></div>
+                        <div id="mm-seq-dots" style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px;"></div>
+                        <div id="mm-streak" style="text-align:center;font-size:12px;min-height:16px;margin-bottom:14px;font-family:'Cairo',sans-serif;font-weight:600;"></div>
+                        <div style="text-align:center;margin-bottom:18px;">
+                            <div style="font-size:11px;color:#64748b;letter-spacing:1px;margin-bottom:4px;">الصفقة رقم</div>
+                            <div id="mm-trade-num" style="font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">1</div>
+                            <div style="margin-top:14px;padding:16px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:12px;">
+                                <div style="font-size:11px;color:#94a3b8;letter-spacing:1px;margin-bottom:6px;">مبلغ هذه الصفقة</div>
+                                <div id="mm-trade-amount" style="font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:800;color:#f59e0b;">$0</div>
+                                <div id="mm-pct-note" style="font-size:11px;color:#64748b;margin-top:4px;"></div>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+                                <div style="padding:12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;text-align:center;">
+                                    <div style="font-size:10px;color:#64748b;margin-bottom:5px;">✅ لو ربحت</div>
+                                    <div id="mm-if-win" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:1rem;color:#10b981;">$0</div>
+                                    <div id="mm-profit-note" style="font-size:10px;color:#34d399;margin-top:2px;"></div>
+                                </div>
+                                <div style="padding:12px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:10px;text-align:center;">
+                                    <div style="font-size:10px;color:#64748b;margin-bottom:5px;">❌ لو خسرت</div>
+                                    <div id="mm-if-lose" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:1rem;color:#ef4444;">$0</div>
+                                    <div id="mm-loss-note" style="font-size:10px;color:#f87171;margin-top:2px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:18px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                                <span style="font-size:11px;color:#64748b;">تقدم الجلسة</span>
+                                <span id="mm-progress-text" style="font-size:11px;color:#94a3b8;">0 صفقة</span>
+                            </div>
+                            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
+                                <div id="mm-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:4px;transition:width 0.5s ease;"></div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;margin:10px 0 5px;">
+                                <span style="font-size:11px;color:#64748b;">صفقات رابحة</span>
+                                <span id="mm-win-progress-text" style="font-size:11px;color:#10b981;">0 فوز</span>
+                            </div>
+                            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
+                                <div id="mm-win-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:4px;transition:width 0.5s ease;"></div>
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                            <button class="mm-win-btn" id="mm-btn-win" onclick="mmRecord(true)"><i class="fas fa-arrow-trend-up"></i> ربحت</button>
+                            <button class="mm-lose-btn" id="mm-btn-lose" onclick="mmRecord(false)"><i class="fas fa-arrow-trend-down"></i> خسرت</button>
+                        </div>
+                        <button onclick="mmReset()" style="width:100%;padding:11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:#64748b;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px;">
+                            <i class="fas fa-redo" style="margin-left:6px;"></i> إنهاء الجلسة وبدء جديدة
+                        </button>
+                        <!-- Open float button during session -->
+                        <div style="display:flex;justify-content:center;margin-top:18px;">
+                            <div style="position:relative;width:90px;height:90px;">
+                                <svg width="90" height="90" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="6"></circle>
+                                    <circle id="mm-ring-fill" cx="50" cy="50" r="42" fill="none" stroke="#3b82f6" stroke-width="6" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" style="transition:stroke-dashoffset 0.8s ease;"></circle>
+                                </svg>
+                                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                                    <div id="mm-ring-val" style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#f1f5f9;">0%</div>
+                                    <div style="font-size:9px;color:#64748b;letter-spacing:0.5px;">نسبة الفوز</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding:20px;margin-bottom:14px;">
+                        <div style="font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">📈 منحنى الرصيد</div>
+                        <div style="position:relative;width:100%;height:220px;"><canvas id="mm-chart"></canvas></div>
+                    </div>
+                    <div class="glass-card" style="padding:20px;">
+                        <div style="font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">📋 سجل الصفقات</div>
+                        <div id="mm-empty" style="text-align:center;padding:30px 20px;color:#475569;">
+                            <div style="font-size:2rem;margin-bottom:8px;opacity:0.4;">📊</div>
+                            <p style="font-size:13px;">لا توجد صفقات بعد</p>
+                        </div>
+                        <div style="overflow-x:auto;" id="mm-table-wrap" class="hidden">
+                            <table style="width:100%;border-collapse:separate;border-spacing:0 4px;font-size:12px;">
+                                <thead>
+                                    <tr style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.8px;">
+                                        <th style="padding:8px 10px;text-align:right;">#</th>
+                                        <th style="padding:8px 10px;text-align:right;">النتيجة</th>
+                                        <th style="padding:8px 10px;text-align:right;">مبلغ الصفقة</th>
+                                        <th style="padding:8px 10px;text-align:right;">الربح/الخسارة</th>
+                                        <th style="padding:8px 10px;text-align:right;">الرصيد</th>
+                                        <th style="padding:8px 10px;text-align:right;">% الفوز</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mm-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <!-- ==================== STATS MODAL ==================== -->
+    <div id="stats-modal" class="stats-modal">
+        <div class="stats-modal-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                <h2 style="font-family:'Orbitron',sans-serif;font-size:1rem;color:#06b6d4;">📊 إحصائياتي</h2>
+                <button onclick="closeStatsModal()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 12px;color:#94a3b8;cursor:pointer;font-size:13px;">إغلاق</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+                <div class="stat-tile">
+                    <div class="st-val" id="st-total-sessions" style="color:#06b6d4;">0</div>
+                    <div class="st-lbl">إجمالي الجلسات</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-total-pnl" style="color:#10b981;">$0</div>
+                    <div class="st-lbl">إجمالي الربح/الخسارة</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-win-rate" style="color:#f59e0b;">0%</div>
+                    <div class="st-lbl">معدل النجاح</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-best-streak" style="color:#34D399;">0</div>
+                    <div class="st-lbl">أفضل سلسلة فوز</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-worst-streak" style="color:#F87171;">0</div>
+                    <div class="st-lbl">أسوأ سلسلة خسارة</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-avg-profit" style="color:#8b5cf6;">$0</div>
+                    <div class="st-lbl">متوسط الربح/جلسة</div>
+                </div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;">
+                <div style="font-size:11px;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">آخر 5 جلسات</div>
+                <div id="st-recent-sessions" style="font-size:12px;color:#94a3b8;">لا توجد بيانات</div>
             </div>
         </div>
     </div>
@@ -1108,7 +1527,9 @@
 
     const OTC_PAIRS = [
         "CAD/CHF (OTC)","CAD/JPY (OTC)","CHF/JPY (OTC)","USD/BDT (OTC)",
-        "USD/BRL (OTC)","USD/COP (OTC)","USD/DZD (OTC)","USD/EGP (OTC)"
+        "USD/BRL (OTC)","USD/COP (OTC)","USD/DZD (OTC)","USD/EGP (OTC)",
+        "EUR/USD (OTC)","GBP/USD (OTC)","USD/JPY (OTC)","AUD/USD (OTC)",
+        "USD/INR (OTC)","USD/MXN (OTC)","USD/NGN (OTC)","USD/PKR (OTC)"
     ];
 
     // ===================== STATE =====================
@@ -1156,7 +1577,16 @@
             loadingText:'جاري تحليل الخوارزمية',
             select4:'يجب اختيار 4 أزواج بالضبط.', max4:'يمكنك اختيار 4 أزواج فقط.',
             sigGenSuccess:'تم توليد الإشارات بنجاح!', sigCopied:'تم نسخ الإشارات!', sigCopyErr:'خطأ في النسخ.',
-            logout:'تسجيل الخروج'
+            logout:'تسجيل الخروج',
+            sidebarSubscription:'تفاصيل الاشتراك',
+            sidebarCopyKey:'نسخ المفتاح',
+            sidebarFav:'عرض المفضلة', sidebarFavAll:'عرض الكل',
+            sidebarAutoUpdate:'تحديث تلقائي (ثواني)',
+            sidebarToggle:'تشغيل', sidebarPause:'إيقاف مؤقت', sidebarResume:'استئناف',
+            sidebarLang:'Switch to English',
+            sidebarStats:'إحصائياتي',
+            sidebarLogout:'تسجيل الخروج',
+            sidebarFollow:'تابعنا'
         },
         en: {
             selectCurrency:'Select Currency', appSubject:'KingSignals Pro',
@@ -1191,7 +1621,16 @@
             loadingText:'Analyzing Algorithm',
             select4:'You must select exactly 4 pairs.', max4:'You can select only 4 pairs.',
             sigGenSuccess:'Signals generated successfully!', sigCopied:'Signals copied!', sigCopyErr:'Error copying signals.',
-            logout:'Logout'
+            logout:'Logout',
+            sidebarSubscription:'Subscription Details',
+            sidebarCopyKey:'Copy Key',
+            sidebarFav:'Show Favorites', sidebarFavAll:'Show All',
+            sidebarAutoUpdate:'Auto Update (seconds)',
+            sidebarToggle:'Start', sidebarPause:'Pause', sidebarResume:'Resume',
+            sidebarLang:'التحويل إلى العربية',
+            sidebarStats:'My Stats',
+            sidebarLogout:'Logout',
+            sidebarFollow:'Follow Us'
         }
     };
     function t(key) { return (isEnglish ? T.en : T.ar)[key] || key; }
@@ -1450,10 +1889,13 @@
             return;
         }
         currentMode = mode;
-        document.getElementById('panel-widget').classList.toggle('active', mode==='widget');
-        document.getElementById('panel-signals').classList.toggle('active', mode==='signals');
-        document.getElementById('tab-widget').classList.toggle('active', mode==='widget');
-        document.getElementById('tab-signals').classList.toggle('active', mode==='signals');
+        ['widget','signals','money'].forEach(m => {
+            const panel = document.getElementById(`panel-${m}`);
+            const tab   = document.getElementById(`tab-${m}`);
+            if (panel) panel.classList.toggle('active', m === mode);
+            if (tab)   tab.classList.toggle('active',   m === mode);
+        });
+        if (mode === 'widget') applyMarketStatus();
     }
 
     function showWeekendWarning() {
@@ -1523,10 +1965,12 @@
     // Force switch without weekend check (used from modal button)
     function switchModeForce(mode) {
         currentMode = mode;
-        document.getElementById('panel-widget').classList.toggle('active', mode==='widget');
-        document.getElementById('panel-signals').classList.toggle('active', mode==='signals');
-        document.getElementById('tab-widget').classList.toggle('active', mode==='widget');
-        document.getElementById('tab-signals').classList.toggle('active', mode==='signals');
+        ['widget','signals','money'].forEach(m => {
+            const panel = document.getElementById(`panel-${m}`);
+            const tab   = document.getElementById(`tab-${m}`);
+            if (panel) panel.classList.toggle('active', m === mode);
+            if (tab)   tab.classList.toggle('active',   m === mode);
+        });
     }
 
     // ===================== SIDEBAR =====================
@@ -1557,26 +2001,40 @@
     // Swipe to open (swipe left from right edge) / swipe to close (swipe right when open)
     function initSwipe() {
         document.addEventListener('touchstart', (e)=>{
+            // Don't track swipe if touching an interactive element
+            const tag = e.target.tagName;
+            if (['INPUT','BUTTON','SELECT','TEXTAREA'].includes(tag)) {
+                swipeTracking = false;
+                return;
+            }
+            // Don't track if inside a scrollable container (MM panel)
+            const scrollable = e.target.closest('#panel-money, .currency-dropdown-menu, .user-details-box, .sidebar');
+            if (scrollable && !e.target.closest('.sidebar-overlay')) {
+                swipeTracking = false;
+                return;
+            }
             swipeStartX = e.touches[0].clientX;
             swipeStartY = e.touches[0].clientY;
             swipeTracking = true;
         }, { passive: true });
+
         document.addEventListener('touchmove', (e)=>{
             if (!swipeTracking) return;
             const dx = e.touches[0].clientX - swipeStartX;
             const dy = Math.abs(e.touches[0].clientY - swipeStartY);
-            // Ignore vertical swipes
-            if (dy > 30) { swipeTracking = false; return; }
-            const fromRightEdge = swipeStartX > window.innerWidth - 40;
-            // Open: swipe left (dx < -40) from right edge
-            if (!sidebarOpen && fromRightEdge && dx < -40) {
+            // Ignore if mostly vertical
+            if (dy > Math.abs(dx) * 1.2 || dy > 30) { swipeTracking = false; return; }
+            const fromRightEdge = swipeStartX > window.innerWidth - 44;
+            // Open: swipe left (dx < -50) from right edge
+            if (!sidebarOpen && fromRightEdge && dx < -50) {
                 openSidebar(); swipeTracking = false;
             }
-            // Close: swipe right (dx > 50) when sidebar is open
-            if (sidebarOpen && dx > 50) {
+            // Close: swipe right (dx > 60) when sidebar is open
+            if (sidebarOpen && dx > 60) {
                 closeSidebar(); swipeTracking = false;
             }
         }, { passive: true });
+
         document.addEventListener('touchend', ()=>{ swipeTracking = false; }, { passive: true });
     }
 
@@ -1645,7 +2103,7 @@
     }
     function toggleFavorites() {
         showFavorites = !showFavorites;
-        document.getElementById('favorites-toggle').textContent = showFavorites ? t('allCurrencies') : t('favoritesToggle');
+        const favSpan=document.getElementById('sidebar-fav-label'); if(favSpan) favSpan.textContent = showFavorites ? t('sidebarFavAll') : t('sidebarFav');
         generateCurrencyDropdown();
     }
 
@@ -1679,7 +2137,7 @@
         isAutoUpdating=true; isPaused=false;
         document.getElementById('autoUpdateButton').classList.add('active');
         document.getElementById('pauseResumeButton').style.display='block';
-        document.getElementById('pauseResumeButton').textContent = t('pauseResume');
+        const ps=document.getElementById('sidebar-pause-label'); if(ps) ps.textContent=t('sidebarPause');
         currentIndex = list.findIndex(([id])=>id===currentCurrencyId);
         if (currentIndex===-1) currentIndex=0;
         updateWidget(list[currentIndex][0], true); startCountdown(sec);
@@ -1687,7 +2145,7 @@
     }
     function pauseResumeAutoUpdate() {
         isPaused=!isPaused;
-        document.getElementById('pauseResumeButton').textContent = isPaused ? t('resume') : t('pauseResume');
+        const psb=document.getElementById('sidebar-pause-label'); if(psb) psb.textContent=isPaused?t('sidebarResume'):t('sidebarPause');
         if (isPaused) { clearInterval(countdownInterval); document.getElementById('countdown-timer').style.display='none'; }
         else { const s=parseInt(document.getElementById('updateInterval').value); if(!isNaN(s)&&s>=1) startCountdown(s); }
     }
@@ -1774,6 +2232,7 @@
             if(pFill) pFill.style.width='0%';
             genBtn.disabled=false;
             copyBtn.style.display='inline-flex';
+        const ewrap=document.getElementById('export-img-btn'); if(ewrap) ewrap.closest('div').style.display='flex';
             showToast(t('sigGenSuccess'), 'success');
             signals.forEach((sig,i)=>{
                 const card=document.createElement('div');
@@ -1810,41 +2269,60 @@
         if (btnEl) btnEl.textContent = t('loginButton');
     }
     function updateAppUI() {
-        const el = (id)=>document.getElementById(id);
-        el('user-details-toggle').textContent = t('userDetailsToggle');
-        el('favorites-toggle').textContent = showFavorites ? t('allCurrencies') : t('favoritesToggle');
-        el('autoUpdateButton').textContent = t('autoUpdate');
-        el('language-toggle').textContent = t('languageToggle');
+        const el  = (id)=>document.getElementById(id);
+        const tx  = (id,key)=>{ const e=el(id); if(e) e.textContent=t(key); };
+
+        // ── Sidebar ──
+        tx('sidebar-subscription-label', 'sidebarSubscription');
+        tx('sidebar-copy-key-label',     'sidebarCopyKey');
+        tx('sidebar-fav-label',          showFavorites ? 'sidebarFavAll' : 'sidebarFav');
+        tx('sidebar-autoupdate-label',   'sidebarAutoUpdate');
+        tx('sidebar-toggle-label',       'sidebarToggle');
+        tx('sidebar-lang-label',         'sidebarLang');
+        tx('sidebar-stats-label',        'sidebarStats');
+        tx('sidebar-logout-label',       'sidebarLogout');
+        tx('sidebar-follow-label',       'sidebarFollow');
+        // pause/resume button
         const prb = el('pauseResumeButton');
-        if (prb && prb.style.display!=='none') prb.textContent = isPaused ? t('resume') : t('pauseResume');
+        const prbSpan = el('sidebar-pause-label');
+        if (prb && prb.style.display!=='none' && prbSpan)
+            prbSpan.textContent = isPaused ? t('sidebarResume') : t('sidebarPause');
+        // license key label
+        tx('license-key-label', 'licenseKeyLabel');
+
+        // ── Tabs ──
+        tx('tab-widget-label',  'tabWidget');
+        tx('tab-signals-label', 'tabSignals');
+
+        // ── Widget panel ──
+        tx('usage-title',           'usageTitle');
+        const gtEl = el('guide-toggle-text');
+        if (gtEl) gtEl.textContent = t('guideToggle');
+        tx('usage-select-duration', 'usageSelectDuration');
+        tx('usage-buy',             'usageBuy');
+        tx('usage-sell',            'usageSell');
+        const uep = el('usage-entry-point');
+        if (uep) uep.innerHTML = isEnglish
+            ? 'Open the trade only when <strong style="color:#FFD700;">Strong Buy</strong> or <strong style="color:#FFD700;">Strong Sell</strong> appears for best win rate'
+            : 'افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح';
+        tx('usage-buy-label',  'buyLabel');
+        tx('usage-sell-label', 'sellLabel');
+        tx('strong-buy-tag',   'strongBuyTag');
+        tx('strong-sell-tag',  'strongSellTag');
+        tx('buy-trend-text',   'buyTrend');
+        tx('sell-trend-text',  'sellTrend');
         // Currency badge
         const badge = el('currency-badge-text');
         if (badge) badge.textContent = currencyMap[currentCurrencyId] || '';
-        // Instructions
-        el('usage-title').textContent = t('usageTitle');
-        // Instructions toggle label
-        const gtEl = el('guide-toggle-text');
-        if (gtEl) gtEl.textContent = t('guideToggle');
-        el('usage-select-duration').textContent = t('usageSelectDuration');
-        el('usage-buy').textContent = t('usageBuy');
-        el('usage-sell').textContent = t('usageSell');
-        el('usage-entry-point').innerHTML = isEnglish
-            ? `Open the trade only when <strong style="color:#FFD700;">Strong Buy</strong> or <strong style="color:#FFD700;">Strong Sell</strong> appears for best win rate`
-            : `افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح`;
-        el('usage-buy-label').textContent = t('buyLabel');
-        el('usage-sell-label').textContent = t('sellLabel');
-        el('strong-buy-tag').textContent = t('strongBuyTag');
-        el('strong-sell-tag').textContent = t('strongSellTag');
-        el('buy-trend-text').textContent = t('buyTrend');
-        el('sell-trend-text').textContent = t('sellTrend');
-        // Other UI
-        el('license-key-label').textContent = t('licenseKeyLabel');
-        el('copy-key').textContent = t('copyKeyButton');
-        el('tab-widget-label').textContent = t('tabWidget');
-        el('tab-signals-label').textContent = t('tabSignals');
-        el('sig-subtitle-text').textContent = t('sigSubtitle');
-        el('gen-btn-text').textContent = t('genBtn');
-        el('copy-btn-text').textContent = t('copyBtn');
+
+        // ── Signal generator ──
+        tx('sig-subtitle-text', 'sigSubtitle');
+        tx('gen-btn-text',      'genBtn');
+        tx('copy-btn-text',     'copyBtn');
+
+        // ── RTL/LTR direction ──
+        document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
+        document.documentElement.setAttribute('dir',  isEnglish?'ltr':'rtl');
     }
 
     // ===================== INIT =====================
@@ -1875,6 +2353,482 @@
             if (e.key === 'Escape' && sidebarOpen) closeSidebar();
         });
     });
+    let mmCfg    = null;
+    let mmTrades = [];
+    let mmRisk   = 'mid';
+
+    const MM_RISK = {
+        safe: { pct: 0.02, stopPct: 0.15, label:'محافظ',  color:'#10b981' },
+        mid:  { pct: 0.05, stopPct: 0.25, label:'متوازن', color:'#f59e0b' },
+        high: { pct: 0.10, stopPct: 0.40, label:'جريء',   color:'#ef4444' },
+    };
+
+    function mmFmt(val) { return Math.max(1, Math.round(val)); }
+
+    function mmComputeBet(balance, streakLoss, streakWin) {
+        const profile = MM_RISK[mmCfg.riskLevel];
+        let pct = profile.pct;
+        if      (streakLoss >= 3)  pct *= 0.40;
+        else if (streakLoss === 2) pct *= 0.60;
+        else if (streakLoss === 1) pct *= 0.80;
+        else if (streakWin  >= 3)  pct *= 1.20;
+        else if (streakWin  >= 2)  pct *= 1.10;
+        return mmFmt(balance * pct);
+    }
+
+    function mmSetRisk(level) {
+        mmRisk = level;
+        ['safe','mid','high'].forEach(l => {
+            const btn = document.getElementById(`mm-risk-${l}`);
+            if (!btn) return;
+            btn.classList.remove('active','active-safe','active-mid','active-high');
+            btn.style.borderColor = ''; btn.style.background = '';
+        });
+        const btn = document.getElementById(`mm-risk-${level}`);
+        if (btn) { btn.classList.add('active'); btn.style.borderColor = MM_RISK[level].color; btn.style.background = MM_RISK[level].color+'18'; }
+        mmUpdatePreview();
+    }
+
+    function mmGetState() {
+        const { capital, payout, riskLevel } = mmCfg;
+        const b = payout - 1;
+        const profile = MM_RISK[riskLevel];
+        let balance = capital;
+        const history = [capital];
+        const tradeLog = [];
+        let streakLoss=0, streakWin=0, stopped=false;
+        for (let i=0; i<mmTrades.length; i++) {
+            if (stopped) break;
+            const bet = mmComputeBet(balance, streakLoss, streakWin);
+            const isWin = mmTrades[i];
+            const profit = isWin ? parseFloat((bet*b).toFixed(2)) : -bet;
+            balance = parseFloat((balance+profit).toFixed(2));
+            if (isWin){streakWin++;streakLoss=0;}else{streakLoss++;streakWin=0;}
+            history.push(balance);
+            tradeLog.push({num:i+1, win:isWin, bet, profit, balance});
+            if (balance <= capital*(1-profile.stopPct)) stopped=true;
+        }
+        const done=tradeLog.length, wonCount=tradeLog.filter(t=>t.win).length, lostCount=done-wonCount;
+        const nextBet = !stopped ? mmComputeBet(balance, streakLoss, streakWin) : 0;
+        const ifWin   = parseFloat((balance + nextBet*b).toFixed(2));
+        const ifLose  = parseFloat((balance - nextBet).toFixed(2));
+        const status  = stopped ? 'stopped' : 'in_progress';
+        return { balance, history, tradeLog, nextBet, wonCount, lostCount, done,
+            winRate: done>0?Math.round(wonCount/done*100):0,
+            pnl: parseFloat((balance-capital).toFixed(2)),
+            pnlPct: ((balance-capital)/capital*100).toFixed(1),
+            ifWin, ifLose, stopped, status, streakLoss, streakWin,
+            stopLevel: parseFloat((capital*(1-profile.stopPct)).toFixed(2)) };
+    }
+
+    function mmUpdatePreview() {
+        const capital = parseFloat(document.getElementById('mm-capital')?.value)||500;
+        const payout  = parseFloat(document.getElementById('mm-payout')?.value)||1.82;
+        const hint    = document.getElementById('mm-payout-hint');
+        const box     = document.getElementById('mm-preview-box');
+        if (!box) return;
+        if (hint) hint.textContent = `= ربح +${Math.round((payout-1)*100)}% على كل صفقة رابحة`;
+        const profile = MM_RISK[mmRisk];
+        const b = payout-1;
+        const firstBet = mmFmt(capital*profile.pct);
+        const profitOnWin = parseFloat((firstBet*b).toFixed(2));
+        const stopAt = mmFmt(capital*(1-profile.stopPct));
+        const simWinRate=0.55, simRuns=300;
+        let totalEnd=0, profitable=0;
+        for(let r=0;r<simRuns;r++){
+            let bal=capital,sl=0,sw=0;
+            for(let t=0;t<20;t++){
+                const bet=mmFmt(bal*profile.pct*(sl>=2?0.6:sl===1?0.8:sw>=2?1.1:1));
+                const win=Math.random()<simWinRate;
+                bal=parseFloat((bal+(win?bet*b:-bet)).toFixed(2));
+                if(win){sw++;sl=0;}else{sl++;sw=0;}
+                if(bal<=capital*(1-profile.stopPct)) break;
+            }
+            totalEnd+=bal; if(bal>capital) profitable++;
+        }
+        const profChance=Math.round(profitable/simRuns*100);
+        box.innerHTML=`
+        <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;margin-bottom:12px;">
+            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:12px;color:#94a3b8;">مبلغ أول صفقة</span>
+                <span style="font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:800;color:#f59e0b;">$${firstBet}</span>
+            </div>
+            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:12px;color:#94a3b8;">لو ربحت الصفقة تكسب</span>
+                <span style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#10b981;">+$${profitOnWin}</span>
+            </div>
+            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:12px;color:#94a3b8;">لو خسرت الصفقة تخسر</span>
+                <span style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#ef4444;">-$${firstBet}</span>
+            </div>
+            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:12px;color:#94a3b8;">حماية تشتغل لو وصل رصيدك لـ</span>
+                <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#f87171;">$${stopAt}</span>
+            </div>
+            <div style="padding:13px 16px;display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:12px;color:#94a3b8;">فرصة الربح (300 محاكاة)</span>
+                <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:${profChance>=50?'#10b981':'#f59e0b'};">${profChance}%</span>
+            </div>
+        </div>
+        <div style="background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.12);border-radius:10px;padding:10px 14px;font-size:11px;color:#64748b;line-height:1.7;">
+            💡 النظام يخفض مبلغ الصفقة تلقائياً بعد كل خسارة ويرفعه بعد الفوز. مستوى <strong style="color:${profile.color};">${profile.label}</strong> = ${Math.round(profile.pct*100)}% من رصيدك/صفقة.
+        </div>`;
+    }
+
+    // ── localStorage bridge for Tampermonkey ──
+    function mmSync() {
+        if (!mmCfg) { localStorage.removeItem('ks_mm'); return; }
+        const st = mmGetState();
+        localStorage.setItem('ks_mm', JSON.stringify({
+            active:   st.status === 'in_progress',
+            bet:      st.nextBet,
+            balance:  st.balance,
+            pnl:      st.pnl,
+            payout:   mmCfg.payout,
+            tradeNum: st.done + 1,
+            status:   st.status,
+            ts:       Date.now()
+        }));
+    }
+
+    function mmStart() {
+        const capital=parseFloat(document.getElementById('mm-capital').value);
+        const payout=parseFloat(document.getElementById('mm-payout').value);
+        if(!capital||capital<1){showToast('أدخل رأس مال صحيح (1$ على الأقل)','error');return;}
+        if(!payout||payout<=1){showToast('نسبة العائد يجب أن تكون أكبر من 1','error');return;}
+        mmCfg={capital,payout,riskLevel:mmRisk};
+        mmTrades=[];
+        document.getElementById('mm-config-section').style.display='none';
+        document.getElementById('mm-session').style.display='block';
+        document.getElementById('mm-cycle-complete').style.display='none';
+        document.getElementById('mm-tbody').innerHTML='';
+        document.getElementById('mm-table-wrap').classList.add('hidden');
+        document.getElementById('mm-empty').style.display='block';
+        const profile=MM_RISK[mmRisk];
+        const profPct=Math.round((payout-1)*100);
+        document.getElementById('mm-summary').innerHTML=`
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">💰 رأس المال: <strong style="color:#f1f5f9;">$${capital}</strong></span>
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">📈 ربح/صفقة: <strong style="color:#10b981;">+${profPct}%</strong></span>
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">⚖️ المخاطرة: <strong style="color:${profile.color};">${profile.label}</strong></span>
+            <span style="background:rgba(239,68,68,0.1);border-radius:20px;padding:4px 12px;font-size:11px;color:#f87171;">🛡️ حماية: $${mmFmt(capital*(1-profile.stopPct))}</span>`;
+        mmBuildDots(15);
+        mmSync();
+        mmRender(); mmDrawChart();
+        // Check daily target
+        const _st = mmGetState();
+        if (mmCheckDailyTarget(_st)) return;
+        // Auto-save on session complete
+        if (_st.status !== 'in_progress') mmSaveSession(_st);
+    }
+
+    function mmRecord(isWin) {
+        if(!mmCfg) return;
+        const st=mmGetState();
+        if(st.status!=='in_progress') return;
+        mmTrades.push(isWin);
+        if(mmTrades.length>=document.getElementById('mm-seq-dots').children.length) mmAddDots(5);
+        mmSync();
+        mmRender(); mmDrawChart();
+    }
+
+    function mmReset() {
+        mmCfg=null; mmTrades=[];
+        mmSync();
+        document.getElementById('mm-config-section').style.display='block';
+        document.getElementById('mm-session').style.display='none';
+        document.getElementById('mm-tbody').innerHTML='';
+        document.getElementById('mm-table-wrap').classList.add('hidden');
+        document.getElementById('mm-empty').style.display='block';
+        document.getElementById('mm-cycle-complete').style.display='none';
+    }
+
+    function mmBuildDots(count){
+        const c=document.getElementById('mm-seq-dots'); c.innerHTML='';
+        for(let i=1;i<=count;i++){const d=document.createElement('div');d.className='mm-seq-dot'+(i===1?' cur':'');d.id=`mmdot${i}`;d.textContent=i;c.appendChild(d);}
+    }
+    function mmAddDots(extra){
+        const c=document.getElementById('mm-seq-dots'); const cur=c.children.length;
+        for(let i=cur+1;i<=cur+extra;i++){const d=document.createElement('div');d.className='mm-seq-dot';d.id=`mmdot${i}`;d.textContent=i;c.appendChild(d);}
+    }
+
+    function mmRender(){
+        if(!mmCfg) return;
+        const st=mmGetState();
+        const {capital,payout}=mmCfg; const b=payout-1; const done=st.done;
+        document.getElementById('mm-stat-balance').textContent=`$${st.balance}`;
+        const pnlEl=document.getElementById('mm-stat-pnl');
+        pnlEl.textContent=`${st.pnl>=0?'+':''}$${st.pnl} (${st.pnl>=0?'+':''}${st.pnlPct}%)`;
+        pnlEl.className=`mm-stat-sub ${st.pnl>=0?'pos':'neg'}`;
+        const estProfit=parseFloat((st.balance*(b*0.55-0.45)).toFixed(2));
+        document.getElementById('mm-stat-expected').textContent=estProfit>0?`+$${mmFmt(estProfit)}`:'—';
+        document.getElementById('mm-stat-ratio').textContent=estProfit>0?`ربح متوقع إضافي`:'لا يوجد ضمان';
+        document.getElementById('mm-stat-wins').textContent=st.wonCount;
+        document.getElementById('mm-stat-losses').textContent=st.lostCount;
+        document.getElementById('mm-stat-winpct').textContent=`نسبة الفوز ${st.winRate}%`;
+        document.getElementById('mm-stat-losspct').textContent=`نسبة الخسارة ${done>0?Math.round(st.lostCount/done*100):0}%`;
+        document.getElementById('mm-trade-num').textContent=!st.stopped?done+1:'—';
+        const bet=st.nextBet;
+        document.getElementById('mm-trade-amount').textContent=`$${bet}`;
+        const pctOfBal=st.balance>0?((bet/st.balance)*100).toFixed(1):0;
+        document.getElementById('mm-pct-note').textContent=bet>0?`${pctOfBal}% من رصيدك الحالي`:'';
+        document.getElementById('mm-if-win').textContent=`$${st.ifWin}`;
+        document.getElementById('mm-if-lose').textContent=`$${st.ifLose}`;
+        const profitAmt=parseFloat((bet*b).toFixed(2));
+        document.getElementById('mm-profit-note').textContent=bet>0?`+$${profitAmt} (+${Math.round(b*100)}%)`:'';
+        document.getElementById('mm-loss-note').textContent=bet>0?`-$${bet}`:'';
+        const streakEl=document.getElementById('mm-streak');
+        if(streakEl){
+            if(st.streakLoss>=2){streakEl.textContent=`⚠️ ${st.streakLoss} خسائر متتالية — مبلغ الصفقة مخفَّض للحماية`;streakEl.style.color='#f87171';}
+            else if(st.streakWin>=2){streakEl.textContent=`🔥 ${st.streakWin} انتصارات متتالية — مبلغ الصفقة مرفوع للاستفادة`;streakEl.style.color='#34d399';}
+            else streakEl.textContent='';
+        }
+        document.getElementById('mm-progress-text').textContent=`${done} صفقة`;
+        document.getElementById('mm-progress-fill').style.width=`${Math.min(100,done/20*100)}%`;
+        document.getElementById('mm-win-progress-text').textContent=`${st.wonCount} فوز`;
+        document.getElementById('mm-win-fill').style.width=`${done>0?st.winRate:0}%`;
+        document.getElementById('mm-ring-fill').style.strokeDashoffset=263.89-(st.winRate/100)*263.89;
+        document.getElementById('mm-ring-val').textContent=`${st.winRate}%`;
+        const totalDots=document.getElementById('mm-seq-dots').children.length;
+        for(let i=1;i<=totalDots;i++){const d=document.getElementById(`mmdot${i}`);if(!d)continue;d.className='mm-seq-dot';if(i<=done)d.classList.add(mmTrades[i-1]?'win':'lose');else if(i===done+1&&!st.stopped)d.classList.add('cur');}
+        document.getElementById('mm-btn-win').disabled=st.status!=='in_progress';
+        document.getElementById('mm-btn-lose').disabled=st.status!=='in_progress';
+        if(st.tradeLog.length>0){
+            document.getElementById('mm-empty').style.display='none';
+            document.getElementById('mm-table-wrap').classList.remove('hidden');
+            const tbody=document.getElementById('mm-tbody');
+            if(st.tradeLog.length>tbody.children.length){
+                const t=st.tradeLog[st.tradeLog.length-1];
+                const tr=document.createElement('tr'); tr.className='mm-table-row';
+                const profPct=Math.round(b*100);
+                tr.innerHTML=`<td class="mm-td" style="text-align:right;color:#64748b;">${t.num}</td><td class="mm-td" style="text-align:right;"><span class="mm-badge ${t.win?'win':'lose'}">${t.win?'✅ ربح':'❌ خسارة'}</span></td><td class="mm-td" style="text-align:right;font-weight:700;">$${t.bet}</td><td class="mm-td ${t.win?'mm-pos':'mm-neg'}" style="text-align:right;">${t.win?`+$${parseFloat((t.bet*b).toFixed(2))} (+${profPct}%)`:`-$${t.bet}`}</td><td class="mm-td" style="text-align:right;">$${t.balance}</td><td class="mm-td" style="text-align:right;color:#64748b;">${done>0?Math.round(st.wonCount/done*100):0}%</td>`;
+                tbody.insertBefore(tr, tbody.firstChild);
+            }
+        }
+        if(st.status!=='in_progress') mmShowComplete(st);
+    }
+
+    function mmShowComplete(st){
+        const el=document.getElementById('mm-cycle-complete'); el.style.display='block';
+        if(st.status==='stopped'){
+            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.08));border:1px solid rgba(245,158,11,0.3);text-align:center;';
+            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🛑</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#f59e0b;font-weight:700;margin-bottom:6px;">تفعّل نظام الحماية</div><div style="font-size:13px;color:#94a3b8;">وصل رصيدك للحد الأدنى — تم الإيقاف لحماية رأس مالك</div><div style="font-size:1.1rem;font-family:'Orbitron',sans-serif;color:#f59e0b;margin-top:8px;">الرصيد المتبقي: $${st.balance}</div>`;
+        } else if(st.pnl>0){
+            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.08));border:1px solid rgba(16,185,129,0.3);text-align:center;';
+            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🎉</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#10b981;font-weight:700;margin-bottom:6px;">أنهيت الجلسة برصيد أعلى!</div><div style="font-size:1.2rem;font-family:'Orbitron',sans-serif;color:#10b981;margin:8px 0;">+$${st.pnl} (+${st.pnlPct}%)</div><div style="font-size:13px;color:#94a3b8;">من $${mmCfg.capital} إلى $${st.balance}</div>`;
+            const colors=['#10b981','#3b82f6','#8b5cf6','#f59e0b'];const wrap=document.createElement('div');wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+            for(let i=0;i<50;i++){const c=document.createElement('div');const col=colors[Math.floor(Math.random()*colors.length)];const sz=Math.random()*8+4;c.style.cssText=`position:absolute;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${col};border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${Math.random()*2+2}s ease-in ${Math.random()}s forwards;`;wrap.appendChild(c);}
+            document.body.appendChild(wrap);setTimeout(()=>wrap.remove(),4000);
+        } else {
+            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);text-align:center;';
+            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">📊</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#ef4444;font-weight:700;margin-bottom:6px;">انتهت الجلسة</div><div style="font-size:1.1rem;font-family:'Orbitron',sans-serif;color:#ef4444;">الرصيد النهائي: $${st.balance}</div><div style="font-size:12px;color:#64748b;margin-top:6px;">حاول مرة أخرى أو غيّر مستوى المخاطرة</div>`;
+        }
+    }
+
+    function mmDrawChart(){
+        const canvas=document.getElementById('mm-chart');
+        if(!canvas||!mmCfg) return;
+        const ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
+        const rect=canvas.parentElement.getBoundingClientRect();
+        if(!rect.width) return;
+        canvas.width=rect.width*dpr; canvas.height=rect.height*dpr; ctx.scale(dpr,dpr);
+        const W=rect.width,H=rect.height,pad={top:20,right:12,bottom:30,left:50};
+        const plotW=W-pad.left-pad.right,plotH=H-pad.top-pad.bottom;
+        ctx.clearRect(0,0,W,H);
+        const st=mmGetState(),data=st.history;
+        if(data.length<2){ctx.fillStyle='#475569';ctx.font='12px Cairo';ctx.textAlign='center';ctx.fillText('يظهر الرسم بعد أول صفقة',W/2,H/2);return;}
+        const stopLine=mmCfg.capital*(1-MM_RISK[mmCfg.riskLevel].stopPct);
+        const minV=Math.min(...data,stopLine)*0.97,maxV=Math.max(...data)*1.03,range=maxV-minV||1;
+        const xStep=plotW/(data.length-1),toX=i=>pad.left+i*xStep,toY=v=>pad.top+plotH-((v-minV)/range)*plotH;
+        ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
+        for(let i=0;i<=4;i++){const y=pad.top+(plotH/4)*i;ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();ctx.fillStyle='#475569';ctx.font='9px Orbitron';ctx.textAlign='right';ctx.fillText('$'+(maxV-(range/4)*i).toFixed(0),pad.left-3,y+4);}
+        ctx.textAlign='center';ctx.fillStyle='#475569';ctx.font='9px Orbitron';
+        for(let i=0;i<data.length;i++) ctx.fillText(i,toX(i),H-pad.bottom+12);
+        const iy=toY(mmCfg.capital);ctx.strokeStyle='rgba(245,158,11,0.3)';ctx.setLineDash([5,4]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.left,iy);ctx.lineTo(W-pad.right,iy);ctx.stroke();
+        ctx.strokeStyle='rgba(239,68,68,0.35)';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(pad.left,toY(stopLine));ctx.lineTo(W-pad.right,toY(stopLine));ctx.stroke();ctx.setLineDash([]);
+        const last=data[data.length-1],isP=last>=mmCfg.capital;
+        const grad=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);grad.addColorStop(0,isP?'rgba(16,185,129,0.18)':'rgba(239,68,68,0.14)');grad.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.lineTo(toX(data.length-1),pad.top+plotH);ctx.lineTo(toX(0),pad.top+plotH);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+        ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.strokeStyle=isP?'#10b981':'#ef4444';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
+        for(let i=0;i<data.length;i++){const col=i===0?'#3b82f6':(mmTrades[i-1]?'#10b981':'#ef4444');ctx.beginPath();ctx.arc(toX(i),toY(data[i]),4,0,Math.PI*2);ctx.fillStyle=col+'66';ctx.fill();ctx.beginPath();ctx.arc(toX(i),toY(data[i]),2.5,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();}
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+        ['mm-capital','mm-payout'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',()=>setTimeout(mmUpdatePreview,150));});
+        setTimeout(()=>{mmSetRisk('mid');mmUpdatePreview();},600);
+    });
+    window.addEventListener('resize',()=>{if(mmCfg)mmDrawChart();});
+    // ===================== END MONEY MANAGEMENT =====================
+
+    // ===================== USER STATS =====================
+    function getUserStats() {
+        const raw = localStorage.getItem('ks_user_stats');
+        return raw ? JSON.parse(raw) : { sessions:[], totalPnl:0 };
+    }
+    function saveUserStats(stats) { localStorage.setItem('ks_user_stats', JSON.stringify(stats)); }
+    function recordSessionToStats(pnl, tradeCount, wonCount, bestStreak, worstStreak) {
+        const stats = getUserStats();
+        stats.sessions.push({ pnl, tradeCount, wonCount, bestStreak:bestStreak||0, worstStreak:worstStreak||0, date:new Date().toLocaleDateString('ar-EG'), ts:Date.now() });
+        stats.totalPnl = parseFloat((stats.totalPnl + pnl).toFixed(2));
+        saveUserStats(stats);
+    }
+
+    function openStatsModal() {
+        const modal = document.getElementById('stats-modal');
+        if (!modal) return;
+        const stats = getUserStats();
+        const sessions = stats.sessions;
+        const totalPnl = stats.totalPnl;
+        const allTrades= sessions.reduce((a,s)=>a+(s.tradeCount||0),0);
+        const allWins  = sessions.reduce((a,s)=>a+(s.wonCount||0),0);
+        const winRate  = allTrades>0?Math.round(allWins/allTrades*100):0;
+        const avgProfit= sessions.length>0?(totalPnl/sessions.length).toFixed(2):0;
+        const bestStreak  = sessions.reduce((m,s)=>Math.max(m,s.bestStreak||0),0);
+        const worstStreak = sessions.reduce((m,s)=>Math.max(m,s.worstStreak||0),0);
+        const tx2=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+        tx2('st-total-sessions', sessions.length);
+        const pe=document.getElementById('st-total-pnl');
+        if(pe){pe.textContent=`${totalPnl>=0?'+':''}$${totalPnl}`;pe.style.color=totalPnl>=0?'#10b981':'#ef4444';}
+        tx2('st-win-rate', winRate+'%');
+        tx2('st-best-streak', bestStreak);
+        tx2('st-worst-streak', worstStreak);
+        const avgE=document.getElementById('st-avg-profit');
+        if(avgE){avgE.textContent=`${avgProfit>=0?'+':''}$${avgProfit}`;avgE.style.color=avgProfit>=0?'#8b5cf6':'#ef4444';}
+        const recentEl=document.getElementById('st-recent-sessions');
+        if(recentEl){
+            if(!sessions.length){recentEl.textContent='لا توجد بيانات';}
+            else{
+                recentEl.innerHTML=sessions.slice(-5).reverse().map(s=>`
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <span style="color:#64748b;font-size:11px;">${s.date}</span>
+                    <span style="font-size:11px;">${s.tradeCount||0} صفقة (${s.wonCount||0} ✅)</span>
+                    <span style="font-weight:700;color:${s.pnl>=0?'#10b981':'#ef4444'};">${s.pnl>=0?'+':''}$${s.pnl}</span>
+                </div>`).join('');
+            }
+        }
+        modal.classList.add('open');
+    }
+    function closeStatsModal() { document.getElementById('stats-modal')?.classList.remove('open'); }
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ closeStatsModal(); } });
+
+    // ===================== MM SESSION HISTORY =====================
+    function mmGetStreaks(trades) {
+        let best=0,worst=0,cur=0,curL=0;
+        trades.forEach(w=>{ if(w){cur++;curL=0;best=Math.max(best,cur);}else{curL++;cur=0;worst=Math.max(worst,curL);} });
+        return {best,worst};
+    }
+
+    function mmSaveSession(st) {
+        const key = 'ks_mm_history';
+        const raw = localStorage.getItem(key);
+        const history = raw ? JSON.parse(raw) : [];
+        const profile = mmCfg ? MM_RISK[mmCfg.riskLevel] : {};
+        const streaks = mmGetStreaks(mmTrades);
+        history.unshift({
+            date:st.done?new Date().toLocaleDateString('ar-EG'):'',
+            capital:mmCfg?.capital||0, endBal:st.balance, pnl:st.pnl, pnlPct:st.pnlPct,
+            trades:st.done, wins:st.wonCount, losses:st.lostCount, winRate:st.winRate,
+            risk:profile?.label||'—', status:st.status,
+            bestStreak:streaks.best, worstStreak:streaks.worst, ts:Date.now()
+        });
+        localStorage.setItem(key, JSON.stringify(history.slice(0,30)));
+        mmRenderHistory();
+        recordSessionToStats(st.pnl, st.done, st.wonCount, streaks.best, streaks.worst);
+    }
+
+    function mmRenderHistory() {
+        const el = document.getElementById('mm-history-list');
+        if (!el) return;
+        const raw = localStorage.getItem('ks_mm_history');
+        const history = raw ? JSON.parse(raw) : [];
+        if (!history.length) { el.innerHTML='<div style="text-align:center;padding:20px;color:#475569;font-size:12px;">لا توجد جلسات محفوظة بعد</div>'; return; }
+        el.innerHTML = history.map(s=>`
+            <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.05);border-right:3px solid ${s.pnl>=0?'#10b981':'#ef4444'};border-radius:10px;padding:12px;margin-bottom:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-size:11px;color:#64748b;">${s.date} • ${s.risk}</span>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:800;color:${s.pnl>=0?'#10b981':'#ef4444'};">${s.pnl>=0?'+':''}$${s.pnl}</span>
+                </div>
+                <div style="display:flex;gap:10px;font-size:11px;color:#94a3b8;flex-wrap:wrap;">
+                    <span>💰 $${s.capital}→$${s.endBal}</span>
+                    <span>📊 ${s.trades} صفقة</span>
+                    <span>✅${s.wins}/❌${s.losses}</span>
+                    <span>🎯${s.winRate}%</span>
+                    ${s.bestStreak>1?`<span style="color:#34D399;">🔥سلسلة:${s.bestStreak}</span>`:''}
+                </div>
+            </div>`).join('');
+    }
+
+    function mmClearHistory() {
+        if (!confirm('مسح كل سجل الجلسات؟')) return;
+        localStorage.removeItem('ks_mm_history');
+        localStorage.removeItem('ks_user_stats');
+        mmRenderHistory();
+        showToast('تم مسح السجل','success');
+    }
+
+    // ===================== MM DAILY TARGET =====================
+    function mmCheckDailyTarget(st) {
+        const inp = document.getElementById('mm-daily-target');
+        if (!inp || !inp.value) return false;
+        const target = parseFloat(inp.value);
+        if (isNaN(target)||target<=0) return false;
+        if (st.pnl >= target) {
+            showToast('🎯 وصلت لهدف الربح اليومي +$'+target+' !','success');
+            return true;
+        }
+        return false;
+    }
+
+    // ===================== EXPORT SIGNALS AS IMAGE =====================
+    function exportSignalsAsImage() {
+        const grid = document.getElementById('trades-grid');
+        if (!grid||!grid.children.length) { showToast('لا توجد إشارات للتصدير','warning'); return; }
+        const items = [...grid.children];
+        const W=400, CARD=68, PAD=14;
+        const canvas=document.createElement('canvas');
+        canvas.width=W; canvas.height=PAD*2+items.length*(CARD+6)+56;
+        const ctx=canvas.getContext('2d');
+        ctx.fillStyle='#0b0f19'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle='#FFD700'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center';
+        ctx.fillText('👑 KingSignals Pro', W/2, 26);
+        ctx.fillStyle='#64748b'; ctx.font='11px sans-serif';
+        ctx.fillText(new Date().toLocaleString('ar-EG'), W/2, 44);
+        let y=56;
+        items.forEach(card=>{
+            const timeT = card.querySelector('.trade-time')?.textContent.replace(/[^\d:]/g,'').trim()||'';
+            const pairT = card.querySelector('.pair-name')?.textContent.trim()||'';
+            const dirT  = card.querySelector('.direction-badge')?.textContent.replace(/[^\w]/g,'').trim().toUpperCase()||'';
+            const isCall= dirT.includes('CALL');
+            ctx.fillStyle = isCall?'rgba(16,185,129,0.12)':'rgba(239,68,68,0.12)';
+            ctx.strokeStyle= isCall?'#10b981':'#ef4444';
+            ctx.lineWidth=1;
+            ctx.beginPath(); ctx.roundRect(PAD,y,W-PAD*2,CARD-4,8); ctx.fill(); ctx.stroke();
+            ctx.fillStyle='#94a3b8'; ctx.font='10px sans-serif'; ctx.textAlign='right';
+            ctx.fillText(timeT, W-PAD*2, y+20);
+            ctx.fillStyle='#f1f5f9'; ctx.font='bold 12px sans-serif';
+            ctx.fillText(pairT, W-PAD*2, y+40);
+            ctx.fillStyle=isCall?'#10b981':'#ef4444'; ctx.font='bold 13px sans-serif'; ctx.textAlign='left';
+            ctx.fillText(isCall?'▲ CALL':'▼ PUT', PAD*2, y+34);
+            y+=CARD+2;
+        });
+        const a=document.createElement('a'); a.download='KingSignals_'+Date.now()+'.png'; a.href=canvas.toDataURL('image/png'); a.click();
+        showToast('تم تصدير الإشارات كصورة ✅','success');
+    }
+
+    // ===================== INIT ALL NEW FEATURES =====================
+    document.addEventListener('DOMContentLoaded',()=>{
+        mmRenderHistory();
+    });
+
+    // ╔══════════════════════════════════════════════════╗
+    // ║          KING INDICATOR — Real Technical         ║
+    // ║  Data: Finnhub free API | Indicators: RSI,MACD,  ║
+    // ║         EMA, Bollinger Bands, Stochastic         ║
+    // ╚══════════════════════════════════════════════════╝
+
+
+
+    // ===================== END NEW FEATURES =====================
+
     </script>
 
     <!-- Anti-debugging protection -->
