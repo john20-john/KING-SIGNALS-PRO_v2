@@ -320,6 +320,60 @@
             border-radius: 8px; color: #fff; text-align: center; font-size: 13px;
         }
 
+        /* ===================== SIDEBAR SOCIAL LINKS ===================== */
+        .sidebar-social {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .sidebar-social-title {
+            font-size: 11px;
+            color: #444;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .sidebar-social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.25s;
+            border: 1px solid transparent;
+        }
+        .sidebar-social-link i:first-child { font-size: 16px; }
+        .sidebar-social-link span { flex: 1; font-weight: 600; }
+        .sidebar-social-ext { font-size: 9px; opacity: 0.4; }
+        .sidebar-social-link.telegram {
+            background: rgba(41, 182, 246, 0.06);
+            border-color: rgba(41, 182, 246, 0.2);
+            color: #54a7d4;
+        }
+        .sidebar-social-link.telegram:hover {
+            background: rgba(41, 182, 246, 0.14);
+            border-color: rgba(41, 182, 246, 0.5);
+            color: #7ec8e8;
+            transform: translateX(-3px);
+        }
+        .sidebar-social-link.youtube {
+            background: rgba(255, 65, 54, 0.06);
+            border-color: rgba(255, 65, 54, 0.2);
+            color: #c9524a;
+        }
+        .sidebar-social-link.youtube:hover {
+            background: rgba(255, 65, 54, 0.14);
+            border-color: rgba(255, 65, 54, 0.5);
+            color: #e87a74;
+            transform: translateX(-3px);
+        }
+
         /* ===================== MAIN WIDGET PANEL ===================== */
         .widget-container {
             width: 100%; max-width: 317px; height: 467px;
@@ -606,6 +660,57 @@
         .dir-call { background: rgba(0,230,118,0.1); color: var(--call-color); border: 1px solid var(--call-color); }
         .dir-put { background: rgba(255,23,68,0.1); color: var(--put-color); border: 1px solid var(--put-color); }
 
+        /* ===================== GUIDE ACCORDION ===================== */
+        .guide-accordion {
+            margin: 8px 0 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0,255,0,0.15);
+        }
+        .guide-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            background: rgba(0,255,0,0.04);
+            border: none;
+            color: #aaa;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            text-align: right;
+        }
+        .guide-toggle:hover {
+            background: rgba(0,255,0,0.09);
+            color: #ccc;
+        }
+        .guide-toggle-icon { font-size: 15px; }
+        .guide-toggle span:nth-child(2) { flex: 1; }
+        .guide-chevron {
+            font-size: 10px;
+            color: rgba(0,255,0,0.5);
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .guide-chevron.open { transform: rotate(180deg); }
+        .guide-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.3s ease,
+                        opacity 0.3s ease;
+            opacity: 0;
+            padding: 0 12px;
+            background: rgba(0,0,0,0.2);
+        }
+        .guide-body.open {
+            max-height: 500px;
+            opacity: 1;
+            padding: 12px;
+        }
+
         /* ===================== COUNTDOWN ===================== */
         .countdown-timer {
             margin-top: 10px; text-align: center;
@@ -714,6 +819,21 @@
             <button class="sidebar-btn" id="pauseResumeButton" onclick="pauseResumeAutoUpdate()" style="display:none;">إيقاف مؤقت</button>
             <button class="sidebar-btn" id="language-toggle" onclick="toggleLanguage()">Switch to English</button>
             <button class="sidebar-btn" onclick="logout()" style="margin-top:16px; border-color:rgba(248,113,113,0.3); color:#F87171;">تسجيل الخروج</button>
+
+            <!-- Social Links -->
+            <div class="sidebar-social">
+                <p class="sidebar-social-title">تابعنا</p>
+                <a href="https://t.me/KingTraDe28" target="_blank" rel="noopener noreferrer" class="sidebar-social-link telegram">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                    <i class="fas fa-external-link-alt sidebar-social-ext"></i>
+                </a>
+                <a href="https://www.youtube.com/@king_trading_Official_Channel" target="_blank" rel="noopener noreferrer" class="sidebar-social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                    <i class="fas fa-external-link-alt sidebar-social-ext"></i>
+                </a>
+            </div>
         </div>
 
         <!-- Main content -->
@@ -737,62 +857,66 @@
             <!-- ---- PANEL 1: Widget ---- -->
             <div id="panel-widget" class="mode-panel glass-card active" style="padding:20px;">
                 <!-- Currency Badge -->
-                <div style="text-align:center; margin-bottom:12px;">
+                <div style="text-align:center; margin-bottom:10px;">
                     <div class="currency-badge" id="current-currency">
                         <span class="badge-dot"></span>
                         <span id="currency-badge-text">USD/JPY</span>
                     </div>
                 </div>
 
-                <!-- Instructions -->
-                <div id="usage-instructions" class="instructions-box">
-                    <div class="instr-header" id="usage-title">دليل القراءة</div>
-
-                    <div class="instr-tip" id="usage-select-duration">
-                        اختر مدة الصفقة المناسبة وانتظر حتى تظهر الإشارة بوضوح قبل الدخول
-                    </div>
-
-                    <div class="instr-signals-row">
-                        <!-- BUY card -->
-                        <div class="signal-card buy">
-                            <div class="sig-arrow">↑</div>
-                            <div class="sig-name" id="usage-buy-label">CALL · شراء</div>
-                            <div class="sig-details">
-                                <div class="sig-detail-row">
-                                    <span class="sig-tag" id="strong-buy-tag">Strong Buy</span>
-                                    <span class="sig-sep">|</span>
-                                    <span id="usage-buy">سهم أخضر</span>
+                <!-- Collapsible Instructions -->
+                <div class="guide-accordion">
+                    <button class="guide-toggle" onclick="toggleGuide()" id="guide-toggle-btn" aria-expanded="false">
+                        <span class="guide-toggle-icon">📋</span>
+                        <span id="guide-toggle-text">تعليمات الدخول</span>
+                        <span class="guide-chevron" id="guide-chevron">▼</span>
+                    </button>
+                    <div class="guide-body" id="guide-body">
+                        <div id="usage-instructions" class="instructions-box">
+                            <div class="instr-tip" id="usage-select-duration">
+                                اختر مدة الصفقة المناسبة وانتظر حتى تظهر الإشارة بوضوح قبل الدخول
+                            </div>
+                            <div class="instr-signals-row">
+                                <div class="signal-card buy">
+                                    <div class="sig-arrow">↑</div>
+                                    <div class="sig-name" id="usage-buy-label">CALL · شراء</div>
+                                    <div class="sig-details">
+                                        <div class="sig-detail-row">
+                                            <span class="sig-tag" id="strong-buy-tag">Strong Buy</span>
+                                            <span class="sig-sep">|</span>
+                                            <span id="usage-buy">سهم أخضر</span>
+                                        </div>
+                                        <div class="sig-detail-row">
+                                            <span>📈</span>
+                                            <span id="buy-trend-text">اتجاه صاعد</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="sig-detail-row" id="buy-direction-row">
-                                    <span>📈</span>
-                                    <span id="buy-trend-text">اتجاه صاعد</span>
+                                <div class="signal-card sell">
+                                    <div class="sig-arrow">↓</div>
+                                    <div class="sig-name" id="usage-sell-label">PUT · بيع</div>
+                                    <div class="sig-details">
+                                        <div class="sig-detail-row">
+                                            <span class="sig-tag" id="strong-sell-tag">Strong Sell</span>
+                                            <span class="sig-sep">|</span>
+                                            <span id="usage-sell">سهم أحمر</span>
+                                        </div>
+                                        <div class="sig-detail-row">
+                                            <span>📉</span>
+                                            <span id="sell-trend-text">اتجاه هابط</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- SELL card -->
-                        <div class="signal-card sell">
-                            <div class="sig-arrow">↓</div>
-                            <div class="sig-name" id="usage-sell-label">PUT · بيع</div>
-                            <div class="sig-details">
-                                <div class="sig-detail-row">
-                                    <span class="sig-tag" id="strong-sell-tag">Strong Sell</span>
-                                    <span class="sig-sep">|</span>
-                                    <span id="usage-sell">سهم أحمر</span>
-                                </div>
-                                <div class="sig-detail-row" id="sell-direction-row">
-                                    <span>📉</span>
-                                    <span id="sell-trend-text">اتجاه هابط</span>
-                                </div>
+                            <div class="instr-entry">
+                                <span class="entry-icon">🎯</span>
+                                <span class="entry-text" id="usage-entry-point">افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="instr-entry">
-                        <span class="entry-icon">🎯</span>
-                        <span class="entry-text" id="usage-entry-point">افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح</span>
                     </div>
                 </div>
-                <!-- hidden elements for JS compat -->
+                <!-- hidden compat -->
+                <span id="usage-title" style="display:none;"></span>
                 <span id="usage-rely-signal" style="display:none;"></span>
                 <div class="widget-container">
                     <iframe id="investingWidget" src="https://ssltsw.investing.com?notChosenTab=%230d7ffa&borderColor=%23ff0f0f&dateFont=%23637a11&lang=1&forex=3&commodities=8830,8836,8831,8849,8833,8862,8832&indices=175,166,172,27,179,170,174&stocks=345,346,347,348,349,350,352&tabs=1,2,3,4" title="Investing.com Technical Summary Widget"></iframe>
@@ -800,7 +924,6 @@
                     <button class="refresh-btn" onclick="refreshWidget()" aria-label="Refresh">⟳</button>
                 </div>
                 <div id="countdown-timer" class="countdown-timer"></div>
-                <div class="powered-by">Powered by <a href="https://t.me/KingTraDe28" target="_blank" rel="noopener noreferrer">KING TRADING</a></div>
             </div>
 
             <!-- ---- PANEL 2: Signal Generator ---- -->
@@ -860,7 +983,8 @@
     const T = {
         ar: {
             selectCurrency:'اختر العملة', appSubject:'KingSignals Pro',
-            usageTitle:'دليل القراءة',
+            usageTitle:'تعليمات الدخول',
+            guideToggle:'تعليمات الدخول',
             usageSelectDuration:'اختر مدة الصفقة المناسبة وانتظر حتى تظهر الإشارة بوضوح قبل الدخول',
             usageRelySignal:'',
             usageBuy:'سهم أخضر',
@@ -894,7 +1018,8 @@
         },
         en: {
             selectCurrency:'Select Currency', appSubject:'KingSignals Pro',
-            usageTitle:'READING GUIDE',
+            usageTitle:'Entry Instructions',
+            guideToggle:'Entry Instructions',
             usageSelectDuration:'Choose the right trade duration and wait for the signal to appear clearly before entering',
             usageRelySignal:'',
             usageBuy:'Green arrow',
@@ -928,6 +1053,16 @@
         }
     };
     function t(key) { return (isEnglish ? T.en : T.ar)[key] || key; }
+
+    // ===================== GUIDE ACCORDION =====================
+    function toggleGuide() {
+        const body = document.getElementById('guide-body');
+        const chevron = document.getElementById('guide-chevron');
+        const btn = document.getElementById('guide-toggle-btn');
+        const isOpen = body.classList.toggle('open');
+        chevron.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+    }
 
     // ===================== TOAST =====================
     function showToast(message, type='info') {
@@ -1319,6 +1454,9 @@
         if (badge) badge.textContent = currencyMap[currentCurrencyId] || '';
         // Instructions
         el('usage-title').textContent = t('usageTitle');
+        // Instructions toggle label
+        const gtEl = el('guide-toggle-text');
+        if (gtEl) gtEl.textContent = t('guideToggle');
         el('usage-select-duration').textContent = t('usageSelectDuration');
         el('usage-buy').textContent = t('usageBuy');
         el('usage-sell').textContent = t('usageSell');
@@ -1381,4 +1519,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
