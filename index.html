@@ -1510,8 +1510,9 @@
             const pair=selected[Math.floor(Math.random()*selected.length)];
             const ts=cur.toTimeString().slice(0,5);
             const dir=cur.getMinutes()%2===0?'PUT':'CALL';
+            const pairShort = pair.replace(' (OTC)','_otc');
             signals.push({pair,ts,dir});
-            generatedSignalsText.push(`${pair} ➪ ${ts} ${dir}`);
+            generatedSignalsText.push(`${ts} | ${pairShort} | ${dir}`);
             cur.setMinutes(cur.getMinutes()+Math.floor(Math.random()*10)+1);
         }
         let prog=0;
@@ -1536,7 +1537,7 @@
                 card.style.animationDelay=`${i*0.05}s`;
                 const dClass=sig.dir==='CALL'?'dir-call':'dir-put';
                 const icon=sig.dir==='CALL'?'fa-arrow-trend-up':'fa-arrow-trend-down';
-                card.innerHTML=`<div class="pair-name">${sig.pair}</div><div class="trade-time"><i class="far fa-clock"></i> ${sig.ts}</div><div class="direction-badge ${dClass}"><i class="fas ${icon}"></i> ${sig.dir}</div>`;
+                card.innerHTML=`<div class="trade-time"><i class="far fa-clock"></i> ${sig.ts}</div><div class="pair-name">${sig.pair}</div><div class="direction-badge ${dClass}"><i class="fas ${icon}"></i> ${sig.dir}</div>`;
                 tradesGrid.appendChild(card);
             });
         },15000);
