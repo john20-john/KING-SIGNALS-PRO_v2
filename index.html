@@ -892,16 +892,49 @@
         .powered-by a:hover { color: #00FF00; }
 
         @media (max-width: 480px) {
-            .mode-tab { font-size: 10px; padding: 9px 4px; gap: 4px; }
+            /* Tabs */
+            .mode-tab { font-size: 10px; padding: 9px 4px; gap: 3px; }
             .mode-tab i { font-size: 12px; }
-            .mode-tab span { display: none; }  /* hide label, show only icon on very small screens */
+            .mode-tab span { display: none; }
             .tabs-row { gap: 6px; }
+
+            /* Signal grid */
             #trades-grid { grid-template-columns: 1fr 1fr; }
-            .mm-input { font-size: 0.85rem; padding: 9px 10px; }
+
+            /* MM inputs */
+            .mm-input { font-size: 0.9rem; padding: 10px; }
+            .mm-label { font-size: 12px; }
+
+            /* MM session — full width, readable on mobile */
+            #panel-money { padding: 0 0 20px; }
+            .mm-stat-card { padding: 12px 10px; }
+            .mm-stat-value { font-size: 1.1rem; }
+            .mm-stat-label { font-size: 10px; }
+            .mm-stat-sub   { font-size: 10px; }
+
+            /* Trade card — bigger bet amount */
+            #mm-trade-amount { font-size: 1.6rem; }
+            #mm-trade-num    { font-size: 2.2rem; }
+
+            /* Win/Lose buttons — full width easy tap */
+            .mm-win-btn, .mm-lose-btn { padding: 16px 10px; font-size: 1rem; }
+
+            /* MM risk buttons */
+            .mm-risk-btn { padding: 10px 6px; font-size: 12px; }
+
+            /* Sequence dots smaller */
+            .mm-seq-dot { width: 22px; height: 22px; font-size: 9px; }
+
+            /* Charts */
+            #mm-chart { height: 180px; }
+
+            /* History cards */
+            #mm-history-section .glass-card { padding: 14px; }
         }
         @media (max-width: 380px) {
             .mode-tab span { display: none; }
-            .mode-tab { padding: 10px 8px; }
+            .mode-tab { padding: 10px 6px; }
+            #mm-trade-amount { font-size: 1.4rem; }
         }
         @media (min-width: 481px) {
             .mode-tab span { display: inline; }
@@ -1293,7 +1326,7 @@
             </div>
 
             <!-- ---- PANEL 3: Money Management ---- -->
-            <div id="panel-money" class="mode-panel" style="padding-bottom:20px;">
+            <div id="panel-money" class="mode-panel" style="padding-bottom:20px; overflow-x:hidden;">
 
                 <!-- Config -->
                 <div id="mm-config-section" class="glass-card" style="padding:22px; margin-bottom:16px;">
@@ -1357,7 +1390,7 @@
                 <!-- Active Session -->
                 <div id="mm-session" style="display:none;">
                     <div id="mm-summary" class="glass-card" style="padding:12px 16px;margin-bottom:14px;font-size:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
                         <div class="mm-stat-card mm-gold">
                             <div class="mm-stat-label">الرصيد الحالي</div>
                             <div class="mm-stat-value" id="mm-stat-balance">$500</div>
@@ -2001,18 +2034,15 @@
     // Swipe to open (swipe left from right edge) / swipe to close (swipe right when open)
     function initSwipe() {
         document.addEventListener('touchstart', (e)=>{
-            // Don't track swipe if touching an interactive element
-            const tag = e.target.tagName;
-            if (['INPUT','BUTTON','SELECT','TEXTAREA'].includes(tag)) {
-                swipeTracking = false;
-                return;
+            // Block on interactive elements
+            if (['INPUT','BUTTON','SELECT','TEXTAREA','LABEL','A'].includes(e.target.tagName)) {
+                swipeTracking = false; return;
             }
-            // Don't track if inside a scrollable container (MM panel)
-            const scrollable = e.target.closest('#panel-money, .currency-dropdown-menu, .user-details-box, .sidebar');
-            if (scrollable && !e.target.closest('.sidebar-overlay')) {
-                swipeTracking = false;
-                return;
-            }
+            // Block on ANY panel content or sidebar (only allow swipe from edge zone)
+            const insidePanel = e.target.closest('.mode-panel, .sidebar, .currency-dropdown-menu, .user-details-box, .stats-modal-card');
+            const fromRightEdge = e.touches[0].clientX > window.innerWidth - 44;
+            // Only allow opening from right edge, and only if NOT inside sidebar
+            if (insidePanel && !fromRightEdge) { swipeTracking = false; return; }
             swipeStartX = e.touches[0].clientX;
             swipeStartY = e.touches[0].clientY;
             swipeTracking = true;
@@ -2022,14 +2052,11 @@
             if (!swipeTracking) return;
             const dx = e.touches[0].clientX - swipeStartX;
             const dy = Math.abs(e.touches[0].clientY - swipeStartY);
-            // Ignore if mostly vertical
-            if (dy > Math.abs(dx) * 1.2 || dy > 30) { swipeTracking = false; return; }
+            if (dy > Math.abs(dx) * 1.5 || dy > 25) { swipeTracking = false; return; }
             const fromRightEdge = swipeStartX > window.innerWidth - 44;
-            // Open: swipe left (dx < -50) from right edge
             if (!sidebarOpen && fromRightEdge && dx < -50) {
                 openSidebar(); swipeTracking = false;
             }
-            // Close: swipe right (dx > 60) when sidebar is open
             if (sidebarOpen && dx > 60) {
                 closeSidebar(); swipeTracking = false;
             }
