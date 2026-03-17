@@ -170,8 +170,24 @@
             z-index: 1;
             min-height: 100vh;
             display: none;
-            padding: 20px;
-            padding-top: 70px;
+            padding: 24px 20px 40px;
+        }
+        /* Tabs + menu button row */
+        .tabs-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tabs-row .mode-tabs {
+            flex: 1;
+            margin-bottom: 0;
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
         }
         /* Mode Tabs */
         .mode-tabs {
@@ -217,29 +233,67 @@
         /* ===================== SIDEBAR ===================== */
         .sidebar {
             position: fixed;
-            top: 0; right: -300px;
-            width: 300px; height: 100%;
-            background: rgba(5, 10, 20, 0.97);
-            backdrop-filter: blur(20px);
-            border-left: 1px solid var(--glass-border);
-            padding: 20px;
-            transition: transform 0.3s ease-out;
-            z-index: 1000;
-            overflow-y: auto;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.5);
-        }
-        .sidebar.open { transform: translateX(-300px); }
-        .hamburger {
-            position: fixed;
-            top: 16px; right: 16px;
+            top: 0; right: -310px;
+            width: 290px; height: 100%;
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(0,255,0,0.12);
+            padding: 24px 16px 20px;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1100;
-            padding: 10px;
-            background: rgba(0,0,0,0.7);
-            border-radius: 10px;
-            border: 1px solid rgba(0,255,0,0.3);
-            cursor: pointer;
+            overflow-y: auto;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
         }
-        .hamburger span { display: block; width: 22px; height: 2px; background: #00FF00; margin: 5px 0; transition: 0.3s; }
+        .sidebar.open { right: 0; }
+
+        /* Overlay */
+        .sidebar-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(2px);
+            z-index: 1050;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.visible { opacity: 1; pointer-events: all; }
+
+        /* ===================== MENU FAB ===================== */
+        .menu-fab {
+            flex-shrink: 0;
+            width: 46px; height: 46px;
+            border-radius: 14px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,0,0.28);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 3px 14px rgba(0,255,0,0.12), 0 1px 4px rgba(0,0,0,0.4);
+            transition: box-shadow 0.25s, background 0.25s, transform 0.18s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .menu-fab:hover {
+            background: rgba(0,255,0,0.1);
+            box-shadow: 0 5px 22px rgba(0,255,0,0.25), 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .menu-fab:active { transform: scale(0.91); }
+        .menu-fab.is-open {
+            background: rgba(248,113,113,0.1);
+            border-color: rgba(248,113,113,0.32);
+            box-shadow: 0 3px 14px rgba(248,113,113,0.18), 0 1px 4px rgba(0,0,0,0.4);
+        }
+        .menu-fab-lines { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+        .menu-fab-lines span {
+            display: block; width: 18px; height: 2px;
+            background: #00FF00; border-radius: 2px;
+            transition: transform 0.28s ease, opacity 0.28s ease, background 0.25s;
+            transform-origin: center;
+        }
+        .menu-fab.is-open .menu-fab-lines span { background: #F87171; }
+        .menu-fab.is-open .menu-fab-lines span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-fab.is-open .menu-fab-lines span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .menu-fab.is-open .menu-fab-lines span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         .sidebar-btn {
             display: block; width: 100%;
             padding: 12px 16px; margin: 8px 0;
@@ -773,17 +827,14 @@
             <p style="text-align:center; color:#888; font-size:13px; margin-bottom:16px;">🔐 أدخل مفتاح الترخيص للدخول</p>
             <input type="text" id="license-key" placeholder="أدخل مفتاح الترخيص" required autocomplete="off">
             <button class="login-btn" id="login-button" onclick="validateAndLogin()">دخول</button>
-            <button class="lang-toggle-btn" id="language-toggle-login" onclick="toggleLanguage()">Switch to English</button>
             <p id="error-message" class="error-msg"></p>
         </div>
     </div>
 
     <!-- ==================== APP SCREEN ==================== -->
     <div id="app-container">
-        <!-- Hamburger -->
-        <div class="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </div>
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
@@ -844,13 +895,20 @@
                 <div id="live-clock">00:00:00</div>
             </div>
 
-            <!-- Mode Tabs -->
-            <div class="mode-tabs">
-                <button class="mode-tab active" id="tab-widget" onclick="switchMode('widget')">
-                    <i class="fas fa-chart-bar"></i> <span id="tab-widget-label">التحليل الفوري</span>
-                </button>
-                <button class="mode-tab" id="tab-signals" onclick="switchMode('signals')">
-                    <i class="fas fa-microchip"></i> <span id="tab-signals-label">مولّد الإشارات</span>
+            <!-- Mode Tabs + Menu Button row -->
+            <div class="tabs-row">
+                <div class="mode-tabs">
+                    <button class="mode-tab active" id="tab-widget" onclick="switchMode('widget')">
+                        <i class="fas fa-chart-bar"></i> <span id="tab-widget-label">التحليل الفوري</span>
+                    </button>
+                    <button class="mode-tab" id="tab-signals" onclick="switchMode('signals')">
+                        <i class="fas fa-microchip"></i> <span id="tab-signals-label">مولّد الإشارات</span>
+                    </button>
+                </div>
+                <button class="menu-fab" id="menu-fab" onclick="toggleSidebar()" aria-label="القائمة">
+                    <span class="menu-fab-lines" id="menu-fab-lines">
+                        <span></span><span></span><span></span>
+                    </span>
                 </button>
             </div>
 
@@ -928,7 +986,7 @@
 
             <!-- ---- PANEL 2: Signal Generator ---- -->
             <div id="panel-signals" class="mode-panel glass-card" style="padding:24px;">
-                <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR OF QUOTEX</h2>
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR</h2>
                 <p style="text-align:center; color:#888; font-size:13px; margin-bottom:20px;" id="sig-subtitle">
                     <i class="fas fa-crosshairs"></i> <span id="sig-subtitle-text">اختر 4 أزواج لتوليد إشارات الساعة القادمة</span>
                 </p>
@@ -1228,11 +1286,75 @@
     }
 
     // ===================== SIDEBAR =====================
-    function toggleSidebar() {
-        const sb = document.getElementById('sidebar');
-        sb.classList.toggle('open');
-        if (!sb.classList.contains('open') && isDropdownOpen) toggleDropdown();
+    let sidebarOpen = false;
+    let swipeStartX = 0, swipeStartY = 0, swipeTracking = false;
+
+    function openSidebar() {
+        if (sidebarOpen) return;
+        sidebarOpen = true;
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('sidebar-overlay').classList.add('visible');
+        document.getElementById('menu-fab').classList.add('is-open');
+        document.body.style.overflow = 'hidden';
     }
+    function closeSidebar() {
+        if (!sidebarOpen) return;
+        sidebarOpen = false;
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('visible');
+        document.getElementById('menu-fab').classList.remove('is-open');
+        document.body.style.overflow = '';
+        if (isDropdownOpen) toggleDropdown();
+    }
+    function toggleSidebar() {
+        sidebarOpen ? closeSidebar() : openSidebar();
+    }
+
+    // Swipe to open (swipe left from right edge) / swipe to close (swipe right when open)
+    function initSwipe() {
+        document.addEventListener('touchstart', (e)=>{
+            swipeStartX = e.touches[0].clientX;
+            swipeStartY = e.touches[0].clientY;
+            swipeTracking = true;
+        }, { passive: true });
+        document.addEventListener('touchmove', (e)=>{
+            if (!swipeTracking) return;
+            const dx = e.touches[0].clientX - swipeStartX;
+            const dy = Math.abs(e.touches[0].clientY - swipeStartY);
+            // Ignore vertical swipes
+            if (dy > 30) { swipeTracking = false; return; }
+            const fromRightEdge = swipeStartX > window.innerWidth - 40;
+            // Open: swipe left (dx < -40) from right edge
+            if (!sidebarOpen && fromRightEdge && dx < -40) {
+                openSidebar(); swipeTracking = false;
+            }
+            // Close: swipe right (dx > 50) when sidebar is open
+            if (sidebarOpen && dx > 50) {
+                closeSidebar(); swipeTracking = false;
+            }
+        }, { passive: true });
+        document.addEventListener('touchend', ()=>{ swipeTracking = false; }, { passive: true });
+    }
+
+    // Auto-close sidebar when a sidebar-btn is clicked (except toggles)
+    function initSidebarAutoClose() {
+        const sb = document.getElementById('sidebar');
+        sb.addEventListener('click', (e)=>{
+            const btn = e.target.closest('.sidebar-btn');
+            if (!btn) return;
+            const noClose = ['user-details-toggle','favorites-toggle','autoUpdateButton','pauseResumeButton','language-toggle','copy-key'];
+            if (noClose.includes(btn.id)) return;
+            // Small delay for visual feedback then close
+            setTimeout(()=> closeSidebar(), 180);
+        });
+        // Also close when currency item selected
+        sb.addEventListener('click', (e)=>{
+            if (e.target.closest('.currency-item') && !e.target.closest('.favorite-star')) {
+                setTimeout(()=> closeSidebar(), 200);
+            }
+        });
+    }
+
     function toggleUserDetails() {
         document.getElementById('user-details-content').classList.toggle('open');
     }
@@ -1437,9 +1559,10 @@
         else { updateAppUI(); generateCurrencyDropdown(); updateUserDetailsDisplay(); }
     }
     function updateLoginUI() {
-        document.getElementById('license-key').placeholder = t('licenseKeyPlaceholder');
-        document.getElementById('login-button').textContent = t('loginButton');
-        document.getElementById('language-toggle-login').textContent = t('languageToggle');
+        const licEl = document.getElementById('license-key');
+        const btnEl = document.getElementById('login-button');
+        if (licEl) licEl.placeholder = t('licenseKeyPlaceholder');
+        if (btnEl) btnEl.textContent = t('loginButton');
     }
     function updateAppUI() {
         const el = (id)=>document.getElementById(id);
@@ -1487,15 +1610,19 @@
         document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
         document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
         checkSession();
+        initSwipe();
+        initSidebarAutoClose();
 
-        // Close sidebar on outside click
+        // Close dropdown on outside click
         document.addEventListener('click', (e)=>{
-            const sb=document.getElementById('sidebar');
-            const hb=document.querySelector('.hamburger');
             const dm=document.getElementById('currencyDropdownMenu');
             const dt=document.querySelector('.currency-dropdown-toggle');
-            if(sb&&hb&&sb.classList.contains('open')&&!sb.contains(e.target)&&!hb.contains(e.target)) toggleSidebar();
-            else if(dm&&dt&&isDropdownOpen&&!dm.contains(e.target)&&!dt.contains(e.target)) toggleDropdown();
+            if(dm&&dt&&isDropdownOpen&&!dm.contains(e.target)&&!dt.contains(e.target)) toggleDropdown();
+        });
+
+        // ESC key closes sidebar
+        document.addEventListener('keydown', (e)=>{
+            if (e.key === 'Escape' && sidebarOpen) closeSidebar();
         });
     });
     </script>
@@ -1519,4 +1646,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
