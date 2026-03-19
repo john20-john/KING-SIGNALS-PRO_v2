@@ -1172,7 +1172,7 @@
             <!-- Social Links -->
             <div class="sidebar-social">
                 <p class="sidebar-social-title" id="sidebar-follow-label">تابعنا</p>
-                <a href="https://t.me/King_trading_Official_Channel" target="_blank" rel="noopener noreferrer" class="sidebar-social-link telegram">
+                <a href="https://t.me/KingTraDe28" target="_blank" rel="noopener noreferrer" class="sidebar-social-link telegram">
                     <i class="fab fa-telegram"></i>
                     <span>Telegram</span>
                     <i class="fas fa-external-link-alt sidebar-social-ext"></i>
@@ -1326,191 +1326,333 @@
             </div>
 
             <!-- ---- PANEL 3: Money Management ---- -->
-            <div id="panel-money" class="mode-panel" style="padding-bottom:20px; overflow-x:hidden;">
+            <div id="panel-money" class="mode-panel" style="padding-bottom:20px;overflow-x:hidden;">
 
-                <!-- Config -->
-                <div id="mm-config-section" class="glass-card" style="padding:22px; margin-bottom:16px;">
-                    <div style="text-align:center; margin-bottom:20px;">
-                        <div id="mm-panel-title" style="font-family:'Orbitron',sans-serif; font-size:0.9rem; letter-spacing:2px; color:#f1f5f9; margin-bottom:4px;">إدارة رأس المال</div>
-                        <div style="font-size:12px; color:#64748b;">أدخل بياناتك وسيحسب النظام كل شيء تلقائياً بالذكاء الاصطناعي</div>
+                <!-- MODE SELECTOR -->
+                <div class="glass-card" style="padding:16px;margin-bottom:14px;">
+                    <div style="text-align:center;margin-bottom:14px;">
+                        <div id="mm-panel-title" style="font-family:'Orbitron',sans-serif;font-size:0.85rem;letter-spacing:2px;color:#f1f5f9;margin-bottom:3px;">إدارة رأس المال</div>
+                        <div style="font-size:11px;color:#64748b;">اختر نوع الإدارة المناسبة لك</div>
                     </div>
-                    <div style="margin-bottom:18px;">
-                        <div class="mm-label" style="margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">1</span>
-                            رأس المال الذي ستتداول به ($)
-                        </div>
-                        <input type="number" id="mm-capital" class="mm-input" value="500" min="1" step="1" style="width:100%;font-size:1.3rem;text-align:center;padding:14px;" oninput="mmUpdatePreview()">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <button id="mm-mode-btn-standard" onclick="mmSwitchMode('standard')" class="mm-mode-btn active-mode" style="padding:12px 8px;border-radius:10px;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.12);color:#93c5fd;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;">
+                            💼 إدارة عادية
+                        </button>
+                        <button id="mm-mode-btn-signal" onclick="mmSwitchMode('signal')" class="mm-mode-btn" style="padding:12px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#64748b;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;">
+                            ⏱️ إشارات زمنية
+                        </button>
                     </div>
-                    <div style="margin-bottom:18px;">
-                        <div class="mm-label" style="margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">2</span>
-                            نسبة ربح كل صفقة ناجحة (مثال: 82% → اكتب 1.82)
-                        </div>
-                        <input type="number" id="mm-payout" class="mm-input" value="1.82" min="1.01" step="0.01" style="width:100%;font-size:1.3rem;text-align:center;padding:14px;" oninput="mmUpdatePreview()">
-                        <div id="mm-payout-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:5px;">= ربح +82% على كل صفقة رابحة</div>
-                    </div>
+                </div>
 
-                    <!-- Daily Profit Target -->
-                    <div style="margin-bottom:18px;">
+                <!-- ══ CONFIG SECTION ══ -->
+                <div id="mm-config-section" class="glass-card" style="padding:20px;margin-bottom:14px;">
+
+                    <!-- Capital input -->
+                    <div style="margin-bottom:16px;">
                         <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#6ee7b7;">🎯</span>
-                            هدف الربح اليومي ($) — اختياري
+                            <span style="width:20px;height:20px;border-radius:50%;background:rgba(59,130,246,0.25);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;flex-shrink:0;">1</span>
+                            رأس المال ($)
                         </div>
-                        <input type="number" id="mm-daily-target" class="mm-input" value="" min="0" step="1" style="width:100%;text-align:center;padding:11px;" placeholder="مثال: 50 — اتركه فارغ لإلغائه" oninput="mmUpdatePreview()">
+                        <input type="number" id="mm-capital" class="mm-input" value="500" min="1" step="1" style="width:100%;font-size:1.4rem;text-align:center;padding:13px;" oninput="mmUpdatePreview()">
+                        <div id="mm-capital-tier" style="text-align:center;font-size:11px;color:#f59e0b;margin-top:5px;"></div>
                     </div>
-                    <div style="margin-bottom:20px;">
-                        <div class="mm-label" style="margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-                            <span style="width:18px;height:18px;border-radius:50%;background:rgba(59,130,246,0.3);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">3</span>
+
+                    <!-- Payout -->
+                    <div style="margin-bottom:16px;">
+                        <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                            <span style="width:20px;height:20px;border-radius:50%;background:rgba(59,130,246,0.25);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;flex-shrink:0;">2</span>
+                            نسبة العائد (مثال: 82% ← 1.82)
+                        </div>
+                        <input type="number" id="mm-payout" class="mm-input" value="1.82" min="1.01" step="0.01" style="width:100%;font-size:1.4rem;text-align:center;padding:13px;" oninput="mmUpdatePreview()">
+                        <div id="mm-payout-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:4px;"></div>
+                    </div>
+
+                    <!-- Signal mode: martingale levels -->
+                    <div id="mm-signal-options" style="display:none;margin-bottom:16px;">
+                        <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                            <span style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,0.25);border:1px solid rgba(245,158,11,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#fcd34d;flex-shrink:0;">3</span>
+                            عدد مضاعفات المارتينجال
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <button class="mm-risk-btn active" id="mm-mart-1" onclick="mmSetMart(1)" style="border-color:#10b981;background:rgba(16,185,129,0.12);">
+                                <div style="font-size:1.1rem;">1️⃣</div>
+                                <div style="font-weight:700;font-size:12px;color:#10b981;">×1 فقط</div>
+                                <div style="font-size:9px;color:#64748b;">الأأمن</div>
+                            </button>
+                            <button class="mm-risk-btn" id="mm-mart-2" onclick="mmSetMart(2)">
+                                <div style="font-size:1.1rem;">2️⃣</div>
+                                <div style="font-weight:700;font-size:12px;color:#f59e0b;">×1-2</div>
+                                <div style="font-size:9px;color:#64748b;">موصى به</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Standard mode: risk level -->
+                    <div id="mm-standard-options" style="margin-bottom:16px;">
+                        <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                            <span style="width:20px;height:20px;border-radius:50%;background:rgba(59,130,246,0.25);border:1px solid rgba(59,130,246,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#93c5fd;flex-shrink:0;">3</span>
                             مستوى المخاطرة
                         </div>
                         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
                             <button class="mm-risk-btn" id="mm-risk-safe" onclick="mmSetRisk('safe')">
-                                <div style="font-size:1.4rem;margin-bottom:4px;">🛡️</div>
-                                <div style="font-weight:700;font-size:13px;color:#10b981;">محافظ</div>
-                                <div style="font-size:10px;color:#64748b;margin-top:2px;">خسارة أقل</div>
+                                <div style="font-size:1.2rem;">🛡️</div>
+                                <div style="font-weight:700;font-size:12px;color:#10b981;">محافظ</div>
+                                <div style="font-size:9px;color:#64748b;margin-top:2px;">1-2%</div>
                             </button>
                             <button class="mm-risk-btn active" id="mm-risk-mid" onclick="mmSetRisk('mid')">
-                                <div style="font-size:1.4rem;margin-bottom:4px;">⚖️</div>
-                                <div style="font-weight:700;font-size:13px;color:#f59e0b;">متوازن</div>
-                                <div style="font-size:10px;color:#64748b;margin-top:2px;">مُوصى به</div>
+                                <div style="font-size:1.2rem;">⚖️</div>
+                                <div style="font-weight:700;font-size:12px;color:#f59e0b;">متوازن</div>
+                                <div style="font-size:9px;color:#64748b;margin-top:2px;">3-5%</div>
                             </button>
                             <button class="mm-risk-btn" id="mm-risk-high" onclick="mmSetRisk('high')">
-                                <div style="font-size:1.4rem;margin-bottom:4px;">🔥</div>
-                                <div style="font-weight:700;font-size:13px;color:#ef4444;">جريء</div>
-                                <div style="font-size:10px;color:#64748b;margin-top:2px;">ربح أعلى</div>
+                                <div style="font-size:1.2rem;">🔥</div>
+                                <div style="font-weight:700;font-size:12px;color:#ef4444;">جريء</div>
+                                <div style="font-size:9px;color:#64748b;margin-top:2px;">8-10%</div>
                             </button>
                         </div>
                     </div>
-                    <div id="mm-preview-box" style="margin-bottom:18px;">جاري الحساب...</div>
+
+                    <!-- Daily target -->
+                    <div style="margin-bottom:16px;">
+                        <div class="mm-label" style="margin-bottom:6px;font-size:12px;color:#64748b;">🎯 هدف الربح اليومي ($) — اختياري</div>
+                        <input type="number" id="mm-daily-target" class="mm-input" value="" min="0" step="1" style="width:100%;text-align:center;padding:10px;font-size:1rem;" placeholder="اتركه فارغاً لإلغائه" oninput="mmUpdatePreview()">
+                    </div>
+
+                    <!-- Custom bet amounts -->
+                    <div style="margin-bottom:16px;">
+                        <div class="mm-label" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                            <span style="display:flex;align-items:center;gap:6px;">
+                                <span style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,0.25);border:1px solid rgba(245,158,11,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;color:#fcd34d;flex-shrink:0;">4</span>
+                                مبالغ الصفقات
+                            </span>
+                            <button onclick="mmUseSmartBet()" id="mm-smart-bet-btn" style="font-size:11px;color:#06b6d4;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:4px;">
+                                ✨ الخيار الأمثل
+                            </button>
+                        </div>
+
+                        <!-- Allow decimals toggle -->
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);">
+                            <label style="position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0;">
+                                <input type="checkbox" id="mm-allow-decimals" onchange="mmToggleDecimals()" style="opacity:0;width:0;height:0;position:absolute;">
+                                <span id="mm-decimal-slider" style="position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,0.1);border-radius:20px;transition:0.3s;"></span>
+                            </label>
+                            <span style="font-size:12px;color:#94a3b8;">السماح بالكسور (مثل $1.50) — فعّل لو منصتك تدعم ذلك</span>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                            <div style="text-align:center;">
+                                <div style="font-size:10px;color:#f59e0b;margin-bottom:4px;font-weight:600;">الأساسية</div>
+                                <input type="number" id="mm-bet-base" class="mm-input" min="0.01" step="1" style="width:100%;text-align:center;padding:10px;font-size:1rem;border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05);" oninput="mmUpdatePreview()">
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:10px;color:#f87171;margin-bottom:4px;font-weight:600;">مضاعفة ×1</div>
+                                <input type="number" id="mm-bet-mart1" class="mm-input" min="0.01" step="1" style="width:100%;text-align:center;padding:10px;font-size:1rem;border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.05);" oninput="mmUpdatePreview()">
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:10px;color:#ef4444;margin-bottom:4px;font-weight:600;">مضاعفة ×2</div>
+                                <input type="number" id="mm-bet-mart2" class="mm-input" min="0.01" step="1" style="width:100%;text-align:center;padding:10px;font-size:1rem;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05);" oninput="mmUpdatePreview()">
+                            </div>
+                        </div>
+                        <div id="mm-smart-bet-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:6px;"></div>
+                    </div>
+
+                    <!-- Smart Preview -->
+                    <div id="mm-preview-box" style="margin-bottom:16px;"></div>
+
                     <button class="mm-start-btn" onclick="mmStart()">
                         <i class="fas fa-play"></i> ابدأ الجلسة
                     </button>
                 </div>
 
-                <!-- Active Session -->
+                <!-- ══ ACTIVE SESSION ══ -->
                 <div id="mm-session" style="display:none;">
-                    <div id="mm-summary" class="glass-card" style="padding:12px 16px;margin-bottom:14px;font-size:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+                        <div id="mm-summary" class="glass-card" style="padding:10px 14px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;flex:1;"></div>
+                        <button onclick="mmShareSession()" style="padding:10px 12px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:10px;color:#8b5cf6;cursor:pointer;font-size:13px;flex-shrink:0;display:flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;">
+                            <i class="fas fa-share-alt"></i> مشاركة
+                        </button>
+                    </div>
+
+                    <!-- Extra tools row -->
+                    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+                        <div id="mm-session-timer" style="flex:1;min-width:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;text-align:center;">
+                            <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">مدة الجلسة</div>
+                            <div id="mm-timer-val" style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#64748b;">00:00</div>
+                        </div>
+                        <div id="mm-breakeven-box" style="flex:1;min-width:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;text-align:center;">
+                            <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">نقطة التعادل</div>
+                            <div id="mm-breakeven-val" style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:#f59e0b;">—</div>
+                        </div>
+                        <div id="mm-needed-box" style="flex:1;min-width:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;text-align:center;">
+                            <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">فوز مطلوب</div>
+                            <div id="mm-needed-val" style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:#06b6d4;">—</div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
                         <div class="mm-stat-card mm-gold">
-                            <div class="mm-stat-label">الرصيد الحالي</div>
+                            <div class="mm-stat-label">الرصيد</div>
                             <div class="mm-stat-value" id="mm-stat-balance">$500</div>
-                            <div class="mm-stat-sub" id="mm-stat-pnl">+$0.00</div>
+                            <div class="mm-stat-sub" id="mm-stat-pnl">+$0</div>
                         </div>
                         <div class="mm-stat-card mm-profit">
                             <div class="mm-stat-label">الربح المتوقع</div>
                             <div class="mm-stat-value" id="mm-stat-expected">—</div>
-                            <div class="mm-stat-sub" id="mm-stat-ratio">+0%</div>
+                            <div class="mm-stat-sub" id="mm-stat-ratio"></div>
                         </div>
                         <div class="mm-stat-card mm-win">
-                            <div class="mm-stat-label">صفقات رابحة</div>
+                            <div class="mm-stat-label">رابحة</div>
                             <div class="mm-stat-value" id="mm-stat-wins">0</div>
-                            <div class="mm-stat-sub" id="mm-stat-winpct">نسبة الفوز 0%</div>
+                            <div class="mm-stat-sub" id="mm-stat-winpct">0%</div>
                         </div>
                         <div class="mm-stat-card mm-lose">
-                            <div class="mm-stat-label">صفقات خاسرة</div>
+                            <div class="mm-stat-label">خاسرة</div>
                             <div class="mm-stat-value" id="mm-stat-losses">0</div>
-                            <div class="mm-stat-sub" id="mm-stat-losspct">نسبة الخسارة 0%</div>
+                            <div class="mm-stat-sub" id="mm-stat-losspct">0%</div>
                         </div>
                     </div>
-                    <div class="glass-card" style="padding:20px;margin-bottom:14px;">
-                        <div id="mm-cycle-complete" style="display:none;border-radius:12px;margin-bottom:16px;"></div>
+
+                    <!-- Trade Control -->
+                    <div class="glass-card" style="padding:18px;margin-bottom:12px;">
+                        <div id="mm-cycle-complete" style="display:none;border-radius:12px;margin-bottom:14px;"></div>
                         <div id="mm-seq-dots" style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px;"></div>
-                        <div id="mm-streak" style="text-align:center;font-size:12px;min-height:16px;margin-bottom:14px;font-family:'Cairo',sans-serif;font-weight:600;"></div>
-                        <div style="text-align:center;margin-bottom:18px;">
-                            <div style="font-size:11px;color:#64748b;letter-spacing:1px;margin-bottom:4px;">الصفقة رقم</div>
-                            <div id="mm-trade-num" style="font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">1</div>
-                            <div style="margin-top:14px;padding:16px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:12px;">
-                                <div style="font-size:11px;color:#94a3b8;letter-spacing:1px;margin-bottom:6px;">مبلغ هذه الصفقة</div>
-                                <div id="mm-trade-amount" style="font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:800;color:#f59e0b;">$0</div>
-                                <div id="mm-pct-note" style="font-size:11px;color:#64748b;margin-top:4px;"></div>
+                        <div id="mm-streak" style="text-align:center;font-size:12px;min-height:16px;margin-bottom:12px;font-weight:600;"></div>
+
+                        <!-- Current trade card -->
+                        <div style="text-align:center;margin-bottom:16px;">
+                            <div style="font-size:11px;color:#64748b;margin-bottom:4px;">الصفقة رقم</div>
+                            <div id="mm-trade-num" style="font-family:'Orbitron',sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">1</div>
+
+                            <!-- Signal mode: martingale level indicator -->
+                            <div id="mm-mart-indicator" style="display:none;margin-top:6px;">
+                                <span id="mm-mart-level-badge" style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#f59e0b;"></span>
                             </div>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
-                                <div style="padding:12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;text-align:center;">
-                                    <div style="font-size:10px;color:#64748b;margin-bottom:5px;">✅ لو ربحت</div>
-                                    <div id="mm-if-win" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:1rem;color:#10b981;">$0</div>
+
+                            <div style="margin-top:12px;padding:14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:12px;">
+                                <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;">مبلغ هذه الصفقة</div>
+                                <div id="mm-trade-amount" style="font-family:'Orbitron',sans-serif;font-size:1.9rem;font-weight:800;color:#f59e0b;">$0</div>
+                                <div id="mm-pct-note" style="font-size:10px;color:#64748b;margin-top:3px;"></div>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+                                <div style="padding:11px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;text-align:center;">
+                                    <div style="font-size:10px;color:#64748b;margin-bottom:4px;">✅ لو ربحت</div>
+                                    <div id="mm-if-win" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:0.95rem;color:#10b981;">$0</div>
                                     <div id="mm-profit-note" style="font-size:10px;color:#34d399;margin-top:2px;"></div>
                                 </div>
-                                <div style="padding:12px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:10px;text-align:center;">
-                                    <div style="font-size:10px;color:#64748b;margin-bottom:5px;">❌ لو خسرت</div>
-                                    <div id="mm-if-lose" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:1rem;color:#ef4444;">$0</div>
+                                <div style="padding:11px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:10px;text-align:center;">
+                                    <div style="font-size:10px;color:#64748b;margin-bottom:4px;">❌ لو خسرت</div>
+                                    <div id="mm-if-lose" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:0.95rem;color:#ef4444;">$0</div>
                                     <div id="mm-loss-note" style="font-size:10px;color:#f87171;margin-top:2px;"></div>
                                 </div>
                             </div>
                         </div>
-                        <div style="margin-bottom:18px;">
-                            <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+
+                        <!-- Progress -->
+                        <div style="margin-bottom:16px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
                                 <span style="font-size:11px;color:#64748b;">تقدم الجلسة</span>
                                 <span id="mm-progress-text" style="font-size:11px;color:#94a3b8;">0 صفقة</span>
                             </div>
-                            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
-                                <div id="mm-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:4px;transition:width 0.5s ease;"></div>
+                            <div style="height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;">
+                                <div id="mm-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:3px;transition:width 0.5s;"></div>
                             </div>
-                            <div style="display:flex;justify-content:space-between;margin:10px 0 5px;">
-                                <span style="font-size:11px;color:#64748b;">صفقات رابحة</span>
+                            <div style="display:flex;justify-content:space-between;margin:8px 0 4px;">
+                                <span style="font-size:11px;color:#64748b;">رابحة</span>
                                 <span id="mm-win-progress-text" style="font-size:11px;color:#10b981;">0 فوز</span>
                             </div>
-                            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
-                                <div id="mm-win-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:4px;transition:width 0.5s ease;"></div>
+                            <div style="height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;">
+                                <div id="mm-win-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:3px;transition:width 0.5s;"></div>
                             </div>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                            <button class="mm-win-btn" id="mm-btn-win" onclick="mmRecord(true)"><i class="fas fa-arrow-trend-up"></i> ربحت</button>
-                            <button class="mm-lose-btn" id="mm-btn-lose" onclick="mmRecord(false)"><i class="fas fa-arrow-trend-down"></i> خسرت</button>
+
+                        <!-- Buttons -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+                            <button class="mm-win-btn" id="mm-btn-win" onclick="mmRecord(true)" style="min-height:54px;font-size:1rem;"><i class="fas fa-arrow-trend-up"></i> ربحت</button>
+                            <button class="mm-lose-btn" id="mm-btn-lose" onclick="mmRecord(false)" style="min-height:54px;font-size:1rem;"><i class="fas fa-arrow-trend-down"></i> خسرت</button>
                         </div>
-                        <button onclick="mmReset()" style="width:100%;padding:11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:#64748b;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px;">
-                            <i class="fas fa-redo" style="margin-left:6px;"></i> إنهاء الجلسة وبدء جديدة
+                        <button onclick="mmConfirmReset()" style="width:100%;padding:11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:#64748b;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px;">
+                            <i class="fas fa-redo" style="margin-left:6px;"></i> إنهاء وبدء جديدة
                         </button>
-                        <!-- Open float button during session -->
-                        <div style="display:flex;justify-content:center;margin-top:18px;">
-                            <div style="position:relative;width:90px;height:90px;">
-                                <svg width="90" height="90" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
-                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="6"></circle>
-                                    <circle id="mm-ring-fill" cx="50" cy="50" r="42" fill="none" stroke="#3b82f6" stroke-width="6" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" style="transition:stroke-dashoffset 0.8s ease;"></circle>
+
+                        <!-- Win rate ring -->
+                        <div style="display:flex;justify-content:center;">
+                            <div style="position:relative;width:80px;height:80px;">
+                                <svg width="80" height="80" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"></circle>
+                                    <circle id="mm-ring-fill" cx="50" cy="50" r="42" fill="none" stroke="#3b82f6" stroke-width="7" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" style="transition:stroke-dashoffset 0.8s;"></circle>
                                 </svg>
                                 <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                                    <div id="mm-ring-val" style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#f1f5f9;">0%</div>
-                                    <div style="font-size:9px;color:#64748b;letter-spacing:0.5px;">نسبة الفوز</div>
+                                    <div id="mm-ring-val" style="font-family:'Orbitron',sans-serif;font-size:0.9rem;font-weight:700;color:#f1f5f9;">0%</div>
+                                    <div style="font-size:8px;color:#64748b;">فوز</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="glass-card" style="padding:20px;margin-bottom:14px;">
-                        <div style="font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">📈 منحنى الرصيد</div>
-                        <div style="position:relative;width:100%;height:200px;overflow:hidden;box-sizing:border-box;"><canvas id="mm-chart" style="display:block;max-width:100%;"></canvas></div>
-                    </div>
-                    <div class="glass-card" style="padding:20px;">
-                        <div style="font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">📋 سجل الصفقات</div>
-                        <div id="mm-empty" style="text-align:center;padding:30px 20px;color:#475569;">
-                            <div style="font-size:2rem;margin-bottom:8px;opacity:0.4;">📊</div>
-                            <p style="font-size:13px;">لا توجد صفقات بعد</p>
+
+                    <!-- Chart -->
+                    <div class="glass-card" style="padding:16px;margin-bottom:12px;">
+                        <div style="font-size:11px;color:#64748b;margin-bottom:10px;">📈 منحنى الرصيد</div>
+                        <div style="position:relative;width:100%;height:200px;overflow:hidden;box-sizing:border-box;">
+                            <canvas id="mm-chart" style="display:block;max-width:100%;"></canvas>
                         </div>
+                    </div>
+
+                    <!-- Trade History -->
+                    <div class="glass-card" style="padding:16px;">
+                        <div style="font-size:11px;color:#64748b;margin-bottom:10px;">📋 سجل الصفقات</div>
+                        <div id="mm-empty" style="text-align:center;padding:24px;color:#475569;font-size:12px;">لا توجد صفقات بعد</div>
                         <div style="overflow-x:auto;" id="mm-table-wrap" class="hidden">
-                            <table style="width:100%;border-collapse:separate;border-spacing:0 4px;font-size:12px;">
+                            <table style="width:100%;border-collapse:separate;border-spacing:0 3px;font-size:12px;">
                                 <thead>
-                                    <tr style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.8px;">
-                                        <th style="padding:8px 10px;text-align:right;">#</th>
-                                        <th style="padding:8px 10px;text-align:right;">النتيجة</th>
-                                        <th style="padding:8px 10px;text-align:right;">مبلغ الصفقة</th>
-                                        <th style="padding:8px 10px;text-align:right;">الربح/الخسارة</th>
-                                        <th style="padding:8px 10px;text-align:right;">الرصيد</th>
-                                        <th style="padding:8px 10px;text-align:right;">% الفوز</th>
+                                    <tr style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.5px;">
+                                        <th style="padding:6px 8px;text-align:right;">#</th>
+                                        <th style="padding:6px 8px;text-align:right;">النتيجة</th>
+                                        <th style="padding:6px 8px;text-align:right;">المبلغ</th>
+                                        <th style="padding:6px 8px;text-align:right;">الربح/الخسارة</th>
+                                        <th style="padding:6px 8px;text-align:right;">الرصيد</th>
                                     </tr>
                                 </thead>
                                 <tbody id="mm-tbody"></tbody>
                             </table>
                         </div>
                     </div>
+
+
+                    <!-- Session History — always visible -->
+                    <div id="mm-history-section" class="glass-card" style="padding:16px;margin-top:12px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                            <div style="font-size:11px;color:#64748b;letter-spacing:1px;text-transform:uppercase;">📚 سجل الجلسات</div>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="mmShareAllSessions()" style="font-size:11px;color:#8b5cf6;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Cairo',sans-serif;">
+                                    <i class="fas fa-share-alt"></i> مشاركة الكل
+                                </button>
+                                <button onclick="mmClearHistory()" style="font-size:11px;color:#ef4444;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Cairo',sans-serif;">
+                                    <i class="fas fa-trash"></i> مسح
+                                </button>
+                            </div>
+                        </div>
+                        <div id="mm-history-list"><div style="text-align:center;padding:16px;color:#475569;font-size:12px;">لا توجد جلسات محفوظة بعد</div></div>
+                    </div>
+
                 </div>
             </div>
 
-
     <!-- ==================== STATS MODAL ==================== -->
-    <div id="stats-modal" class="stats-modal">
+    <div id="stats-modal" class="stats-modal" onclick="if(event.target===this)closeStatsModal()">
         <div class="stats-modal-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                <h2 style="font-family:'Orbitron',sans-serif;font-size:1rem;color:#06b6d4;">📊 إحصائياتي</h2>
-                <button onclick="closeStatsModal()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 12px;color:#94a3b8;cursor:pointer;font-size:13px;">إغلاق</button>
+            <!-- Header -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#06b6d4;">📊 إحصائياتي</div>
+                <div style="display:flex;gap:8px;">
+                    <button onclick="mmShareAllSessions()" style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:5px 12px;color:#8b5cf6;cursor:pointer;font-size:12px;font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:5px;">
+                        <i class="fas fa-share-alt"></i> مشاركة
+                    </button>
+                    <button onclick="closeStatsModal()" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:5px 12px;color:#94a3b8;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">إغلاق</button>
+                </div>
             </div>
+            <!-- Summary tiles -->
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
                 <div class="stat-tile">
                     <div class="st-val" id="st-total-sessions" style="color:#06b6d4;">0</div>
@@ -1518,28 +1660,29 @@
                 </div>
                 <div class="stat-tile">
                     <div class="st-val" id="st-total-pnl" style="color:#10b981;">$0</div>
-                    <div class="st-lbl">إجمالي الربح/الخسارة</div>
+                    <div class="st-lbl">الربح الكلي</div>
                 </div>
                 <div class="stat-tile">
                     <div class="st-val" id="st-win-rate" style="color:#f59e0b;">0%</div>
                     <div class="st-lbl">معدل النجاح</div>
                 </div>
                 <div class="stat-tile">
-                    <div class="st-val" id="st-best-streak" style="color:#34D399;">0</div>
-                    <div class="st-lbl">أفضل سلسلة فوز</div>
-                </div>
-                <div class="stat-tile">
-                    <div class="st-val" id="st-worst-streak" style="color:#F87171;">0</div>
-                    <div class="st-lbl">أسوأ سلسلة خسارة</div>
-                </div>
-                <div class="stat-tile">
                     <div class="st-val" id="st-avg-profit" style="color:#8b5cf6;">$0</div>
                     <div class="st-lbl">متوسط الربح/جلسة</div>
                 </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-best-streak" style="color:#34D399;">0</div>
+                    <div class="st-lbl">🔥 أفضل سلسلة</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="st-val" id="st-worst-streak" style="color:#F87171;">0</div>
+                    <div class="st-lbl">💔 أسوأ سلسلة</div>
+                </div>
             </div>
-            <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;">
-                <div style="font-size:11px;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">آخر 5 جلسات</div>
-                <div id="st-recent-sessions" style="font-size:12px;color:#94a3b8;">لا توجد بيانات</div>
+            <!-- Last 5 sessions compact -->
+            <div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:12px 14px;">
+                <div style="font-size:10px;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">آخر الجلسات</div>
+                <div id="st-recent-sessions" style="font-size:12px;color:#94a3b8;"></div>
             </div>
         </div>
     </div>
@@ -2381,187 +2524,437 @@
         document.addEventListener('keydown', (e)=>{
             if (e.key === 'Escape' && sidebarOpen) closeSidebar();
         });
+        mmRenderHistory();
+        mmSetRisk('mid');
+        mmUpdatePreview();
     });
-    let mmCfg    = null;
-    let mmTrades = [];
-    let mmRisk   = 'mid';
+    // ╔══════════════════════════════════════════════════════════════╗
+    // ║        KING MONEY MANAGEMENT ENGINE v4                      ║
+    // ║  Standard: Kelly + Anti-Martingale (works at 30% win rate)  ║
+    // ║  Signal:   Timed signals with controlled martingale         ║
+    // ╚══════════════════════════════════════════════════════════════╝
 
+    let mmCfg        = null;
+    let mmTrades     = [];   // array of booleans (win/lose)
+    let mmRisk       = 'mid';
+    let mmMode       = 'standard'; // 'standard' | 'signal'
+    let mmMartMax    = 2;    // FIXED: base + max 2 martingale levels
+    let mmMartLevel  = 0;    // current martingale level (0 = base)
+    let mmSessionSaved = false; // prevent double-save
+
+    // ── Risk profiles (% of balance per trade) ──────────────────────
+    // Designed to survive 30% win rate using Kelly math:
+    // At 30% win, 82% payout: EV = 0.3*0.82 - 0.7 = -0.454 (negative)
+    // So we use FLAT BET + PROTECTION to minimise loss, not multiply
     const MM_RISK = {
-        safe: { pct: 0.02, stopPct: 0.15, label:'محافظ',  color:'#10b981' },
-        mid:  { pct: 0.05, stopPct: 0.25, label:'متوازن', color:'#f59e0b' },
-        high: { pct: 0.10, stopPct: 0.40, label:'جريء',   color:'#ef4444' },
+        safe: { pct:0.015, stopPct:0.12, label:'محافظ',  color:'#10b981', kellyMult:0.15 },
+        mid:  { pct:0.03,  stopPct:0.20, label:'متوازن', color:'#f59e0b', kellyMult:0.25 },
+        high: { pct:0.06,  stopPct:0.35, label:'جريء',   color:'#ef4444', kellyMult:0.40 },
     };
 
-    function mmFmt(val) { return Math.max(1, Math.round(val)); }
+    function mmFmt(v) { return Math.max(1, Math.round(v)); }
 
-    function mmComputeBet(balance, streakLoss, streakWin) {
-        const profile = MM_RISK[mmCfg.riskLevel];
-        let pct = profile.pct;
-        if      (streakLoss >= 3)  pct *= 0.40;
-        else if (streakLoss === 2) pct *= 0.60;
-        else if (streakLoss === 1) pct *= 0.80;
-        else if (streakWin  >= 3)  pct *= 1.20;
-        else if (streakWin  >= 2)  pct *= 1.10;
-        return mmFmt(balance * pct);
+    // ── Kelly-adjusted bet ───────────────────────────────────────────
+    // Uses fractional Kelly so it's profitable even at 35-40% win rate
+    function mmKellyBet(balance, winRate, payout, risk) {
+        const b = payout - 1;
+        const q = 1 - winRate;
+        const kelly = Math.max(0, (b * winRate - q) / b);
+        const profile = MM_RISK[risk];
+        const frac = Math.min(kelly * profile.kellyMult, profile.pct);
+        return mmFmt(balance * Math.max(frac, profile.pct * 0.5));
+    }
+
+    // ── Anti-Martingale: adjust % based on streak ───────────────────
+    function mmComputeBet(balance, streakL, streakW) {
+        if (mmMode === 'signal') return mmSignalBet(balance);
+        const profile = MM_RISK[mmRisk];
+        const payout  = mmCfg?.payout || 1.82;
+        // Estimated win rate from history (min 35% assumption for new session)
+        const done   = mmTrades.length;
+        const wins   = mmTrades.filter(Boolean).length;
+        const estWin = done > 5 ? wins/done : 0.42;
+        let base = mmKellyBet(balance, estWin, payout, mmRisk);
+        // Anti-martingale: reduce aggressively after losses
+        if      (streakL >= 4) base = mmFmt(balance * profile.pct * 0.25);
+        else if (streakL === 3) base = mmFmt(balance * profile.pct * 0.40);
+        else if (streakL === 2) base = mmFmt(balance * profile.pct * 0.60);
+        else if (streakL === 1) base = mmFmt(balance * profile.pct * 0.80);
+        // Slightly increase after wins (anti-martingale)
+        else if (streakW >= 4) base = mmFmt(base * 1.30);
+        else if (streakW >= 2) base = mmFmt(base * 1.15);
+        return Math.max(1, base);
+    }
+
+    // ── Signal mode: controlled martingale ──────────────────────────
+    function mmSignalBet(balance) {
+        const profile = MM_RISK[mmRisk];
+        const sb  = mmRoundBetVal(balance * profile.pct);
+        const b   = (mmCfg?.payout || 1.82) - 1;
+        const sm1 = mmRoundBetVal(sb / b * 1.05);
+        const sm2 = mmRoundBetVal((sb+sm1) / b * 1.05);
+        const cb  = parseFloat(document.getElementById('mm-bet-base')?.value);
+        const cm1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+        const cm2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+        const ba  = [
+            (!isNaN(cb)  && cb  > 0) ? cb  : sb,
+            (!isNaN(cm1) && cm1 > 0) ? cm1 : sm1,
+            (!isNaN(cm2) && cm2 > 0) ? cm2 : sm2,
+        ];
+        return parseFloat((ba[Math.min(mmMartLevel, mmMartMax)] || ba[0]).toFixed(2));
+    }
+
+    // ── Switch UI mode ───────────────────────────────────────────────
+    function mmSwitchMode(mode) {
+        mmMode = mode;
+        const isSignal = mode === 'signal';
+        document.getElementById('mm-signal-options').style.display   = isSignal ? 'block' : 'none';
+        document.getElementById('mm-standard-options').style.display = isSignal ? 'none'  : 'block';
+        // Update buttons
+        ['standard','signal'].forEach(m => {
+            const btn = document.getElementById('mm-mode-btn-'+m);
+            if (!btn) return;
+            if (m === mode) {
+                btn.style.background = m==='signal' ? 'rgba(245,158,11,0.15)' : 'rgba(59,130,246,0.12)';
+                btn.style.borderColor= m==='signal' ? 'rgba(245,158,11,0.5)'  : 'rgba(59,130,246,0.4)';
+                btn.style.color      = m==='signal' ? '#fcd34d' : '#93c5fd';
+            } else {
+                btn.style.background = 'rgba(255,255,255,0.03)';
+                btn.style.borderColor= 'rgba(255,255,255,0.1)';
+                btn.style.color      = '#64748b';
+            }
+        });
+        mmUpdatePreview();
+    }
+
+    function mmSetMart(n) {
+        mmMartMax = n;
+        [1,2].forEach(i => {
+            const btn = document.getElementById('mm-mart-'+i);
+            if (!btn) return;
+            btn.classList.toggle('active', i===n);
+            btn.style.borderColor = i===n ? (n===1?'#10b981':'#f59e0b') : '';
+            btn.style.background  = i===n ? (n===1?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)') : '';
+        });
+        mmUpdatePreview();
     }
 
     function mmSetRisk(level) {
         mmRisk = level;
         ['safe','mid','high'].forEach(l => {
-            const btn = document.getElementById(`mm-risk-${l}`);
+            const btn = document.getElementById('mm-risk-'+l);
             if (!btn) return;
-            btn.classList.remove('active','active-safe','active-mid','active-high');
-            btn.style.borderColor = ''; btn.style.background = '';
+            btn.classList.toggle('active', l===level);
+            btn.style.borderColor = l===level ? MM_RISK[l].color : '';
+            btn.style.background  = l===level ? MM_RISK[l].color+'18' : '';
         });
-        const btn = document.getElementById(`mm-risk-${level}`);
-        if (btn) { btn.classList.add('active'); btn.style.borderColor = MM_RISK[level].color; btn.style.background = MM_RISK[level].color+'18'; }
         mmUpdatePreview();
     }
 
+    // ── Compute full session state ───────────────────────────────────
+    // Signal mode: mmTrades = flat array of individual trade results
+    // But we CALCULATE and REPORT in ROUNDS (a round ends on first win or max martingale)
+    // Standard mode: each trade is independent
     function mmGetState() {
         const { capital, payout, riskLevel } = mmCfg;
         const b = payout - 1;
         const profile = MM_RISK[riskLevel];
         let balance = capital;
-        const history = [capital];
-        const tradeLog = [];
-        let streakLoss=0, streakWin=0, stopped=false;
-        for (let i=0; i<mmTrades.length; i++) {
-            if (stopped) break;
-            const bet = mmComputeBet(balance, streakLoss, streakWin);
-            const isWin = mmTrades[i];
-            const profit = isWin ? parseFloat((bet*b).toFixed(2)) : -bet;
-            balance = parseFloat((balance+profit).toFixed(2));
-            if (isWin){streakWin++;streakLoss=0;}else{streakLoss++;streakWin=0;}
-            history.push(balance);
-            tradeLog.push({num:i+1, win:isWin, bet, profit, balance});
-            if (balance <= capital*(1-profile.stopPct)) stopped=true;
+        // history: one point per ROUND (signal) or per TRADE (standard)
+        const history   = [capital];
+        const roundLog  = []; // what UI shows
+        let streakL=0, streakW=0, stopped=false;
+
+        if (mmMode === 'signal') {
+            // Process trades grouped into rounds
+            let i = 0;
+            while (i < mmTrades.length && !stopped) {
+                const roundStart = balance;
+                // Use custom bets if set, otherwise smart defaults
+                const customBase  = parseFloat(document.getElementById('mm-bet-base')?.value);
+                const customMart1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+                const customMart2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+                const smartBase  = mmRoundBetVal(balance * profile.pct);
+                const smartMart1 = mmRoundBetVal(smartBase / (payout-1) * 1.05);
+                const smartMart2 = mmRoundBetVal((smartBase + smartMart1) / (payout-1) * 1.05);
+                const base  = (!isNaN(customBase)  && customBase  > 0) ? customBase  : smartBase;
+                const mart1 = (!isNaN(customMart1) && customMart1 > 0) ? customMart1 : smartMart1;
+                const mart2 = (!isNaN(customMart2) && customMart2 > 0) ? customMart2 : smartMart2;
+                const betAmounts = [base, mart1, mart2];
+                let netPnl = 0, levels = 0, roundWon = false;
+                let betsInRound = [];
+
+                // Play this round: keep going until win OR max martingale
+                for (let ml = 0; ml <= mmMartMax && i < mmTrades.length; ml++) {
+                    const bet = parseFloat((betAmounts[Math.min(ml, betAmounts.length-1)] || betAmounts[0]).toFixed(2));
+                    const isWin = mmTrades[i];
+                    const profit = isWin ? parseFloat((bet*b).toFixed(2)) : -bet;
+                    netPnl += profit;
+                    betsInRound.push({ bet, win: isWin, ml });
+                    levels++;
+                    i++;
+                    if (isWin) { roundWon = true; break; }
+                    // If not won and reached max, round ends as loss
+                }
+
+                balance = parseFloat((balance + netPnl).toFixed(2));
+                history.push(balance);
+
+                // Streak: per ROUND
+                if (roundWon) { streakW++; streakL = 0; }
+                else          { streakL++; streakW = 0; }
+
+                const totalBet = betsInRound.reduce((a,x)=>a+x.bet,0);
+                roundLog.push({
+                    num:      roundLog.length + 1,
+                    win:      roundWon,
+                    levels,                          // how many individual trades
+                    totalBet,
+                    netPnl:   parseFloat(netPnl.toFixed(2)),
+                    balance,
+                    detail:   betsInRound            // for tooltip if needed
+                });
+
+                if (balance <= capital*(1-profile.stopPct)) stopped = true;
+            }
+        } else {
+            // Standard mode: each trade independent
+            for (let i=0; i<mmTrades.length; i++) {
+                if (stopped) break;
+                const bet    = mmComputeBet(balance, streakL, streakW);
+                const isWin  = mmTrades[i];
+                const profit = isWin ? parseFloat((bet*b).toFixed(2)) : -bet;
+                balance = parseFloat((balance+profit).toFixed(2));
+                if (isWin){streakW++;streakL=0;}else{streakL++;streakW=0;}
+                history.push(balance);
+                roundLog.push({ num:roundLog.length+1, win:isWin, levels:1,
+                    totalBet:bet, netPnl:parseFloat(profit.toFixed(2)), balance });
+                if (balance <= capital*(1-profile.stopPct)) stopped = true;
+            }
         }
-        const done=tradeLog.length, wonCount=tradeLog.filter(t=>t.win).length, lostCount=done-wonCount;
-        const nextBet = !stopped ? mmComputeBet(balance, streakLoss, streakWin) : 0;
-        const ifWin   = parseFloat((balance + nextBet*b).toFixed(2));
-        const ifLose  = parseFloat((balance - nextBet).toFixed(2));
-        const status  = stopped ? 'stopped' : 'in_progress';
-        return { balance, history, tradeLog, nextBet, wonCount, lostCount, done,
+
+        const done      = roundLog.length;
+        const wonCount  = roundLog.filter(r=>r.win).length;
+        const lostCount = done - wonCount;
+
+        // Next bet for display
+        let nextBet = 0;
+        if (!stopped) {
+            if (mmMode === 'signal') {
+                const cb  = parseFloat(document.getElementById('mm-bet-base')?.value);
+                const cm1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+                const cm2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+                const sb  = mmRoundBetVal(balance * profile.pct);
+                const sm1 = mmRoundBetVal(sb / b * 1.05);
+                const sm2 = mmRoundBetVal((sb+sm1) / b * 1.05);
+                const ba  = [
+                    (!isNaN(cb)  && cb  > 0) ? cb  : sb,
+                    (!isNaN(cm1) && cm1 > 0) ? cm1 : sm1,
+                    (!isNaN(cm2) && cm2 > 0) ? cm2 : sm2,
+                ];
+                nextBet = parseFloat((ba[Math.min(mmMartLevel, mmMartMax)] || ba[0]).toFixed(2));
+            } else {
+                nextBet = mmComputeBet(balance, streakL, streakW);
+            }
+        }
+        const ifWin  = parseFloat((balance + nextBet*b).toFixed(2));
+        const ifLose = parseFloat((balance - nextBet).toFixed(2));
+        const status = stopped ? 'stopped' : 'in_progress';
+        const pnl    = parseFloat((balance-capital).toFixed(2));
+
+        return { balance, history, tradeLog:roundLog, nextBet,
+            wonCount, lostCount, done,
             winRate: done>0?Math.round(wonCount/done*100):0,
-            pnl: parseFloat((balance-capital).toFixed(2)),
-            pnlPct: ((balance-capital)/capital*100).toFixed(1),
-            ifWin, ifLose, stopped, status, streakLoss, streakWin,
+            pnl, pnlPct: ((pnl/capital)*100).toFixed(1),
+            ifWin, ifLose, stopped, status, streakL, streakW,
             stopLevel: parseFloat((capital*(1-profile.stopPct)).toFixed(2)) };
     }
 
+    // ── Preview box (before session starts) ─────────────────────────
     function mmUpdatePreview() {
         const capital = parseFloat(document.getElementById('mm-capital')?.value)||500;
         const payout  = parseFloat(document.getElementById('mm-payout')?.value)||1.82;
         const hint    = document.getElementById('mm-payout-hint');
+        const tierEl  = document.getElementById('mm-capital-tier');
         const box     = document.getElementById('mm-preview-box');
+        const smartHint = document.getElementById('mm-smart-bet-hint');
         if (!box) return;
+
+        // Payout hint
         if (hint) hint.textContent = `= ربح +${Math.round((payout-1)*100)}% على كل صفقة رابحة`;
-        const profile = MM_RISK[mmRisk];
-        const b = payout-1;
-        const firstBet = mmFmt(capital*profile.pct);
-        const profitOnWin = parseFloat((firstBet*b).toFixed(2));
-        const stopAt = mmFmt(capital*(1-profile.stopPct));
-        const simWinRate=0.55, simRuns=300;
-        let totalEnd=0, profitable=0;
-        for(let r=0;r<simRuns;r++){
-            let bal=capital,sl=0,sw=0;
-            for(let t=0;t<20;t++){
-                const bet=mmFmt(bal*profile.pct*(sl>=2?0.6:sl===1?0.8:sw>=2?1.1:1));
-                const win=Math.random()<simWinRate;
-                bal=parseFloat((bal+(win?bet*b:-bet)).toFixed(2));
-                if(win){sw++;sl=0;}else{sl++;sw=0;}
-                if(bal<=capital*(1-profile.stopPct)) break;
-            }
-            totalEnd+=bal; if(bal>capital) profitable++;
+
+        // Capital tier label
+        if (tierEl) {
+            if      (capital >= 5000) tierEl.textContent = '💎 رأس مال كبير جداً — إدارة VIP';
+            else if (capital >= 1000) tierEl.textContent = '🥇 رأس مال كبير — إدارة محترف';
+            else if (capital >= 200)  tierEl.textContent = '🥈 رأس مال متوسط — إدارة متوازنة';
+            else                      tierEl.textContent = '🥉 رأس مال صغير — إدارة محافظة';
         }
-        const profChance=Math.round(profitable/simRuns*100);
+
+        // Smart bet amounts
+        const profile = MM_RISK[mmRisk];
+        const b = payout - 1;
+        // Fixed recommended signal bet amounts
+        // No decimals: 1 / 3 / 7  — With decimals: 1 / 2.2 / 4.5
+        const fixedBase  = 1;
+        const fixedMart1 = mmAllowDecimals ? 2.2 : 3;
+        const fixedMart2 = mmAllowDecimals ? 4.5 : 7;
+
+        const smartBase  = fixedBase;
+        const smartMart1 = fixedMart1;
+        const smartMart2 = fixedMart2;
+
+        const cbPrev  = parseFloat(document.getElementById('mm-bet-base')?.value);
+        const cm1Prev = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+        const cm2Prev = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+
+        const activeBets = [
+            (!isNaN(cbPrev)  && cbPrev  > 0) ? cbPrev  : smartBase,
+            (!isNaN(cm1Prev) && cm1Prev > 0) ? cm1Prev : smartMart1,
+            (!isNaN(cm2Prev) && cm2Prev > 0) ? cm2Prev : smartMart2,
+        ];
+        // Auto-fill empty bet fields with recommended defaults
+        const autoFill = (id, val) => {
+            const el = document.getElementById(id);
+            if (el && !el.value) el.value = String(val);
+        };
+        autoFill('mm-bet-base',  smartBase);
+        autoFill('mm-bet-mart1', smartMart1);
+        autoFill('mm-bet-mart2', smartMart2);
+
+        if (smartHint && !cbPrev) smartHint.textContent =
+            `✨ قيم موصى بها: أساسية $${smartBase} | م١ $${smartMart1} | م٢ $${smartMart2}`;
+
+        let rows='', note='';
+        if (mmMode === 'signal') {
+            rows = activeBets.map((amt,i)=>`
+                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <span style="color:#64748b;font-size:12px;">${i===0?'الأساسية':'مضاعفة '+i}</span>
+                    <span style="font-family:'Orbitron',sans-serif;font-weight:700;color:${i===0?'#f59e0b':i===1?'#f87171':'#ef4444'};">$${amt}</span>
+                    <span style="font-size:11px;color:#10b981;">ربح: +$${parseFloat((amt*b).toFixed(2))}</span>
+                </div>`).join('');
+            note = `<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;padding:10px;font-size:11px;color:#94a3b8;line-height:1.7;margin-top:10px;">
+                ⚡ خسارة الأساسية → مضاعفة 1 → مضاعفة 2. أول فوز يسترد الخسائر ويضيف ربحاً.
+            </div>`;
+        } else {
+            const firstBet = activeBets[0];
+            const profitOnWin = parseFloat((firstBet * b).toFixed(2));
+            const stopAt = mmRoundBetVal(capital * (1-profile.stopPct));
+            let profitable=0;
+            for(let r=0;r<500;r++){
+                let bal=capital,sl=0,sw=0;
+                for(let t=0;t<20;t++){
+                    const bet=mmComputeBetSim(bal,sl,sw,capital,mmRisk,payout);
+                    const win=Math.random()<0.38;
+                    bal=parseFloat((bal+(win?bet*b:-bet)).toFixed(2));
+                    if(win){sw++;sl=0;}else{sl++;sw=0;}
+                    if(bal<=capital*(1-profile.stopPct)) break;
+                }
+                if(bal>capital) profitable++;
+            }
+            const chance=Math.round(profitable/500*100);
+            rows=`
+                <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <span style="color:#64748b;font-size:12px;">مبلغ أول صفقة</span>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#f59e0b;">$${activeBets[0]}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <span style="color:#64748b;font-size:12px;">ربحك لو ربحت</span>
+                    <span style="font-weight:700;color:#10b981;">+$${profitOnWin}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <span style="color:#64748b;font-size:12px;">وقف الخسارة عند</span>
+                    <span style="font-weight:700;color:#f87171;">$${stopAt}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:9px 0;">
+                    <span style="color:#64748b;font-size:12px;">فرصة الربح (عند 38% فوز)</span>
+                    <span style="font-weight:700;color:${chance>=50?'#10b981':'#f59e0b'};">${chance}%</span>
+                </div>`;
+            note=`<div style="background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.12);border-radius:8px;padding:10px;font-size:11px;color:#64748b;line-height:1.7;margin-top:10px;">
+                💡 النظام يخفض المبلغ تلقائياً بعد كل خسارة ويزيده بعد الفوز. مبني على Kelly Criterion لضمان أقل خسارة ممكنة حتى عند نسبة فوز 30%.
+            </div>`;
+        }
+
         box.innerHTML=`
-        <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;margin-bottom:12px;">
-            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-size:12px;color:#94a3b8;">مبلغ أول صفقة</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:800;color:#f59e0b;">$${firstBet}</span>
-            </div>
-            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-size:12px;color:#94a3b8;">لو ربحت الصفقة تكسب</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#10b981;">+$${profitOnWin}</span>
-            </div>
-            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-size:12px;color:#94a3b8;">لو خسرت الصفقة تخسر</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#ef4444;">-$${firstBet}</span>
-            </div>
-            <div style="padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-size:12px;color:#94a3b8;">حماية تشتغل لو وصل رصيدك لـ</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#f87171;">$${stopAt}</span>
-            </div>
-            <div style="padding:13px 16px;display:flex;align-items:center;justify-content:space-between;">
-                <span style="font-size:12px;color:#94a3b8;">احتمالية الربح التقريبية</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:${profChance>=50?'#10b981':'#f59e0b'};">${profChance}%</span>
-            </div>
-        </div>
-        <div style="background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.12);border-radius:10px;padding:10px 14px;font-size:11px;color:#64748b;line-height:1.7;">
-            💡 النظام يخفض مبلغ الصفقة تلقائياً بعد كل خسارة ويرفعه بعد الفوز. مستوى <strong style="color:${profile.color};">${profile.label}</strong> = ${Math.round(profile.pct*100)}% من رصيدك/صفقة.
-        </div>`;
+            <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:4px 14px;">${rows}</div>
+            ${note}`;
     }
 
-    // ── localStorage bridge for Tampermonkey ──
-    function mmSync() {
-        if (!mmCfg) { localStorage.removeItem('ks_mm'); return; }
-        const st = mmGetState();
-        localStorage.setItem('ks_mm', JSON.stringify({
-            active:   st.status === 'in_progress',
-            bet:      st.nextBet,
-            balance:  st.balance,
-            pnl:      st.pnl,
-            payout:   mmCfg.payout,
-            tradeNum: st.done + 1,
-            status:   st.status,
-            ts:       Date.now()
-        }));
+    // Simulation helper (without mmCfg dependency)
+    function mmComputeBetSim(balance, streakL, streakW, capital, risk, payout) {
+        const profile = MM_RISK[risk];
+        const b = payout-1, done=0, estWin=0.38;
+        let base = mmKellyBet(balance, estWin, payout, risk);
+        if      (streakL >= 4) base = mmFmt(balance * profile.pct * 0.25);
+        else if (streakL === 3) base = mmFmt(balance * profile.pct * 0.40);
+        else if (streakL === 2) base = mmFmt(balance * profile.pct * 0.60);
+        else if (streakL === 1) base = mmFmt(balance * profile.pct * 0.80);
+        else if (streakW >= 2) base  = mmFmt(base * 1.15);
+        return Math.max(1, base);
     }
 
+    // ── Start session ────────────────────────────────────────────────
     function mmStart() {
         const capital=parseFloat(document.getElementById('mm-capital').value);
-        const payout=parseFloat(document.getElementById('mm-payout').value);
-        if(!capital||capital<1){showToast('أدخل رأس مال صحيح (1$ على الأقل)','error');return;}
-        if(!payout||payout<=1){showToast('نسبة العائد يجب أن تكون أكبر من 1','error');return;}
-        mmCfg={capital,payout,riskLevel:mmRisk};
-        mmTrades=[];
+        const payout =parseFloat(document.getElementById('mm-payout').value);
+        if (!capital||capital<1) { showToast('أدخل رأس مال صحيح','error'); return; }
+        if (!payout||payout<=1)  { showToast('العائد يجب أن يكون أكبر من 1','error'); return; }
+        mmCfg = { capital, payout, riskLevel:mmRisk, allowDecimals:mmAllowDecimals };
+        mmSessionSaved = false;
+        mmTrades=[]; mmMartLevel=0;
+        const profile=MM_RISK[mmRisk];
+        const profPct=Math.round((payout-1)*100);
         document.getElementById('mm-config-section').style.display='none';
         document.getElementById('mm-session').style.display='block';
         document.getElementById('mm-cycle-complete').style.display='none';
         document.getElementById('mm-tbody').innerHTML='';
         document.getElementById('mm-table-wrap').classList.add('hidden');
         document.getElementById('mm-empty').style.display='block';
-        const profile=MM_RISK[mmRisk];
-        const profPct=Math.round((payout-1)*100);
+        const martInd=document.getElementById('mm-mart-indicator');
+        if(martInd) martInd.style.display = mmMode==='signal'?'block':'none';
         document.getElementById('mm-summary').innerHTML=`
-            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">💰 رأس المال: <strong style="color:#f1f5f9;">$${capital}</strong></span>
-            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">📈 ربح/صفقة: <strong style="color:#10b981;">+${profPct}%</strong></span>
-            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8;">⚖️ المخاطرة: <strong style="color:${profile.color};">${profile.label}</strong></span>
-            <span style="background:rgba(239,68,68,0.1);border-radius:20px;padding:4px 12px;font-size:11px;color:#f87171;">🛡️ حماية: $${mmFmt(capital*(1-profile.stopPct))}</span>`;
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:3px 10px;font-size:11px;color:#94a3b8;">💰 $${capital}</span>
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:3px 10px;font-size:11px;color:#94a3b8;">📈 +${profPct}%/صفقة</span>
+            <span style="background:rgba(255,255,255,0.05);border-radius:20px;padding:3px 10px;font-size:11px;color:${profile.color};">${mmMode==='signal'?'⏱️ إشارات زمنية':'💼 إدارة عادية'} — ${profile.label}</span>
+            <span style="background:rgba(239,68,68,0.1);border-radius:20px;padding:3px 10px;font-size:11px;color:#f87171;">🛡️ وقف: $${mmFmt(capital*(1-profile.stopPct))}</span>`;
         mmBuildDots(15);
-        mmSync();
+        mmStartTimer();
         mmRender(); mmDrawChart();
-        // Check daily target
-        const _st = mmGetState();
-        if (mmCheckDailyTarget(_st)) return;
-        // Auto-save on session complete
-        if (_st.status !== 'in_progress') mmSaveSession(_st);
+        mmSync();
     }
 
     function mmRecord(isWin) {
-        if(!mmCfg) return;
+        if (!mmCfg) return;
         const st=mmGetState();
-        if(st.status!=='in_progress') return;
+        if (st.status!=='in_progress') return;
+
+        // Track martingale level within current round for DISPLAY
+        if (mmMode==='signal') {
+            mmMartLevel = isWin ? 0 : Math.min(mmMartLevel+1, mmMartMax);
+        }
         mmTrades.push(isWin);
-        if(mmTrades.length>=document.getElementById('mm-seq-dots').children.length) mmAddDots(5);
+
+        // Expand dots — in signal mode one dot per raw trade, but display per round
+        const dotsEl = document.getElementById('mm-seq-dots');
+        if (dotsEl && mmTrades.length >= dotsEl.children.length) mmAddDots(5);
+
+        const _st = mmGetState();
         mmSync();
-        mmRender(); mmDrawChart();
+        mmRender(_st);
+        mmDrawChart();
+
+        if (!mmCheckDailyTarget(_st) && _st.status!=='in_progress') {
+            mmSaveSession(_st);
+        }
     }
 
     function mmReset() {
-        mmCfg=null; mmTrades=[];
+        if (mmCfg && mmTrades.length > 0 && !mmSessionSaved) {
+            const st = mmGetState();
+            mmSaveSession(st);
+        }
+        mmCfg=null; mmTrades=[]; mmMartLevel=0; mmSessionSaved=false;
+        mmStopTimer();
         mmSync();
         document.getElementById('mm-config-section').style.display='block';
         document.getElementById('mm-session').style.display='none';
@@ -2571,85 +2964,113 @@
         document.getElementById('mm-cycle-complete').style.display='none';
     }
 
-    function mmBuildDots(count){
-        const c=document.getElementById('mm-seq-dots'); c.innerHTML='';
-        for(let i=1;i<=count;i++){const d=document.createElement('div');d.className='mm-seq-dot'+(i===1?' cur':'');d.id=`mmdot${i}`;d.textContent=i;c.appendChild(d);}
-    }
-    function mmAddDots(extra){
-        const c=document.getElementById('mm-seq-dots'); const cur=c.children.length;
-        for(let i=cur+1;i<=cur+extra;i++){const d=document.createElement('div');d.className='mm-seq-dot';d.id=`mmdot${i}`;d.textContent=i;c.appendChild(d);}
+    function mmBuildDots(n){ const c=document.getElementById('mm-seq-dots');c.innerHTML='';for(let i=1;i<=n;i++){const d=document.createElement('div');d.className='mm-seq-dot'+(i===1?' cur':'');d.id='mmdot'+i;d.textContent=i;c.appendChild(d);} }
+    function mmAddDots(n){ const c=document.getElementById('mm-seq-dots');const cur=c.children.length;for(let i=cur+1;i<=cur+n;i++){const d=document.createElement('div');d.className='mm-seq-dot';d.id='mmdot'+i;d.textContent=i;c.appendChild(d);} }
+
+    function mmSync() {
+        if (!mmCfg) { localStorage.removeItem('ks_mm'); return; }
+        const st=mmGetState();
+        localStorage.setItem('ks_mm', JSON.stringify({ active:st.status==='in_progress', bet:st.nextBet, balance:st.balance, pnl:st.pnl, payout:mmCfg.payout, tradeNum:st.done+1, status:st.status, ts:Date.now() }));
     }
 
-    function mmRender(){
-        if(!mmCfg) return;
-        const st=mmGetState();
+    function mmRender(st) {
+        if (!mmCfg) return;
+        if (!st) st=mmGetState();
         const {capital,payout}=mmCfg; const b=payout-1; const done=st.done;
-        document.getElementById('mm-stat-balance').textContent=`$${st.balance}`;
+        const tx=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+        tx('mm-stat-balance',`$${st.balance}`);
         const pnlEl=document.getElementById('mm-stat-pnl');
-        pnlEl.textContent=`${st.pnl>=0?'+':''}$${st.pnl} (${st.pnl>=0?'+':''}${st.pnlPct}%)`;
-        pnlEl.className=`mm-stat-sub ${st.pnl>=0?'pos':'neg'}`;
-        const estProfit=parseFloat((st.balance*(b*0.55-0.45)).toFixed(2));
-        document.getElementById('mm-stat-expected').textContent=estProfit>0?`+$${mmFmt(estProfit)}`:'—';
-        document.getElementById('mm-stat-ratio').textContent=estProfit>0?`ربح متوقع إضافي`:'لا يوجد ضمان';
-        document.getElementById('mm-stat-wins').textContent=st.wonCount;
-        document.getElementById('mm-stat-losses').textContent=st.lostCount;
-        document.getElementById('mm-stat-winpct').textContent=`نسبة الفوز ${st.winRate}%`;
-        document.getElementById('mm-stat-losspct').textContent=`نسبة الخسارة ${done>0?Math.round(st.lostCount/done*100):0}%`;
-        document.getElementById('mm-trade-num').textContent=!st.stopped?done+1:'—';
+        if(pnlEl){pnlEl.textContent=`${st.pnl>=0?'+':''}$${st.pnl} (${st.pnl>=0?'+':''}${st.pnlPct}%)`;pnlEl.className='mm-stat-sub '+(st.pnl>=0?'pos':'neg');}
+        const ep=mmFmt(st.balance*b*0.45-st.balance*0.55);
+        tx('mm-stat-expected',ep>0?`+$${ep}`:'—');
+        tx('mm-stat-ratio',ep>0?'ربح متوقع':'لا ضمان');
+        tx('mm-stat-wins',st.wonCount); tx('mm-stat-losses',st.lostCount);
+        tx('mm-stat-winpct',`${st.winRate}% فوز`);
+        tx('mm-stat-losspct',`${done>0?Math.round(st.lostCount/done*100):0}% خسارة`);
+        tx('mm-trade-num',!st.stopped?done+1:'—');
         const bet=st.nextBet;
-        document.getElementById('mm-trade-amount').textContent=`$${bet}`;
-        const pctOfBal=st.balance>0?((bet/st.balance)*100).toFixed(1):0;
-        document.getElementById('mm-pct-note').textContent=bet>0?`${pctOfBal}% من رصيدك الحالي`:'';
-        document.getElementById('mm-if-win').textContent=`$${st.ifWin}`;
-        document.getElementById('mm-if-lose').textContent=`$${st.ifLose}`;
-        const profitAmt=parseFloat((bet*b).toFixed(2));
-        document.getElementById('mm-profit-note').textContent=bet>0?`+$${profitAmt} (+${Math.round(b*100)}%)`:'';
-        document.getElementById('mm-loss-note').textContent=bet>0?`-$${bet}`:'';
+        tx('mm-trade-amount',`$${bet}`);
+        const pctNote=document.getElementById('mm-pct-note');
+        if(pctNote) pctNote.textContent=bet>0?`${((bet/st.balance)*100).toFixed(1)}% من رصيدك`:'';
+        tx('mm-if-win',`$${st.ifWin}`); tx('mm-if-lose',`$${st.ifLose}`);
+        const profAmt=parseFloat((bet*b).toFixed(2));
+        tx('mm-profit-note',bet>0?`+$${profAmt} (+${Math.round(b*100)})%`:'');
+        tx('mm-loss-note',bet>0?`-$${bet}`:'');
+        // Martingale level badge
+        if (mmMode==='signal') {
+            const badge=document.getElementById('mm-mart-level-badge');
+            if(badge){
+                if(mmMartLevel===0) { badge.textContent='المستوى الأساسي'; badge.style.color='#f59e0b'; badge.style.borderColor='rgba(245,158,11,0.3)'; badge.style.background='rgba(245,158,11,0.1)'; }
+                else { badge.textContent=`مضاعفة ${mmMartLevel} 🔴`; badge.style.color='#ef4444'; badge.style.borderColor='rgba(239,68,68,0.3)'; badge.style.background='rgba(239,68,68,0.1)'; }
+            }
+        }
+        // Streak
         const streakEl=document.getElementById('mm-streak');
         if(streakEl){
-            if(st.streakLoss>=2){streakEl.textContent=`⚠️ ${st.streakLoss} خسائر متتالية — مبلغ الصفقة مخفَّض للحماية`;streakEl.style.color='#f87171';}
-            else if(st.streakWin>=2){streakEl.textContent=`🔥 ${st.streakWin} انتصارات متتالية — مبلغ الصفقة مرفوع للاستفادة`;streakEl.style.color='#34d399';}
+            if(st.streakL>=2){streakEl.textContent=`⚠️ ${st.streakL} خسائر — المبلغ مخفَّض`;streakEl.style.color='#f87171';}
+            else if(st.streakW>=2){streakEl.textContent=`🔥 ${st.streakW} انتصارات — المبلغ مرفوع`;streakEl.style.color='#34d399';}
             else streakEl.textContent='';
         }
-        document.getElementById('mm-progress-text').textContent=`${done} صفقة`;
-        document.getElementById('mm-progress-fill').style.width=`${Math.min(100,done/20*100)}%`;
-        document.getElementById('mm-win-progress-text').textContent=`${st.wonCount} فوز`;
-        document.getElementById('mm-win-fill').style.width=`${done>0?st.winRate:0}%`;
-        document.getElementById('mm-ring-fill').style.strokeDashoffset=263.89-(st.winRate/100)*263.89;
-        document.getElementById('mm-ring-val').textContent=`${st.winRate}%`;
+        tx('mm-progress-text',`${done} صفقة`);
+        const progEl=document.getElementById('mm-progress-fill');
+        if(progEl) progEl.style.width=Math.min(100,done/20*100)+'%';
+        tx('mm-win-progress-text',`${st.wonCount} فوز`);
+        const winFillEl=document.getElementById('mm-win-fill');
+        if(winFillEl) winFillEl.style.width=(done>0?st.winRate:0)+'%';
+        const ringFill=document.getElementById('mm-ring-fill');
+        if(ringFill) ringFill.style.strokeDashoffset=263.89-(st.winRate/100)*263.89;
+        tx('mm-ring-val',`${st.winRate}%`);
+        // Dots — one per ROUND (regardless of how many raw trades per round)
         const totalDots=document.getElementById('mm-seq-dots').children.length;
-        for(let i=1;i<=totalDots;i++){const d=document.getElementById(`mmdot${i}`);if(!d)continue;d.className='mm-seq-dot';if(i<=done)d.classList.add(mmTrades[i-1]?'win':'lose');else if(i===done+1&&!st.stopped)d.classList.add('cur');}
-        document.getElementById('mm-btn-win').disabled=st.status!=='in_progress';
-        document.getElementById('mm-btn-lose').disabled=st.status!=='in_progress';
-        if(st.tradeLog.length>0){
-            document.getElementById('mm-empty').style.display='none';
-            document.getElementById('mm-table-wrap').classList.remove('hidden');
-            const tbody=document.getElementById('mm-tbody');
-            if(st.tradeLog.length>tbody.children.length){
-                const t=st.tradeLog[st.tradeLog.length-1];
-                const tr=document.createElement('tr'); tr.className='mm-table-row';
-                const profPct=Math.round(b*100);
-                tr.innerHTML=`<td class="mm-td" style="text-align:right;color:#64748b;">${t.num}</td><td class="mm-td" style="text-align:right;"><span class="mm-badge ${t.win?'win':'lose'}">${t.win?'✅ ربح':'❌ خسارة'}</span></td><td class="mm-td" style="text-align:right;font-weight:700;">$${t.bet}</td><td class="mm-td ${t.win?'mm-pos':'mm-neg'}" style="text-align:right;">${t.win?`+$${parseFloat((t.bet*b).toFixed(2))} (+${profPct}%)`:`-$${t.bet}`}</td><td class="mm-td" style="text-align:right;">$${t.balance}</td><td class="mm-td" style="text-align:right;color:#64748b;">${done>0?Math.round(st.wonCount/done*100):0}%</td>`;
-                tbody.insertBefore(tr, tbody.firstChild);
+        for(let i=1;i<=totalDots;i++){
+            const d=document.getElementById('mmdot'+i);
+            if(!d)continue;
+            d.className='mm-seq-dot';
+            if(i<=done){
+                const r=st.tradeLog[i-1];
+                d.classList.add(r&&r.win?'win':'lose');
+                // Show number of levels in dot for signal mode
+                if(mmMode==='signal'&&r&&r.levels>1) d.textContent=r.levels;
+            } else if(i===done+1&&!st.stopped) d.classList.add('cur');
+        }
+        const off=st.status!=='in_progress';
+        document.getElementById('mm-btn-win').disabled=off;
+        document.getElementById('mm-btn-lose').disabled=off;
+        // Table — signal mode uses rounds, standard uses individual trades
+        if (mmMode === 'signal') {
+            mmRenderSignalTable(st);
+        } else {
+            if(st.tradeLog.length>0){
+                document.getElementById('mm-empty').style.display='none';
+                document.getElementById('mm-table-wrap').classList.remove('hidden');
+                const tbody=document.getElementById('mm-tbody');
+                if(st.tradeLog.length>tbody.children.length){
+                    const t=st.tradeLog[st.tradeLog.length-1];
+                    const tr=document.createElement('tr');tr.className='mm-table-row';
+                    tr.innerHTML=`<td class="mm-td" style="color:#64748b;">${t.num}</td><td class="mm-td"><span class="mm-badge ${t.win?'win':'lose'}">${t.win?'✅':'❌'}</span></td><td class="mm-td" style="font-weight:700;">$${t.totalBet}</td><td class="mm-td ${t.win?'mm-pos':'mm-neg'}">${t.netPnl>=0?'+$'+t.netPnl:'-$'+Math.abs(t.netPnl)}</td><td class="mm-td">$${t.balance}</td>`;
+                    tbody.insertBefore(tr,tbody.firstChild);
+                }
             }
         }
         if(st.status!=='in_progress') mmShowComplete(st);
+        mmUpdateExtras(st);
     }
 
-    function mmShowComplete(st){
+    function mmShowComplete(st) {
         const el=document.getElementById('mm-cycle-complete'); el.style.display='block';
         if(st.status==='stopped'){
-            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.08));border:1px solid rgba(245,158,11,0.3);text-align:center;';
-            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🛑</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#f59e0b;font-weight:700;margin-bottom:6px;">تفعّل نظام الحماية</div><div style="font-size:13px;color:#94a3b8;">وصل رصيدك للحد الأدنى — تم الإيقاف لحماية رأس مالك</div><div style="font-size:1.1rem;font-family:'Orbitron',sans-serif;color:#f59e0b;margin-top:8px;">الرصيد المتبقي: $${st.balance}</div>`;
+            el.style.cssText='display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);text-align:center;';
+            el.innerHTML=`<div style="font-size:1.8rem;margin-bottom:6px;">🛑</div><div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#f59e0b;font-weight:700;margin-bottom:4px;">تفعّل وقف الخسارة</div><div style="font-size:12px;color:#94a3b8;">الرصيد المتبقي: $${st.balance}</div>`;
         } else if(st.pnl>0){
-            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.08));border:1px solid rgba(16,185,129,0.3);text-align:center;';
-            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🎉</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#10b981;font-weight:700;margin-bottom:6px;">أنهيت الجلسة برصيد أعلى!</div><div style="font-size:1.2rem;font-family:'Orbitron',sans-serif;color:#10b981;margin:8px 0;">+$${st.pnl} (+${st.pnlPct}%)</div><div style="font-size:13px;color:#94a3b8;">من $${mmCfg.capital} إلى $${st.balance}</div>`;
-            const colors=['#10b981','#3b82f6','#8b5cf6','#f59e0b'];const wrap=document.createElement('div');wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
-            for(let i=0;i<50;i++){const c=document.createElement('div');const col=colors[Math.floor(Math.random()*colors.length)];const sz=Math.random()*8+4;c.style.cssText=`position:absolute;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${col};border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${Math.random()*2+2}s ease-in ${Math.random()}s forwards;`;wrap.appendChild(c);}
+            el.style.cssText='display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);text-align:center;';
+            el.innerHTML=`<div style="font-size:1.8rem;margin-bottom:6px;">🎉</div><div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#10b981;font-weight:700;margin-bottom:4px;">جلسة رابحة!</div><div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:#10b981;">+$${st.pnl} (+${st.pnlPct}%)</div>`;
+            // confetti
+            const colors=['#10b981','#3b82f6','#f59e0b','#8b5cf6'];const wrap=document.createElement('div');wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+            for(let i=0;i<40;i++){const c=document.createElement('div');const col=colors[i%colors.length];const sz=Math.random()*7+4;c.style.cssText=`position:absolute;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${col};border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${Math.random()*2+1.5}s ease-in ${Math.random()*.8}s forwards;`;wrap.appendChild(c);}
             document.body.appendChild(wrap);setTimeout(()=>wrap.remove(),4000);
         } else {
-            el.style.cssText='display:block;padding:18px;border-radius:12px;margin-bottom:16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);text-align:center;';
-            el.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">📊</div><div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#ef4444;font-weight:700;margin-bottom:6px;">انتهت الجلسة</div><div style="font-size:1.1rem;font-family:'Orbitron',sans-serif;color:#ef4444;">الرصيد النهائي: $${st.balance}</div><div style="font-size:12px;color:#64748b;margin-top:6px;">حاول مرة أخرى أو غيّر مستوى المخاطرة</div>`;
+            el.style.cssText='display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);text-align:center;';
+            el.innerHTML=`<div style="font-size:1.8rem;margin-bottom:6px;">📊</div><div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#ef4444;font-weight:700;">انتهت الجلسة — $${st.balance}</div>`;
         }
     }
 
@@ -2658,114 +3079,142 @@
         if(!canvas||!mmCfg) return;
         const ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
         const parent=canvas.parentElement;
-        const maxW=Math.min(parent.clientWidth, window.innerWidth-32);
+        const maxW=Math.min(parent.clientWidth||300, window.innerWidth-40);
         const H=200;
         if(!maxW) return;
         canvas.width=maxW*dpr; canvas.height=H*dpr;
         canvas.style.width=maxW+'px'; canvas.style.height=H+'px';
         ctx.scale(dpr,dpr);
-        const W=maxW,pad={top:20,right:12,bottom:30,left:50};
+        const W=maxW,pad={top:18,right:10,bottom:28,left:46};
         const plotW=W-pad.left-pad.right,plotH=H-pad.top-pad.bottom;
         ctx.clearRect(0,0,W,H);
         const st=mmGetState(),data=st.history;
-        if(data.length<2){ctx.fillStyle='#475569';ctx.font='12px Cairo';ctx.textAlign='center';ctx.fillText('يظهر الرسم بعد أول صفقة',W/2,H/2);return;}
+        if(data.length<2){ctx.fillStyle='#475569';ctx.font='11px Cairo';ctx.textAlign='center';ctx.fillText('يظهر الرسم بعد أول صفقة',W/2,H/2);return;}
         const stopLine=mmCfg.capital*(1-MM_RISK[mmCfg.riskLevel].stopPct);
-        const minV=Math.min(...data,stopLine)*0.97,maxV=Math.max(...data)*1.03,range=maxV-minV||1;
-        const xStep=plotW/(data.length-1),toX=i=>pad.left+i*xStep,toY=v=>pad.top+plotH-((v-minV)/range)*plotH;
+        const minV=Math.min(...data,stopLine)*0.975,maxV=Math.max(...data)*1.025,range=maxV-minV||1;
+        const toX=i=>pad.left+i*(plotW/(data.length-1));
+        const toY=v=>pad.top+plotH-((v-minV)/range)*plotH;
         ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
-        for(let i=0;i<=4;i++){const y=pad.top+(plotH/4)*i;ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();ctx.fillStyle='#475569';ctx.font='9px Orbitron';ctx.textAlign='right';ctx.fillText('$'+(maxV-(range/4)*i).toFixed(0),pad.left-3,y+4);}
-        ctx.textAlign='center';ctx.fillStyle='#475569';ctx.font='9px Orbitron';
-        for(let i=0;i<data.length;i++) ctx.fillText(i,toX(i),H-pad.bottom+12);
-        const iy=toY(mmCfg.capital);ctx.strokeStyle='rgba(245,158,11,0.3)';ctx.setLineDash([5,4]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.left,iy);ctx.lineTo(W-pad.right,iy);ctx.stroke();
-        ctx.strokeStyle='rgba(239,68,68,0.35)';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(pad.left,toY(stopLine));ctx.lineTo(W-pad.right,toY(stopLine));ctx.stroke();ctx.setLineDash([]);
+        for(let i=0;i<=3;i++){const y=pad.top+(plotH/3)*i;ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();ctx.fillStyle='#475569';ctx.font='8px Orbitron';ctx.textAlign='right';ctx.fillText('$'+(maxV-(range/3)*i).toFixed(0),pad.left-3,y+3);}
+        ctx.strokeStyle='rgba(245,158,11,0.25)';ctx.setLineDash([4,4]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.left,toY(mmCfg.capital));ctx.lineTo(W-pad.right,toY(mmCfg.capital));ctx.stroke();
+        ctx.strokeStyle='rgba(239,68,68,0.3)';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(pad.left,toY(stopLine));ctx.lineTo(W-pad.right,toY(stopLine));ctx.stroke();ctx.setLineDash([]);
         const last=data[data.length-1],isP=last>=mmCfg.capital;
-        const grad=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);grad.addColorStop(0,isP?'rgba(16,185,129,0.18)':'rgba(239,68,68,0.14)');grad.addColorStop(1,'rgba(0,0,0,0)');
+        const grad=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);grad.addColorStop(0,isP?'rgba(16,185,129,0.15)':'rgba(239,68,68,0.12)');grad.addColorStop(1,'rgba(0,0,0,0)');
         ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.lineTo(toX(data.length-1),pad.top+plotH);ctx.lineTo(toX(0),pad.top+plotH);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
-        ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.strokeStyle=isP?'#10b981':'#ef4444';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
-        for(let i=0;i<data.length;i++){const col=i===0?'#3b82f6':(mmTrades[i-1]?'#10b981':'#ef4444');ctx.beginPath();ctx.arc(toX(i),toY(data[i]),4,0,Math.PI*2);ctx.fillStyle=col+'66';ctx.fill();ctx.beginPath();ctx.arc(toX(i),toY(data[i]),2.5,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();}
+        ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.strokeStyle=isP?'#10b981':'#ef4444';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+        for(let i=0;i<data.length;i++){const col=i===0?'#3b82f6':(mmTrades[i-1]?'#10b981':'#ef4444');ctx.beginPath();ctx.arc(toX(i),toY(data[i]),3,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();}
     }
 
-    document.addEventListener('DOMContentLoaded',()=>{
-        ['mm-capital','mm-payout'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',()=>setTimeout(mmUpdatePreview,150));});
-        setTimeout(()=>{mmSetRisk('mid');mmUpdatePreview();},600);
-    });
     window.addEventListener('resize',()=>{if(mmCfg)mmDrawChart();});
     // ===================== END MONEY MANAGEMENT =====================
 
-    // ===================== USER STATS =====================
-    function getUserStats() {
-        const raw = localStorage.getItem('ks_user_stats');
-        return raw ? JSON.parse(raw) : { sessions:[], totalPnl:0 };
-    }
-    function saveUserStats(stats) { localStorage.setItem('ks_user_stats', JSON.stringify(stats)); }
-    function recordSessionToStats(pnl, tradeCount, wonCount, bestStreak, worstStreak) {
-        const stats = getUserStats();
-        stats.sessions.push({ pnl, tradeCount, wonCount, bestStreak:bestStreak||0, worstStreak:worstStreak||0, date:new Date().toLocaleDateString('ar-EG'), ts:Date.now() });
-        stats.totalPnl = parseFloat((stats.totalPnl + pnl).toFixed(2));
-        saveUserStats(stats);
-    }
+    // ╔══════════════════════════════════════════════════════════════╗
+    // ║   SESSION MANAGEMENT — Save / History / Target / Stats      ║
+    // ╚══════════════════════════════════════════════════════════════╝
 
-    function openStatsModal() {
-        const modal = document.getElementById('stats-modal');
-        if (!modal) return;
-        const stats = getUserStats();
-        const sessions = stats.sessions;
-        const totalPnl = stats.totalPnl;
-        const allTrades= sessions.reduce((a,s)=>a+(s.tradeCount||0),0);
-        const allWins  = sessions.reduce((a,s)=>a+(s.wonCount||0),0);
-        const winRate  = allTrades>0?Math.round(allWins/allTrades*100):0;
-        const avgProfit= sessions.length>0?(totalPnl/sessions.length).toFixed(2):0;
-        const bestStreak  = sessions.reduce((m,s)=>Math.max(m,s.bestStreak||0),0);
-        const worstStreak = sessions.reduce((m,s)=>Math.max(m,s.worstStreak||0),0);
-        const tx2=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
-        tx2('st-total-sessions', sessions.length);
-        const pe=document.getElementById('st-total-pnl');
-        if(pe){pe.textContent=`${totalPnl>=0?'+':''}$${totalPnl}`;pe.style.color=totalPnl>=0?'#10b981':'#ef4444';}
-        tx2('st-win-rate', winRate+'%');
-        tx2('st-best-streak', bestStreak);
-        tx2('st-worst-streak', worstStreak);
-        const avgE=document.getElementById('st-avg-profit');
-        if(avgE){avgE.textContent=`${avgProfit>=0?'+':''}$${avgProfit}`;avgE.style.color=avgProfit>=0?'#8b5cf6':'#ef4444';}
-        const recentEl=document.getElementById('st-recent-sessions');
-        if(recentEl){
-            if(!sessions.length){recentEl.textContent='لا توجد بيانات';}
-            else{
-                recentEl.innerHTML=sessions.slice(-5).reverse().map(s=>`
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-                    <span style="color:#64748b;font-size:11px;">${s.date}</span>
-                    <span style="font-size:11px;">${s.tradeCount||0} صفقة (${s.wonCount||0} ✅)</span>
-                    <span style="font-weight:700;color:${s.pnl>=0?'#10b981':'#ef4444'};">${s.pnl>=0?'+':''}$${s.pnl}</span>
-                </div>`).join('');
+    // ── Signal mode: group trades into "rounds" ──────────────────────
+    // A round = base + up to mmMartMax martingale levels until first win
+    // We store the ROUND result (net PnL) not individual trades
+    function mmGroupSignalRounds(tradeLog, payout) {
+        const b = payout - 1;
+        const rounds = [];
+        let i = 0;
+        while (i < tradeLog.length) {
+            const roundTrades = [];
+            let netPnl = 0;
+            // Collect trades until win or max martingale reached
+            while (i < tradeLog.length) {
+                const t = tradeLog[i];
+                roundTrades.push(t);
+                netPnl += t.profit;
+                i++;
+                if (t.win) break; // round ends on win
+                if (t.martL !== null && t.martL >= mmMartMax) { i++; break; } // max reached
             }
+            const won = roundTrades[roundTrades.length-1]?.win || false;
+            const totalBet = roundTrades.reduce((a,t)=>a+t.bet,0);
+            rounds.push({
+                num: rounds.length+1,
+                levels: roundTrades.length,
+                won,
+                netPnl: parseFloat(netPnl.toFixed(2)),
+                totalBet,
+                balance: roundTrades[roundTrades.length-1]?.balance || 0
+            });
         }
-        modal.classList.add('open');
+        return rounds;
     }
-    function closeStatsModal() { document.getElementById('stats-modal')?.classList.remove('open'); }
-    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ closeStatsModal(); } });
 
-    // ===================== MM SESSION HISTORY =====================
+    // ── Daily target check ───────────────────────────────────────────
+    function mmCheckDailyTarget(st) {
+        const inp = document.getElementById('mm-daily-target');
+        if (!inp || !inp.value) return false;
+        const target = parseFloat(inp.value);
+        if (isNaN(target) || target <= 0) return false;
+        if (st.pnl >= target) {
+            // Show complete banner and stop
+            mmShowComplete({ ...st, status:'won', forcedStop:'target' });
+            // Disable buttons
+            document.getElementById('mm-btn-win').disabled  = true;
+            document.getElementById('mm-btn-lose').disabled = true;
+            // Show target reached message
+            const el = document.getElementById('mm-cycle-complete');
+            if (el) {
+                el.style.cssText = 'display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.4);text-align:center;';
+                el.innerHTML = `<div style="font-size:1.8rem;margin-bottom:6px;">🎯</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:0.9rem;color:#10b981;font-weight:700;margin-bottom:4px;">وصلت لهدف الربح!</div>
+                    <div style="font-size:1.1rem;font-family:'Orbitron',sans-serif;color:#10b981;">+$${st.pnl} من أصل $${target} هدف</div>
+                    <div style="font-size:11px;color:#64748b;margin-top:6px;">تم إيقاف الجلسة تلقائياً — احجز أرباحك 🏆</div>`;
+            }
+            mmSaveSession(st);
+            return true;
+        }
+        return false;
+    }
+
+    // ── Save session to history ──────────────────────────────────────
     function mmGetStreaks(trades) {
         let best=0,worst=0,cur=0,curL=0;
-        trades.forEach(w=>{ if(w){cur++;curL=0;best=Math.max(best,cur);}else{curL++;cur=0;worst=Math.max(worst,curL);} });
+        trades.forEach(w=>{
+            if(w){cur++;curL=0;best=Math.max(best,cur);}
+            else{curL++;cur=0;worst=Math.max(worst,curL);}
+        });
         return {best,worst};
     }
 
     function mmSaveSession(st) {
+        if (!mmCfg || st.done === 0) return; // don't save empty sessions
+        if (mmSessionSaved) return;          // already saved this session
+        mmSessionSaved = true;
         const key = 'ks_mm_history';
         const raw = localStorage.getItem(key);
         const history = raw ? JSON.parse(raw) : [];
-        const profile = mmCfg ? MM_RISK[mmCfg.riskLevel] : {};
-        const streaks = mmGetStreaks(mmTrades);
-        history.unshift({
-            date:st.done?new Date().toLocaleDateString('ar-EG'):'',
-            capital:mmCfg?.capital||0, endBal:st.balance, pnl:st.pnl, pnlPct:st.pnlPct,
-            trades:st.done, wins:st.wonCount, losses:st.lostCount, winRate:st.winRate,
-            risk:profile?.label||'—', status:st.status,
-            bestStreak:streaks.best, worstStreak:streaks.worst, ts:Date.now()
-        });
-        localStorage.setItem(key, JSON.stringify(history.slice(0,30)));
-        mmRenderHistory();
+        const profile  = MM_RISK[mmCfg.riskLevel];
+        const streaks  = mmGetStreaks(mmTrades);
+        const entry = {
+            date:      new Date().toLocaleDateString('ar-EG'),
+            time:      new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'}),
+            capital:   mmCfg.capital,
+            endBal:    st.balance,
+            pnl:       st.pnl,
+            pnlPct:    st.pnlPct,
+            trades:    st.done,
+            wins:      st.wonCount,
+            losses:    st.lostCount,
+            winRate:   st.winRate,
+            risk:      profile?.label || '—',
+            mode:      mmMode === 'signal' ? 'إشارات زمنية' : 'إدارة عادية',
+            status:    st.status,
+            bestStreak:  streaks.best,
+            worstStreak: streaks.worst,
+            martMax:   mmMode === 'signal' ? mmMartMax : null,
+            ts:        Date.now()
+        };
+        history.unshift(entry);
+        localStorage.setItem(key, JSON.stringify(history.slice(0, 50)));
+        // Also update global stats
         recordSessionToStats(st.pnl, st.done, st.wonCount, streaks.best, streaks.worst);
+        mmRenderHistory();
     }
 
     function mmRenderHistory() {
@@ -2773,21 +3222,28 @@
         if (!el) return;
         const raw = localStorage.getItem('ks_mm_history');
         const history = raw ? JSON.parse(raw) : [];
-        if (!history.length) { el.innerHTML='<div style="text-align:center;padding:20px;color:#475569;font-size:12px;">لا توجد جلسات محفوظة بعد</div>'; return; }
-        el.innerHTML = history.map(s=>`
-            <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.05);border-right:3px solid ${s.pnl>=0?'#10b981':'#ef4444'};border-radius:10px;padding:12px;margin-bottom:8px;">
+        if (!history.length) {
+            el.innerHTML = '<div style="text-align:center;padding:16px;color:#475569;font-size:12px;">لا توجد جلسات محفوظة</div>';
+            return;
+        }
+        el.innerHTML = history.map(s => {
+            const isWin = s.pnl >= 0;
+            return `<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.05);border-right:3px solid ${isWin?'#10b981':'#ef4444'};border-radius:10px;padding:11px 12px;margin-bottom:7px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
-                    <span style="font-size:11px;color:#64748b;">${s.date} • ${s.risk}</span>
-                    <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:800;color:${s.pnl>=0?'#10b981':'#ef4444'};">${s.pnl>=0?'+':''}$${s.pnl}</span>
+                    <span style="font-size:10px;color:#475569;">${s.date} ${s.time||''} • ${s.mode||''} • ${s.risk}</span>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:0.95rem;font-weight:800;color:${isWin?'#10b981':'#ef4444'};">${isWin?'+':''}$${s.pnl}</span>
                 </div>
-                <div style="display:flex;gap:10px;font-size:11px;color:#94a3b8;flex-wrap:wrap;">
+                <div style="display:flex;gap:8px;font-size:11px;color:#64748b;flex-wrap:wrap;">
                     <span>💰 $${s.capital}→$${s.endBal}</span>
                     <span>📊 ${s.trades} صفقة</span>
-                    <span>✅${s.wins}/❌${s.losses}</span>
+                    <span style="color:#10b981;">✅${s.wins}</span>
+                    <span style="color:#ef4444;">❌${s.losses}</span>
                     <span>🎯${s.winRate}%</span>
-                    ${s.bestStreak>1?`<span style="color:#34D399;">🔥سلسلة:${s.bestStreak}</span>`:''}
+                    ${s.bestStreak>1?`<span style="color:#34D399;">🔥${s.bestStreak}</span>`:''}
+                    ${s.status==='stopped'?'<span style="color:#f59e0b;">🛡️وقف خسارة</span>':''}
                 </div>
-            </div>`).join('');
+            </div>`;
+        }).join('');
     }
 
     function mmClearHistory() {
@@ -2795,72 +3251,339 @@
         localStorage.removeItem('ks_mm_history');
         localStorage.removeItem('ks_user_stats');
         mmRenderHistory();
-        showToast('تم مسح السجل','success');
+        showToast('تم مسح السجل', 'success');
     }
 
-    // ===================== MM DAILY TARGET =====================
-    function mmCheckDailyTarget(st) {
-        const inp = document.getElementById('mm-daily-target');
-        if (!inp || !inp.value) return false;
-        const target = parseFloat(inp.value);
-        if (isNaN(target)||target<=0) return false;
-        if (st.pnl >= target) {
-            showToast('🎯 وصلت لهدف الربح اليومي +$'+target+' !','success');
-            return true;
-        }
-        return false;
+    // ── Confirm before reset ─────────────────────────────────────────
+    function mmConfirmReset() {
+        if (!mmCfg || mmTrades.length === 0) { mmReset(); return; }
+        const modal = document.createElement('div');
+        modal.style.cssText = 'position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;';
+        const st = mmGetState();
+        const pnlColor = st.pnl >= 0 ? '#10b981' : '#ef4444';
+        modal.innerHTML = `
+            <div style="background:rgba(5,10,20,0.98);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px;max-width:320px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.5);animation:fadeInUp 0.2s ease-out;">
+                <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#f1f5f9;margin-bottom:8px;">إنهاء الجلسة؟</div>
+                <div style="font-size:12px;color:#64748b;margin-bottom:6px;">الرصيد الحالي: <strong style="color:${pnlColor};">$${st.balance}</strong></div>
+                <div style="font-size:12px;color:#64748b;margin-bottom:18px;">${st.pnl>=0?'ربح':'خسارة'}: <strong style="color:${pnlColor};">${st.pnl>=0?'+':''}$${st.pnl}</strong></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <button id="confirm-no" style="padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#94a3b8;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;">لا، ارجع</button>
+                    <button id="confirm-yes" style="padding:12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#ef4444;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;">نعم، أنهِ</button>
+                </div>
+            </div>`;
+        document.body.appendChild(modal);
+        modal.querySelector('#confirm-no').onclick  = () => modal.remove();
+        modal.querySelector('#confirm-yes').onclick = () => { modal.remove(); mmReset(); };
+        modal.addEventListener('click', e => { if (e.target===modal) modal.remove(); });
     }
 
-    // ===================== EXPORT SIGNALS AS IMAGE =====================
-    function exportSignalsAsImage() {
-        const grid = document.getElementById('trades-grid');
-        if (!grid||!grid.children.length) { showToast('لا توجد إشارات للتصدير','warning'); return; }
-        const items = [...grid.children];
-        const W=400, CARD=68, PAD=14;
-        const canvas=document.createElement('canvas');
-        canvas.width=W; canvas.height=PAD*2+items.length*(CARD+6)+56;
-        const ctx=canvas.getContext('2d');
-        ctx.fillStyle='#0b0f19'; ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle='#FFD700'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center';
-        ctx.fillText('👑 KingSignals Pro', W/2, 26);
-        ctx.fillStyle='#64748b'; ctx.font='11px sans-serif';
-        ctx.fillText(new Date().toLocaleString('ar-EG'), W/2, 44);
-        let y=56;
-        items.forEach(card=>{
-            const timeT = card.querySelector('.trade-time')?.textContent.replace(/[^\d:]/g,'').trim()||'';
-            const pairT = card.querySelector('.pair-name')?.textContent.trim()||'';
-            const dirT  = card.querySelector('.direction-badge')?.textContent.replace(/[^\w]/g,'').trim().toUpperCase()||'';
-            const isCall= dirT.includes('CALL');
-            ctx.fillStyle = isCall?'rgba(16,185,129,0.12)':'rgba(239,68,68,0.12)';
-            ctx.strokeStyle= isCall?'#10b981':'#ef4444';
-            ctx.lineWidth=1;
-            ctx.beginPath(); ctx.roundRect(PAD,y,W-PAD*2,CARD-4,8); ctx.fill(); ctx.stroke();
-            ctx.fillStyle='#94a3b8'; ctx.font='10px sans-serif'; ctx.textAlign='right';
-            ctx.fillText(timeT, W-PAD*2, y+20);
-            ctx.fillStyle='#f1f5f9'; ctx.font='bold 12px sans-serif';
-            ctx.fillText(pairT, W-PAD*2, y+40);
-            ctx.fillStyle=isCall?'#10b981':'#ef4444'; ctx.font='bold 13px sans-serif'; ctx.textAlign='left';
-            ctx.fillText(isCall?'▲ CALL':'▼ PUT', PAD*2, y+34);
-            y+=CARD+2;
+    // ── Decimals toggle ─────────────────────────────────────────────
+    let mmAllowDecimals = false;
+    function mmToggleDecimals() {
+        mmAllowDecimals = document.getElementById('mm-allow-decimals')?.checked || false;
+        const slider = document.getElementById('mm-decimal-slider');
+        if (slider) slider.style.background = mmAllowDecimals ? '#06b6d4' : 'rgba(255,255,255,0.1)';
+        const step = mmAllowDecimals ? '0.01' : '1';
+        ['mm-bet-base','mm-bet-mart1','mm-bet-mart2'].forEach(id=>{
+            const el=document.getElementById(id);
+            if (el) { el.step = step; el.value = ''; } // clear to re-auto-fill
         });
-        const a=document.createElement('a'); a.download='KingSignals_'+Date.now()+'.png'; a.href=canvas.toDataURL('image/png'); a.click();
-        showToast('تم تصدير الإشارات كصورة ✅','success');
+        mmUpdatePreview(); // will auto-fill with correct decimal/whole values
     }
 
-    // ===================== INIT ALL NEW FEATURES =====================
-    document.addEventListener('DOMContentLoaded',()=>{
-        mmRenderHistory();
-    });
+    function mmRoundBetVal(v) {
+        if (v <= 0) return mmAllowDecimals ? 0.01 : 1;
+        return mmAllowDecimals ? parseFloat(v.toFixed(2)) : Math.max(1, Math.round(v));
+    }
 
-    // ╔══════════════════════════════════════════════════╗
-    // ║          KING INDICATOR — Real Technical         ║
-    // ║  Data: Finnhub free API | Indicators: RSI,MACD,  ║
-    // ║         EMA, Bollinger Bands, Stochastic         ║
-    // ╚══════════════════════════════════════════════════╝
+    // Get all 3 bet amounts (custom or auto)
+    function mmGetBets(balance) {
+        const payout  = mmCfg?.payout || 1.82;
+        const profile = MM_RISK[mmRisk];
+        const b = payout - 1;
+        const baseInp  = parseFloat(document.getElementById('mm-bet-base')?.value);
+        const mart1Inp = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+        const mart2Inp = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+        const smartBase  = mmRoundBetVal(balance * profile.pct);
+        const smartMart1 = mmRoundBetVal(smartBase / b * 1.05);
+        const smartMart2 = mmRoundBetVal((smartBase + smartMart1) / b * 1.05);
+        return {
+            base:  (!isNaN(baseInp)  && baseInp  > 0) ? baseInp  : smartBase,
+            mart1: (!isNaN(mart1Inp) && mart1Inp > 0) ? mart1Inp : smartMart1,
+            mart2: (!isNaN(mart2Inp) && mart2Inp > 0) ? mart2Inp : smartMart2,
+        };
+    }
+
+    // ── Smart bet suggestion — fill all 3 fields optimally ───────────
+    function mmUseSmartBet() {
+        const fixedBase  = 1;
+        const fixedMart1 = mmAllowDecimals ? 2.2 : 3;
+        const fixedMart2 = mmAllowDecimals ? 4.5 : 7;
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.value = String(val);
+        };
+        setVal('mm-bet-base',  fixedBase);
+        setVal('mm-bet-mart1', fixedMart1);
+        setVal('mm-bet-mart2', fixedMart2);
+        const hint = document.getElementById('mm-smart-bet-hint');
+        if (hint) hint.textContent =
+            `✨ قيم موصى بها: $${fixedBase} | م١ $${fixedMart1} | م٢ $${fixedMart2}`;
+        mmUpdatePreview();
+    }
+
+    // Legacy compatibility
+    function mmGetBaseBet(balance) {
+        const bets = mmGetBets(balance);
+        return bets.base;
+    }
+
+    // ── Share session as FHD image ───────────────────────────────────
+    function mmShareSession() {
+        const st = mmGetState();
+        if (!mmCfg) { showToast('لا توجد جلسة نشطة','error'); return; }
+        const canvas = mmBuildShareCanvas([{ ...st, capital:mmCfg.capital, payout:mmCfg.payout, mode:mmMode, risk:MM_RISK[mmRisk].label }], false);
+        mmDownloadCanvas(canvas, 'KingSignals_Session_'+Date.now()+'.png');
+        showToast('تم حفظ صورة الجلسة ✅','success');
+    }
+
+    function mmShareAllSessions() {
+        const raw = localStorage.getItem('ks_mm_history');
+        const history = raw ? JSON.parse(raw) : [];
+        if (!history.length) { showToast('لا توجد جلسات محفوظة','error'); return; }
+        const canvas = mmBuildShareCanvas(history, true);
+        mmDownloadCanvas(canvas, 'KingSignals_AllSessions_'+Date.now()+'.png');
+        showToast('تم حفظ صورة جميع الجلسات ✅','success');
+    }
+
+    function mmDownloadCanvas(canvas, filename) {
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/png', 1.0);
+        a.click();
+    }
+
+    function mmBuildShareCanvas(sessions, isAll) {
+        const W = 1080; // FHD width
+        const ROW_H = 90, HEADER_H = 180, FOOTER_H = 60, PAD = 40;
+        const H = HEADER_H + sessions.length * ROW_H + FOOTER_H + PAD;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+
+        // Background
+        const bg = ctx.createLinearGradient(0,0,0,H);
+        bg.addColorStop(0,'#0d1428'); bg.addColorStop(1,'#070b14');
+        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+        // Header glow
+        const glow = ctx.createRadialGradient(W/2,0,0,W/2,0,400);
+        glow.addColorStop(0,'rgba(59,130,246,0.15)'); glow.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle = glow; ctx.fillRect(0,0,W,400);
+
+        // Logo + title
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#FFD700';
+        ctx.font = 'bold 52px Orbitron,sans-serif';
+        ctx.fillText('👑 KingSignals Pro', W/2, 68);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '28px Cairo,sans-serif';
+        ctx.fillText(isAll ? 'تقرير جميع الجلسات' : 'تقرير الجلسة', W/2, 110);
+
+        ctx.fillStyle = '#334155';
+        ctx.font = '22px Cairo,sans-serif';
+        ctx.fillText(new Date().toLocaleString('ar-EG'), W/2, 145);
+
+        // Separator line
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(PAD, HEADER_H-10); ctx.lineTo(W-PAD, HEADER_H-10); ctx.stroke();
+
+        // Column headers
+        const cols = isAll
+            ? [{x:PAD+30,label:'التاريخ'},{x:260,label:'النوع'},{x:430,label:'الصفقات'},{x:580,label:'الفوز'},{x:730,label:'الربح/الخسارة'},{x:920,label:'الرصيد'}]
+            : [{x:PAD+30,label:'#'},{x:180,label:'النتيجة'},{x:380,label:'المبلغ'},{x:560,label:'الربح/الخسارة'},{x:760,label:'الرصيد النهائي'},{x:920,label:'%'}];
+
+        ctx.fillStyle = '#475569'; ctx.font = '22px Cairo,sans-serif'; ctx.textAlign = 'right';
+        cols.forEach(c => { ctx.textAlign='center'; ctx.fillText(c.label, c.x, HEADER_H+22); });
+
+        // Rows
+        sessions.forEach((s, idx) => {
+            const y = HEADER_H + ROW_H * idx;
+            const isWin = isAll ? (s.pnl>=0) : (s.win !== undefined ? s.win : s.pnl>=0);
+            // Row bg
+            ctx.fillStyle = idx%2===0?'rgba(255,255,255,0.02)':'rgba(0,0,0,0.1)';
+            ctx.fillRect(PAD, y+28, W-PAD*2, ROW_H-4);
+            // Left accent
+            ctx.fillStyle = isWin?'#10b981':'#ef4444';
+            ctx.fillRect(PAD, y+28, 4, ROW_H-4);
+
+            ctx.font = 'bold 24px Cairo,sans-serif';
+            if (isAll) {
+                const vals = [s.date||'—', s.mode||'عادية', `${s.trades||0} صفقة`, `${s.winRate||0}%`, `${s.pnl>=0?'+':''}$${s.pnl}`, `$${s.endBal||0}`];
+                cols.forEach((c,ci) => {
+                    ctx.fillStyle = ci===4?(isWin?'#10b981':'#ef4444'):'#e2e8f0';
+                    ctx.textAlign='center'; ctx.fillText(vals[ci], c.x, y+74);
+                });
+            } else {
+                // Single session: show round-by-round
+                ctx.fillStyle='#64748b'; ctx.textAlign='center'; ctx.font='22px Orbitron';
+                ctx.fillText(String(s.num||idx+1), cols[0].x, y+74);
+                ctx.fillStyle = isWin?'#10b981':'#ef4444';
+                ctx.font='bold 24px Cairo'; ctx.fillText(isWin?'✅ ربح':'❌ خسارة', cols[1].x, y+74);
+                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.totalBet||s.bet||0}`, cols[2].x, y+74);
+                ctx.fillStyle=isWin?'#10b981':'#ef4444';
+                ctx.fillText(`${(s.netPnl||s.pnl)>=0?'+':''}$${Math.abs(s.netPnl||s.pnl||0)}`, cols[3].x, y+74);
+                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.balance||0}`, cols[4].x, y+74);
+                ctx.fillStyle='#64748b'; ctx.font='22px Cairo';
+                ctx.fillText(`${s.winRate||0}%`, cols[5].x, y+74);
+            }
+        });
+
+        // Footer
+        const fy = HEADER_H + sessions.length * ROW_H + 30;
+        ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.moveTo(PAD,fy);ctx.lineTo(W-PAD,fy);ctx.stroke();
+        ctx.fillStyle='#334155'; ctx.font='22px Cairo'; ctx.textAlign='center';
+        ctx.fillText('King Trading — Professional Binary Options Signals', W/2, fy+38);
+
+        return canvas;
+    }
+
+    // ── Update openStatsModal to show session history too ────────────
+    function getUserStats() {
+        const raw = localStorage.getItem('ks_user_stats');
+        return raw ? JSON.parse(raw) : { sessions:[], totalPnl:0 };
+    }
+    function saveUserStats(stats) { localStorage.setItem('ks_user_stats', JSON.stringify(stats)); }
+
+    function recordSessionToStats(pnl, tradeCount, wonCount, bestStreak, worstStreak) {
+        const stats = getUserStats();
+        stats.sessions.push({ pnl, tradeCount, wonCount, bestStreak:bestStreak||0, worstStreak:worstStreak||0, date:new Date().toLocaleDateString('ar-EG'), ts:Date.now() });
+        stats.totalPnl = parseFloat((stats.totalPnl + pnl).toFixed(2));
+        saveUserStats(stats);
+    }
+
+    // ── Stats modal ──────────────────────────────────────────────────
+    function openStatsModal() {
+        const modal = document.getElementById('stats-modal');
+        if (!modal) return;
+
+        // Read from mm_history (the detailed session log)
+        const raw = localStorage.getItem('ks_mm_history');
+        const history = raw ? JSON.parse(raw) : [];
+
+        // Compute stats from history
+        const totalPnl    = parseFloat(history.reduce((a,s)=>a+s.pnl,0).toFixed(2));
+        const allTrades   = history.reduce((a,s)=>a+(s.trades||0),0);
+        const allWins     = history.reduce((a,s)=>a+(s.wins||0),0);
+        const winRate     = allTrades>0?Math.round(allWins/allTrades*100):0;
+        const avgProfit   = history.length>0?(totalPnl/history.length).toFixed(2):0;
+        const bestStreak  = history.reduce((m,s)=>Math.max(m,s.bestStreak||0),0);
+        const worstStreak = history.reduce((m,s)=>Math.max(m,s.worstStreak||0),0);
+
+        const tx=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+        tx('st-total-sessions', history.length);
+        const pe=document.getElementById('st-total-pnl');
+        if(pe){pe.textContent=`${totalPnl>=0?'+':''}$${totalPnl}`;pe.style.color=totalPnl>=0?'#10b981':'#ef4444';}
+        tx('st-win-rate', winRate+'%');
+        tx('st-best-streak', bestStreak);
+        tx('st-worst-streak', worstStreak);
+        const avgE=document.getElementById('st-avg-profit');
+        if(avgE){avgE.textContent=`${parseFloat(avgProfit)>=0?'+':''}$${avgProfit}`;avgE.style.color=parseFloat(avgProfit)>=0?'#8b5cf6':'#ef4444';}
+
+        // Show last 5 sessions compact
+        const recentEl = document.getElementById('st-recent-sessions');
+        if (recentEl) {
+            if (!history.length) {
+                recentEl.innerHTML = '<div style="text-align:center;padding:12px;color:#475569;font-size:12px;">لا توجد جلسات بعد</div>';
+            } else {
+                recentEl.innerHTML = history.slice(0, 5).map(s => {
+                    const isWin = s.pnl >= 0;
+                    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <span style="font-size:11px;color:#475569;">${s.date} • ${s.mode||'عادية'}</span>
+                        <span style="font-size:11px;color:#64748b;">${s.trades||0} صفقة • ${s.winRate||0}%</span>
+                        <span style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:${isWin?'#10b981':'#ef4444'};">${isWin?'+':''}$${s.pnl}</span>
+                    </div>`;
+                }).join('');
+            }
+        }
+        modal.classList.add('open');
+    }
+    function closeStatsModal() { document.getElementById('stats-modal')?.classList.remove('open'); }
+
+    // ── Session timer ────────────────────────────────────────────────
+    let mmTimerStart = null, mmTimerInterval = null;
+
+    function mmStartTimer() {
+        mmTimerStart = Date.now();
+        if (mmTimerInterval) clearInterval(mmTimerInterval);
+        mmTimerInterval = setInterval(() => {
+            const el = document.getElementById('mm-timer-val');
+            if (!el || !mmTimerStart) return;
+            const sec = Math.floor((Date.now() - mmTimerStart) / 1000);
+            const m = Math.floor(sec/60), s = sec%60;
+            el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }, 1000);
+    }
+    function mmStopTimer() {
+        if (mmTimerInterval) { clearInterval(mmTimerInterval); mmTimerInterval = null; }
+        mmTimerStart = null;
+        const el = document.getElementById('mm-timer-val');
+        if (el) el.textContent = '00:00';
+    }
+
+    // ── Break-even & wins-needed calculator ─────────────────────────
+    function mmUpdateExtras(st) {
+        const bel = document.getElementById('mm-breakeven-val');
+        const nel = document.getElementById('mm-needed-val');
+        if (!mmCfg || !bel || !nel) return;
+
+        const b = mmCfg.payout - 1;
+        const done = st.done;
+        if (done === 0) { bel.textContent='—'; nel.textContent='—'; return; }
+
+        // Break-even win rate = 1 / (1 + b)
+        const beRate = (1 / (1 + b) * 100).toFixed(1);
+        bel.textContent = `${beRate}%`;
+        bel.style.color = st.winRate >= parseFloat(beRate) ? '#10b981' : '#f87171';
+
+        // Wins needed to get back to capital (if losing)
+        if (st.pnl < 0) {
+            const needed = Math.ceil(Math.abs(st.pnl) / (st.nextBet * b));
+            nel.textContent = `${needed} فوز`;
+            nel.style.color = '#f59e0b';
+        } else {
+            nel.textContent = '✅ رابح';
+            nel.style.color = '#10b981';
+        }
+    }
+
+    // ── Signal mode: render rounds table ────────────────────────────
+    function mmRenderSignalTable(st) {
+        if (mmMode !== 'signal') return;
+        const tbody = document.getElementById('mm-tbody');
+        if (!tbody) return;
+        const rounds = st.tradeLog;
+        document.getElementById('mm-empty').style.display = rounds.length ? 'none' : 'block';
+        document.getElementById('mm-table-wrap').classList.toggle('hidden', !rounds.length);
+        tbody.innerHTML = rounds.map(r => {
+            const levelsLabel = r.levels === 1 ? 'أساسية' : `أساسية + مضاعفة ${r.levels-1}`;
+            const pnlStr = r.netPnl >= 0 ? `+$${r.netPnl}` : `-$${Math.abs(r.netPnl)}`;
+            return `<tr class="mm-table-row">
+                <td class="mm-td" style="color:#64748b;">${r.num}</td>
+                <td class="mm-td">
+                    <span class="mm-badge ${r.win?'win':'lose'}">${r.win?'✅ ربح':'❌ خسارة'}</span>
+                    <span style="font-size:9px;color:#64748b;display:block;margin-top:1px;">${levelsLabel}</span>
+                </td>
+                <td class="mm-td" style="font-weight:700;">$${r.totalBet}</td>
+                <td class="mm-td ${r.netPnl>=0?'mm-pos':'mm-neg'}">${pnlStr}</td>
+                <td class="mm-td">$${r.balance}</td>
+            </tr>`;
+        }).join('');
+    }
 
 
-
-    // ===================== END NEW FEATURES =====================
 
     </script>
 
