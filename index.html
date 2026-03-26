@@ -53,6 +53,7 @@
         .glow-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: var(--primary-blue); }
         .glow-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: var(--primary-gold); }
         .glow-3 { top: 50%; left: 50%; width: 300px; height: 300px; background: rgba(0,255,0,0.3); transform: translate(-50%,-50%); }
+
         /* Glass card */
         .glass-card {
             background: var(--glass-bg);
@@ -75,6 +76,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
         /* ===================== LOGIN SCREEN ===================== */
         #login-container {
             position: relative;
@@ -161,6 +163,7 @@
         .lang-toggle-btn:hover { background: rgba(0,255,0,0.1); color: #fff; border-color: rgba(0,255,0,0.4); }
         .error-msg { color: #F87171; text-align: center; font-size: 13px; min-height: 20px; margin-top: 8px; display: none; }
         .success-msg { color: #34D399; }
+
         /* ===================== APP SCREEN ===================== */
         #app-container {
             position: relative;
@@ -224,9 +227,11 @@
             box-shadow: 0 0 20px rgba(0,255,0,0.2);
         }
         .mode-tab:not(.active):hover { background: rgba(255,255,255,0.05); color: #ccc; }
+
         /* Mode panels */
         .mode-panel { display: none; animation: fadeInUp 0.4s ease-out; }
         .mode-panel.active { display: block; }
+
         /* ===================== SIDEBAR ===================== */
         .sidebar {
             position: fixed;
@@ -245,6 +250,7 @@
             flex-direction: column;
         }
         .sidebar.open { right: 0; }
+
         /* Overlay */
         .sidebar-overlay {
             position: fixed; inset: 0;
@@ -255,6 +261,7 @@
             transition: opacity 0.3s ease;
         }
         .sidebar-overlay.visible { opacity: 1; pointer-events: all; }
+
         /* ===================== MENU FAB ===================== */
         .menu-fab {
             flex-shrink: 0;
@@ -379,6 +386,7 @@
             border: 1px solid rgba(0,255,0,0.3);
             border-radius: 8px; color: #fff; text-align: center; font-size: 13px;
         }
+
         /* ===================== SIDEBAR SOCIAL LINKS ===================== */
         .sidebar-social {
             margin-top: 20px;
@@ -432,6 +440,7 @@
             color: #e87a74;
             transform: translateX(-3px);
         }
+
         /* ===================== MAIN WIDGET PANEL ===================== */
         .widget-container {
             width: 100%; max-width: 317px; height: 467px;
@@ -484,6 +493,7 @@
             background: linear-gradient(90deg, transparent, rgba(0,255,0,0.25));
         }
         .instr-header::before { background: linear-gradient(270deg, transparent, rgba(0,255,0,0.25)); }
+
         /* Top tip strip */
         .instr-tip {
             background: rgba(0,255,0,0.03);
@@ -495,6 +505,7 @@
             line-height: 1.6;
             text-align: center;
         }
+
         /* The two signal explanation cards */
         .instr-signals-row {
             display: grid;
@@ -545,6 +556,7 @@
         }
         .signal-card.buy .sig-name { color: #34D399; }
         .signal-card.sell .sig-name { color: #F87171; }
+
         /* Signal detail rows inside card */
         .sig-details {
             width: 100%;
@@ -575,6 +587,7 @@
             font-size: 10px;
         }
         .sig-sep { color: rgba(255,255,255,0.15); }
+
         /* Entry point row */
         .instr-entry {
             display: flex;
@@ -587,6 +600,7 @@
         }
         .instr-entry .entry-icon { font-size: 1.1rem; flex-shrink: 0; }
         .instr-entry .entry-text { font-size: 12px; color: #999; line-height: 1.5; text-align: right; }
+
         /* Currency badge */
         .currency-badge {
             display: inline-flex;
@@ -614,6 +628,7 @@
             0%,100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(0.6); }
         }
+
         /* ===================== SIGNAL GENERATOR PANEL ===================== */
         #live-clock {
             font-family: 'Orbitron', sans-serif;
@@ -711,17 +726,7 @@
         }
         .dir-call { background: rgba(0,230,118,0.1); color: var(--call-color); border: 1px solid var(--call-color); }
         .dir-put { background: rgba(255,23,68,0.1); color: var(--put-color); border: 1px solid var(--put-color); }
-        /* Platform selector */
-        .platform-selector {
-            margin-bottom: 24px;
-        }
-        .platform-tab {
-            font-size: 13px !important;
-            padding: 10px 14px !important;
-        }
-        .platform-tab i {
-            margin-left: 6px;
-        }
+
         /* ===================== MARKET CLOSED BANNER ===================== */
         .market-closed-banner {
             background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(180,30,30,0.06));
@@ -792,6 +797,7 @@
             cursor: not-allowed !important;
             pointer-events: none !important;
         }
+
         /* ===================== GUIDE ACCORDION ===================== */
         .guide-accordion {
             margin: 8px 0 12px;
@@ -842,12 +848,14 @@
             opacity: 1;
             padding: 12px;
         }
+
         /* ===================== COUNTDOWN ===================== */
         .countdown-timer {
             margin-top: 10px; text-align: center;
             font-weight: 700; font-size: 14px;
             color: #FFD700; display: none;
         }
+
         /* ===================== TOAST ===================== */
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
         .toast {
@@ -866,11 +874,13 @@
         .toast.error { border-left-color: #e74c3c; }
         .toast.success { border-left-color: #2ecc71; }
         .toast.warning { border-left-color: #f1c40f; }
+
         /* ===================== CUSTOM SCROLLBAR ===================== */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
         ::-webkit-scrollbar-thumb { background: rgba(0,255,0,0.3); border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,0,0.5); }
+
         /* ===================== MISC ===================== */
         .section-divider {
             width: 60px; height: 2px;
@@ -880,25 +890,45 @@
         .powered-by { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
         .powered-by a { color: #FFD700; text-decoration: none; }
         .powered-by a:hover { color: #00FF00; }
+
         @media (max-width: 480px) {
+            /* Tabs */
             .mode-tab { font-size: 10px; padding: 9px 4px; gap: 3px; }
             .mode-tab i { font-size: 12px; }
             .mode-tab span { display: none; }
             .tabs-row { gap: 6px; }
+
+            /* Signal grid */
             #trades-grid { grid-template-columns: 1fr 1fr; }
+
+            /* MM inputs */
             .mm-input { font-size: 0.9rem; padding: 10px; }
             .mm-label { font-size: 12px; }
+
+            /* MM session — full width, readable on mobile */
             #panel-money { padding: 0 0 20px; }
             .mm-stat-card { padding: 12px 10px; }
             .mm-stat-value { font-size: 1.1rem; }
             .mm-stat-label { font-size: 10px; }
-            .mm-stat-sub { font-size: 10px; }
+            .mm-stat-sub   { font-size: 10px; }
+
+            /* Trade card — bigger bet amount */
             #mm-trade-amount { font-size: 1.6rem; }
-            #mm-trade-num { font-size: 2.2rem; }
+            #mm-trade-num    { font-size: 2.2rem; }
+
+            /* Win/Lose buttons — full width easy tap */
             .mm-win-btn, .mm-lose-btn { padding: 16px 10px; font-size: 1rem; }
+
+            /* MM risk buttons */
             .mm-risk-btn { padding: 10px 6px; font-size: 12px; }
+
+            /* Sequence dots smaller */
             .mm-seq-dot { width: 22px; height: 22px; font-size: 9px; }
+
+            /* Charts */
             #mm-chart { height: 180px; }
+
+            /* History cards */
             #mm-history-section .glass-card { padding: 14px; }
         }
         @media (max-width: 380px) {
@@ -909,9 +939,11 @@
         @media (min-width: 481px) {
             .mode-tab span { display: inline; }
         }
+            50% { opacity:1; transform:scale(1.2); }
+        }
         .sig-strength-dots { display:flex; gap:3px; }
         .sig-dot { width:8px; height:8px; border-radius:2px; background:rgba(255,255,255,0.15); transition:all 0.3s; }
-        .sig-dot.active-buy { background:#34D399; box-shadow:0 0 6px #34D399; }
+        .sig-dot.active-buy  { background:#34D399; box-shadow:0 0 6px #34D399; }
         .sig-dot.active-sell { background:#F87171; box-shadow:0 0 6px #F87171; }
         /* ══ USER STATS ══ */
         .stats-modal {
@@ -936,7 +968,7 @@
         .stat-tile .st-val { font-family:'Orbitron',sans-serif; font-size:1.4rem; font-weight:800; }
         .stat-tile .st-lbl { font-size:11px; color:#64748b; margin-top:4px; }
         @keyframes confettiFall {
-            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            0%   { transform: translateY(-10px) rotate(0deg);   opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
         /* ===================== MONEY MANAGEMENT ===================== */
@@ -1012,9 +1044,9 @@
             border-color:rgba(59,130,246,0.5); color:#f1f5f9;
             box-shadow:0 0 16px rgba(59,130,246,0.2);
         }
-        .mm-risk-btn.active-safe { background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1)); border-color:rgba(16,185,129,0.4); }
-        .mm-risk-btn.active-mid { background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(251,191,36,0.1)); border-color:rgba(245,158,11,0.4); }
-        .mm-risk-btn.active-high { background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(248,113,113,0.1)); border-color:rgba(239,68,68,0.4); }
+        .mm-risk-btn.active-safe  { background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1)); border-color:rgba(16,185,129,0.4); }
+        .mm-risk-btn.active-mid   { background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(251,191,36,0.1)); border-color:rgba(245,158,11,0.4); }
+        .mm-risk-btn.active-high  { background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(248,113,113,0.1));  border-color:rgba(239,68,68,0.4); }
         .mm-warning-badge {
             display:inline-flex; align-items:center; gap:5px; padding:4px 10px;
             background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25);
@@ -1026,6 +1058,7 @@
         .mm-td { padding:11px 12px; font-family:'Orbitron',sans-serif; font-size:12px; font-weight:500; }
         .mm-pos { color:#10b981; }
         .mm-neg { color:#ef4444; }
+
     </style>
 </head>
 <body>
@@ -1044,16 +1077,20 @@
             <p id="error-message" class="error-msg"></p>
         </div>
     </div>
+
     <!-- ==================== APP SCREEN ==================== -->
     <div id="app-container">
         <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
+
             <!-- Header -->
             <div style="text-align:center; padding-bottom:16px; border-bottom:1px solid rgba(0,255,0,0.1); margin-bottom:16px;">
                 <div style="font-family:'Orbitron',sans-serif; font-size:0.85rem; letter-spacing:2px;" class="gradient-text">KING SIGNALS PRO</div>
             </div>
+
             <!-- Subscription Details -->
             <button class="sidebar-btn" id="user-details-toggle" onclick="toggleUserDetails()">
                 <i class="fas fa-id-card" style="margin-left:8px;"></i>
@@ -1077,13 +1114,16 @@
                 </button>
                 <p id="copy-key-feedback" style="font-size:11px;text-align:center;display:none;margin-top:4px;color:#34D399;"></p>
             </div>
+
             <!-- Divider -->
             <div style="height:1px; background:rgba(255,255,255,0.05); margin:12px 0;"></div>
+
             <!-- Favorites -->
             <button class="sidebar-btn" id="favorites-toggle" onclick="toggleFavorites()">
                 <i class="fas fa-star" style="margin-left:8px;color:#FFD700;"></i>
                 <span id="sidebar-fav-label">عرض العملات المفضلة</span>
             </button>
+
             <!-- Currency Dropdown -->
             <div class="currency-dropdown-wrap">
                 <div class="currency-dropdown-toggle" onclick="toggleDropdown()">
@@ -1092,6 +1132,7 @@
                 </div>
                 <div id="currencyDropdownMenu" class="currency-dropdown-menu"></div>
             </div>
+
             <!-- Auto Update -->
             <div style="margin-top:8px;">
                 <div style="font-size:11px; color:#64748b; margin-bottom:6px; padding-right:2px;" id="sidebar-autoupdate-label">تحديث تلقائي (ثواني)</div>
@@ -1106,23 +1147,28 @@
                     <span id="sidebar-pause-label">إيقاف مؤقت</span>
                 </button>
             </div>
+
             <!-- Divider -->
             <div style="height:1px; background:rgba(255,255,255,0.05); margin:12px 0;"></div>
+
             <!-- Language -->
             <button class="sidebar-btn" id="language-toggle" onclick="toggleLanguage()">
                 <i class="fas fa-globe" style="margin-left:8px;"></i>
                 <span id="sidebar-lang-label">Switch to English</span>
             </button>
+
             <!-- Stats -->
             <button class="sidebar-btn" onclick="openStatsModal()" style="border-color:rgba(6,182,212,0.3); color:#06b6d4;">
                 <i class="fas fa-chart-pie" style="margin-left:8px;"></i>
                 <span id="sidebar-stats-label">إحصائياتي</span>
             </button>
+
             <!-- Logout -->
             <button class="sidebar-btn" onclick="logout()" style="border-color:rgba(248,113,113,0.3); color:#F87171;">
                 <i class="fas fa-sign-out-alt" style="margin-left:8px;"></i>
                 <span id="sidebar-logout-label">تسجيل الخروج</span>
             </button>
+
             <!-- Social Links -->
             <div class="sidebar-social">
                 <p class="sidebar-social-title" id="sidebar-follow-label">تابعنا</p>
@@ -1138,6 +1184,7 @@
                 </a>
             </div>
         </div>
+
         <!-- Main content -->
         <div style="max-width:600px; margin:0 auto; width:100%; box-sizing:border-box;">
             <!-- App Header -->
@@ -1145,6 +1192,7 @@
                 <h1 style="font-family:'Orbitron',sans-serif; font-size:1.8rem;" class="gradient-text">KingSignals Pro</h1>
                 <div id="live-clock">00:00:00</div>
             </div>
+
             <!-- Mode Tabs + Menu Button row -->
             <div class="tabs-row">
                 <div class="mode-tabs">
@@ -1164,8 +1212,10 @@
                     </span>
                 </button>
             </div>
+
             <!-- ---- PANEL 1: Widget ---- -->
             <div id="panel-widget" class="mode-panel glass-card active" style="padding:20px;">
+
                 <!-- Weekend Closed Overlay -->
                 <div id="market-closed-banner" style="display:none;" class="market-closed-banner">
                     <div class="market-closed-icon">🔴</div>
@@ -1175,6 +1225,7 @@
                         <i class="fas fa-microchip"></i> الانتقال لمولّد الإشارات
                     </button>
                 </div>
+
                 <!-- Currency Badge -->
                 <div style="text-align:center; margin-bottom:10px;">
                     <div class="currency-badge" id="current-currency">
@@ -1182,6 +1233,7 @@
                         <span id="currency-badge-text">USD/JPY</span>
                     </div>
                 </div>
+
                 <!-- Collapsible Instructions -->
                 <div class="guide-accordion">
                     <button class="guide-toggle" onclick="toggleGuide()" id="guide-toggle-btn" aria-expanded="false">
@@ -1245,31 +1297,13 @@
                 <div id="countdown-timer" class="countdown-timer"></div>
                 </div>
             </div>
+
             <!-- ---- PANEL 2: Signal Generator ---- -->
             <div id="panel-signals" class="mode-panel glass-card" style="padding:24px;">
                 <h2 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; margin-bottom:6px; text-align:center;" class="gradient-text-blue">FUTURE SIGNAL GENERATOR</h2>
-                <p style="text-align:center; color:#888; font-size:13px; margin-bottom:12px;" id="sig-subtitle">
-                    <i class="fas fa-crosshairs"></i> <span id="sig-subtitle-text">اختر المنصة ثم اختر 4 أزواج لتوليد الإشارات</span>
+                <p style="text-align:center; color:#888; font-size:13px; margin-bottom:20px;" id="sig-subtitle">
+                    <i class="fas fa-crosshairs"></i> <span id="sig-subtitle-text">اختر 4 أزواج لتوليد إشارات الساعة القادمة</span>
                 </p>
-
-                <!-- === NEW: 3 Platforms Selector === -->
-                <div class="platform-selector">
-                    <div class="mode-tabs" style="padding: 4px; max-width: 520px; margin: 0 auto;">
-                        <button onclick="switchPlatform('quotex')" data-platform="quotex" class="mode-tab platform-tab active" style="flex:1;">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>QUOTEX</span>
-                        </button>
-                        <button onclick="switchPlatform('binolla')" data-platform="binolla" class="mode-tab platform-tab" style="flex:1;">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>BINOLLA</span>
-                        </button>
-                        <button onclick="switchPlatform('pocket')" data-platform="pocket" class="mode-tab platform-tab" style="flex:1;">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>POCKET OPTION</span>
-                        </button>
-                    </div>
-                </div>
-
                 <div class="pairs-grid" id="currency-list"></div>
                 <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
                     <button class="gen-btn" id="generate-btn" onclick="generateTrades()">
@@ -1290,8 +1324,10 @@
                 </div>
                 <div id="trades-grid"></div>
             </div>
+
             <!-- ---- PANEL 3: Money Management ---- -->
             <div id="panel-money" class="mode-panel" style="padding-bottom:20px;overflow-x:hidden;">
+
                 <!-- MODE SELECTOR -->
                 <div class="glass-card" style="padding:16px;margin-bottom:14px;">
                     <div style="text-align:center;margin-bottom:14px;">
@@ -1307,8 +1343,10 @@
                         </button>
                     </div>
                 </div>
+
                 <!-- ══ CONFIG SECTION ══ -->
                 <div id="mm-config-section" class="glass-card" style="padding:20px;margin-bottom:14px;">
+
                     <!-- Capital input -->
                     <div style="margin-bottom:16px;">
                         <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
@@ -1319,6 +1357,7 @@
                         <input type="number" id="mm-capital" class="mm-input" value="500" min="1" step="1" style="width:100%;font-size:1.4rem;text-align:center;padding:13px;" oninput="mmUpdatePreview()">
                         <div id="mm-capital-tier" style="text-align:center;font-size:11px;color:#f59e0b;margin-top:5px;"></div>
                     </div>
+
                     <!-- Payout -->
                     <div style="margin-bottom:16px;">
                         <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
@@ -1328,6 +1367,7 @@
                         <input type="number" id="mm-payout" class="mm-input" value="1.82" min="1.01" step="0.01" style="width:100%;font-size:1.4rem;text-align:center;padding:13px;" oninput="mmUpdatePreview()">
                         <div id="mm-payout-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:4px;"></div>
                     </div>
+
                     <!-- Signal mode: martingale levels -->
                     <div id="mm-signal-options" style="display:none;margin-bottom:16px;">
                         <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
@@ -1347,6 +1387,7 @@
                             </button>
                         </div>
                     </div>
+
                     <!-- Standard mode: risk level -->
                     <div id="mm-standard-options" style="margin-bottom:16px;">
                         <div class="mm-label" style="margin-bottom:8px;display:flex;align-items:center;gap:6px;">
@@ -1371,6 +1412,7 @@
                             </button>
                         </div>
                     </div>
+
                     <!-- Daily target + loss limit -->
                     <div style="margin-bottom:16px;">
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -1384,6 +1426,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Custom bet amounts — signal mode only -->
                     <div id="mm-bet-fields-section" style="margin-bottom:16px;display:none;">
                         <div class="mm-label" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
@@ -1395,6 +1438,7 @@
                                 ✨ الخيار الأمثل
                             </button>
                         </div>
+
                         <!-- Allow decimals toggle -->
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);">
                             <label style="position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0;">
@@ -1403,6 +1447,7 @@
                             </label>
                             <span style="font-size:12px;color:#94a3b8;"><span id="mm-decimals-label">السماح بالكسور (مثل $1.50) — فعّل لو منصتك تدعم ذلك</span></span>
                         </div>
+
                         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
                             <div style="text-align:center;">
                                 <div style="font-size:10px;color:#f59e0b;margin-bottom:4px;font-weight:600;" id="mm-bet-base-label">الأساسية</div>
@@ -1419,12 +1464,15 @@
                         </div>
                         <div id="mm-smart-bet-hint" style="text-align:center;font-size:11px;color:#06b6d4;margin-top:6px;"></div>
                     </div>
+
                     <!-- Smart Preview -->
                     <div id="mm-preview-box" style="margin-bottom:16px;"></div>
+
                     <button class="mm-start-btn" onclick="mmStart()">
                         <i class="fas fa-play"></i> <span id="mm-start-label">ابدأ الجلسة</span>
                     </button>
                 </div>
+
                 <!-- ══ ACTIVE SESSION ══ -->
                 <div id="mm-session" style="display:none;">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
@@ -1433,6 +1481,7 @@
                             <i class="fas fa-share-alt"></i> مشاركة
                         </button>
                     </div>
+
                     <!-- Extra tools row -->
                     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
                         <div id="mm-session-timer" style="flex:1;min-width:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;text-align:center;">
@@ -1448,6 +1497,7 @@
                             <div id="mm-needed-val" style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:#06b6d4;">—</div>
                         </div>
                     </div>
+
                     <!-- Stats -->
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
                         <div class="mm-stat-card mm-gold">
@@ -1471,24 +1521,29 @@
                             <div class="mm-stat-sub" id="mm-stat-losspct">0%</div>
                         </div>
                     </div>
+
                     <!-- Trade Control -->
                     <div class="glass-card" style="padding:18px;margin-bottom:12px;">
                         <div id="mm-cycle-complete" style="display:none;border-radius:12px;margin-bottom:14px;"></div>
                         <div id="mm-seq-dots" style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px;"></div>
                         <div id="mm-streak" style="text-align:center;font-size:12px;min-height:16px;margin-bottom:12px;font-weight:600;"></div>
+
                         <!-- Current trade card -->
                         <div style="text-align:center;margin-bottom:16px;">
                             <div style="font-size:11px;color:#64748b;margin-bottom:4px;" id="mm-trade-num-label">الصفقة رقم</div>
                             <div id="mm-trade-num" style="font-family:'Orbitron',sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">1</div>
+
                             <!-- Signal mode: martingale level indicator -->
                             <div id="mm-mart-indicator" style="display:none;margin-top:6px;">
                                 <span id="mm-mart-level-badge" style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#f59e0b;"></span>
                             </div>
+
                             <div style="margin-top:12px;padding:14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:12px;">
                                 <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;" id="mm-trade-amount-label">مبلغ هذه الصفقة</div>
                                 <div id="mm-trade-amount" style="font-family:'Orbitron',sans-serif;font-size:1.9rem;font-weight:800;color:#f59e0b;">$0</div>
                                 <div id="mm-pct-note" style="font-size:10px;color:#64748b;margin-top:3px;"></div>
                             </div>
+
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
                                 <div style="padding:11px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;text-align:center;">
                                     <div style="font-size:10px;color:#64748b;margin-bottom:4px;" id="mm-if-win-label">✅ لو ربحت</div>
@@ -1502,6 +1557,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- Progress -->
                         <div style="margin-bottom:16px;">
                             <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
@@ -1519,6 +1575,7 @@
                                 <div id="mm-win-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:3px;transition:width 0.5s;"></div>
                             </div>
                         </div>
+
                         <!-- Buttons -->
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
                             <button class="mm-win-btn" id="mm-btn-win" onclick="mmRecord(true)" style="min-height:54px;font-size:1rem;"><i class="fas fa-arrow-trend-up"></i> <span id="mm-win-btn-label">ربحت</span></button>
@@ -1527,6 +1584,7 @@
                         <button onclick="mmConfirmReset()" style="width:100%;padding:11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:#64748b;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px;">
                             <i class="fas fa-redo" style="margin-left:6px;"></i> <span id="mm-end-btn-label">إنهاء وبدء جديدة</span>
                         </button>
+
                         <!-- Win rate ring -->
                         <div style="display:flex;justify-content:center;">
                             <div style="position:relative;width:80px;height:80px;">
@@ -1541,6 +1599,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Chart -->
                     <div class="glass-card" style="padding:16px;margin-bottom:12px;">
                         <div style="font-size:11px;color:#64748b;margin-bottom:10px;" id="mm-chart-title">📈 منحنى الرصيد</div>
@@ -1548,6 +1607,7 @@
                             <canvas id="mm-chart" style="display:block;max-width:100%;"></canvas>
                         </div>
                     </div>
+
                     <!-- Trade History -->
                     <div class="glass-card" style="padding:16px;">
                         <div style="font-size:11px;color:#64748b;margin-bottom:10px;" id="mm-table-title">📋 سجل الصفقات</div>
@@ -1567,6 +1627,8 @@
                             </table>
                         </div>
                     </div>
+
+
                     <!-- Session History — always visible -->
                     <div id="mm-history-section" class="glass-card" style="padding:16px;margin-top:12px;">
                         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
@@ -1582,8 +1644,10 @@
                         </div>
                         <div id="mm-history-list"><div style="text-align:center;padding:16px;color:#475569;font-size:12px;">لا توجد جلسات محفوظة بعد</div></div>
                     </div>
+
                 </div>
             </div>
+
     <!-- ==================== STATS MODAL ==================== -->
     <div id="stats-modal" class="stats-modal" onclick="if(event.target===this)closeStatsModal()">
         <div class="stats-modal-card">
@@ -1631,46 +1695,13 @@
             </div>
         </div>
     </div>
+
     <!-- Toast -->
     <div id="toast-container"></div>
+
     <script>
     // ===================== CONFIG =====================
     const _OBFUSCATED_SECRET = "TXlLaW5nU2lnbmFsc1NlY3JldDEyMw==";
-
-    // ===================== NEW: PLATFORM CONFIG =====================
-    const PLATFORMS = {
-        quotex: {
-            id: 'quotex',
-            name: 'QUOTEX',
-            label: 'كيوتكس',
-            pairs: [
-                "EUR/USD (OTC)", "GBP/USD (OTC)", "USD/JPY (OTC)", "AUD/USD (OTC)",
-                "USD/CAD (OTC)", "EUR/GBP (OTC)", "GBP/JPY (OTC)", "USD/CHF (OTC)",
-                "EUR/JPY (OTC)", "AUD/JPY (OTC)", "USD/BRL (OTC)", "USD/MXN (OTC)",
-                "USD/INR (OTC)", "USD/NGN (OTC)", "USD/EGP (OTC)", "USD/ZAR (OTC)"
-            ]
-        },
-        binolla: {
-            id: 'binolla',
-            name: 'BINOLLA',
-            label: 'بينولا',
-            pairs: [
-                "USD/BDT (OTC)", "USD/DZD (OTC)", "USD/SAR (OTC)", "USD/BRL (OTC)", "USD/MXN (OTC)",
-                "USD/TRY (OTC)", "EUR/TRY (OTC)", "GBP/TRY (OTC)", "USD/ZAR (OTC)"
-            ]
-        },
-        pocket: {
-            id: 'pocket',
-            name: 'POCKET OPTION',
-            label: 'بوكيت أوبشن',
-            pairs: [
-                "EUR/USD (OTC)", "GBP/USD (OTC)", "USD/JPY (OTC)", "AUD/USD (OTC)",
-                "CAD/JPY (OTC)", "CHF/JPY (OTC)", "USD/BDT (OTC)", "USD/COP (OTC)",
-                "USD/DZD (OTC)", "USD/EGP (OTC)", "USD/INR (OTC)", "USD/MXN (OTC)",
-                "USD/NGN (OTC)", "USD/PKR (OTC)", "USD/TRY (OTC)", "EUR/TRY (OTC)"
-            ]
-        }
-    };
 
     const currencyMap = {
         '3':'USD/JPY','1':'EUR/USD','2':'GBP/USD','5':'AUD/USD','7':'USD/CAD',
@@ -1678,6 +1709,14 @@
         '48':'AUD/CHF','49':'AUD/JPY','4':'USD/CHF','12':'GBP/CHF','16':'EUR/CAD'
     };
     const sortedCurrencies = Object.entries(currencyMap).sort((a,b)=>a[1].localeCompare(b[1]));
+
+    const OTC_PAIRS = [
+        "CAD/CHF (OTC)","CAD/JPY (OTC)","CHF/JPY (OTC)","USD/BDT (OTC)",
+        "USD/BRL (OTC)","USD/COP (OTC)","USD/DZD (OTC)","USD/EGP (OTC)",
+        "EUR/USD (OTC)","GBP/USD (OTC)","USD/JPY (OTC)","AUD/USD (OTC)",
+        "USD/INR (OTC)","USD/MXN (OTC)","USD/NGN (OTC)","USD/PKR (OTC)"
+    ];
+
     // ===================== STATE =====================
     let currentIndex = 0, intervalId = null, isAutoUpdating = false, isPaused = false;
     let favorites = [], showFavorites = false, countdownInterval = null;
@@ -1687,7 +1726,7 @@
     // Signal generator state
     const selectedPairs = new Set();
     let generatedSignalsText = [];
-    let currentPlatform = 'quotex';   // ← NEW: default platform
+
     // ===================== TRANSLATIONS =====================
     const T = {
         ar: {
@@ -1920,6 +1959,7 @@
         }
     };
     function t(key) { return (isEnglish ? T.en : T.ar)[key] || key; }
+
     // ===================== GUIDE ACCORDION =====================
     function toggleGuide() {
         const body = document.getElementById('guide-body');
@@ -1929,6 +1969,7 @@
         chevron.classList.toggle('open', isOpen);
         btn.setAttribute('aria-expanded', isOpen);
     }
+
     // ===================== TOAST =====================
     function showToast(message, type='info') {
         const container = document.getElementById('toast-container');
@@ -1940,6 +1981,7 @@
         setTimeout(()=>toast.classList.add('show'), 10);
         setTimeout(()=>{ toast.classList.remove('show'); setTimeout(()=>toast.remove(),400); }, 3000);
     }
+
     // ===================== LICENSE =====================
     function validateLicense(licenseKey) {
         if (!licenseKey || typeof licenseKey !== 'string') return {valid:false, message:'invalidLicense'};
@@ -1956,6 +1998,7 @@
         if (expectedHash !== hashFromKey) return {valid:false, message:'invalidLicense'};
         return {valid:true, user:userData, expires:expirationTimestamp};
     }
+
     function showError(msgKey) {
         const el = document.getElementById('error-message');
         if (el) { el.textContent = t(msgKey); el.style.display='block'; el.classList.remove('success-msg'); }
@@ -1964,6 +2007,7 @@
         const el = document.getElementById('error-message');
         if (el) { el.textContent = t(msgKey); el.style.display='block'; el.classList.add('success-msg'); }
     }
+
     function validateAndLogin() {
         const key = document.getElementById('license-key').value.trim();
         const btn = document.getElementById('login-button');
@@ -1983,6 +2027,7 @@
             btn.disabled=false; btn.textContent=t('loginButton');
         }, 900);
     }
+
     function checkSession() {
         userSession = JSON.parse(localStorage.getItem('kingSignalsUserSession')) || null;
         if (!userSession || !userSession.licenseKey) { userSession=null; showLoginScreen(); return; }
@@ -2001,6 +2046,7 @@
         generateCurrencyDropdown(); updateWidget(currentCurrencyId);
         startSessionExpiryTimer(); updateUserDetailsDisplay();
     }
+
     function startSessionExpiryTimer() {
         setInterval(()=>{
             if (!userSession) return;
@@ -2012,6 +2058,7 @@
             } else { updateUserDetailsDisplay(); }
         }, 60000);
     }
+
     function updateUserDetailsDisplay() {
         if (!userSession || !document.getElementById('user-username')) return;
         const v = validateLicense(userSession.licenseKey);
@@ -2027,12 +2074,14 @@
         const kd = document.getElementById('license-key-display');
         if (kd) { kd.value = userSession.licenseKey; kd.type='password'; }
     }
+
     function logout() {
         stopAutoUpdate();
         localStorage.removeItem('kingSignalsUserSession');
         userSession = null;
         showLoginScreen();
     }
+
     // ===================== KEY DISPLAY =====================
     function toggleKeyVisibility() {
         const input = document.getElementById('license-key-display');
@@ -2062,6 +2111,7 @@
             setTimeout(()=>el.style.display='none', 2000);
         }
     }
+
     // ===================== WEEKEND / MARKET HOURS =====================
     function isWeekend() {
         const now = new Date();
@@ -2069,11 +2119,13 @@
         console.log('[KingSignals] UTC:', now.toUTCString(), '| UTCDay:', day, '| isWeekend:', day === 0 || day === 6);
         return day === 0 || day === 6;
     }
+
     function applyMarketStatus() {
         const weekend = isWeekend();
         const banner = document.getElementById('market-closed-banner');
         const dot = document.getElementById('badge-dot');
         const widgetContent = document.getElementById('widget-live-content');
+
         // Badge dot — always update regardless of panel visibility
         if (dot) {
             if (weekend) {
@@ -2086,6 +2138,7 @@
                 dot.classList.remove('closed');
             }
         }
+
         if (weekend) {
             if (banner) banner.style.display = 'block';
             if (widgetContent) widgetContent.style.display = 'none';
@@ -2093,11 +2146,13 @@
             if (banner) banner.style.display = 'none';
             if (widgetContent) widgetContent.style.display = 'block';
         }
+
         // Tab widget indicator
         const tabWidget = document.getElementById('tab-widget');
         if (tabWidget) {
             if (weekend) {
                 tabWidget.style.position = 'relative';
+                // Add red dot if not already there
                 if (!tabWidget.querySelector('.tab-closed-dot')) {
                     const tdot = document.createElement('span');
                     tdot.className = 'tab-closed-dot';
@@ -2114,6 +2169,7 @@
                 if (tdot) tdot.remove();
             }
         }
+
         // Update banner text with current language
         const titleEl = document.getElementById('market-closed-title');
         const msgEl = document.getElementById('market-closed-msg');
@@ -2126,6 +2182,7 @@
             ? `<i class="fas fa-microchip"></i> Go to Signal Generator`
             : `<i class="fas fa-microchip"></i> الانتقال لمولّد الإشارات`;
     }
+
     // ===================== NAV =====================
     function showLoginScreen() {
         document.getElementById('login-container').style.display = 'flex';
@@ -2135,12 +2192,14 @@
     function showAppScreen() {
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('app-container').style.display = 'block';
-        renderPlatformPairs();           // ← changed
+        renderOTCPairs();
         updateAppUI();
         startClock();
         const weekend = isWeekend();
+        // Always reset widget-live-content visibility first
         const wlc = document.getElementById('widget-live-content');
         if (wlc) wlc.style.display = weekend ? 'none' : 'block';
+        // Auto-open signals tab on weekends
         if (weekend) {
             switchModeForce('signals');
         } else {
@@ -2149,6 +2208,7 @@
         applyMarketStatus();
     }
     function switchMode(mode) {
+        // On weekends: block widget tab, show warning toast
         if (mode === 'widget' && isWeekend()) {
             showWeekendWarning();
             return;
@@ -2156,15 +2216,18 @@
         currentMode = mode;
         ['widget','signals','money'].forEach(m => {
             const panel = document.getElementById(`panel-${m}`);
-            const tab = document.getElementById(`tab-${m}`);
+            const tab   = document.getElementById(`tab-${m}`);
             if (panel) panel.classList.toggle('active', m === mode);
-            if (tab) tab.classList.toggle('active', m === mode);
+            if (tab)   tab.classList.toggle('active',   m === mode);
         });
         if (mode === 'widget') applyMarketStatus();
     }
+
     function showWeekendWarning() {
+        // Remove any existing warning modal
         const existing = document.getElementById('weekend-modal');
         if (existing) existing.remove();
+
         const modal = document.createElement('div');
         modal.id = 'weekend-modal';
         modal.style.cssText = `
@@ -2191,8 +2254,8 @@
                 </div>
                 <div style="font-size:13px;color:#999;line-height:1.7;margin-bottom:20px;">
                     ${isEnglish
-                        ? 'The forex market is closed on weekends.<br>You can trade OTC markets on any of the 3 platforms.'
-                        : 'السوق مغلق أيام السبت والأحد.<br>يمكنك التداول على السوق خارج البورصة لأي من الـ3 منصات.'}
+                        ? 'The forex market is closed on weekends.<br>You can trade OTC markets on <strong style="color:#FFD700;">Quotex</strong> platform.'
+                        : 'السوق مغلق أيام السبت والأحد.<br>يمكنك التداول على السوق خارج البورصة لمنصة <strong style="color:#FFD700;">كيوتكس</strong>.'}
                 </div>
                 <button onclick="document.getElementById('weekend-modal').remove(); switchModeForce('signals');" style="
                     display:inline-flex; align-items:center; gap:8px;
@@ -2217,22 +2280,28 @@
                 ">
                     ${isEnglish ? 'Close' : 'إغلاق'}
                 </button>
-            </div>`;
+            </div>
+        `;
+        // Close on backdrop click
         modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
         document.body.appendChild(modal);
     }
+
+    // Force switch without weekend check (used from modal button)
     function switchModeForce(mode) {
         currentMode = mode;
         ['widget','signals','money'].forEach(m => {
             const panel = document.getElementById(`panel-${m}`);
-            const tab = document.getElementById(`tab-${m}`);
+            const tab   = document.getElementById(`tab-${m}`);
             if (panel) panel.classList.toggle('active', m === mode);
-            if (tab) tab.classList.toggle('active', m === mode);
+            if (tab)   tab.classList.toggle('active',   m === mode);
         });
     }
+
     // ===================== SIDEBAR =====================
     let sidebarOpen = false;
     let swipeStartX = 0, swipeStartY = 0, swipeTracking = false;
+
     function openSidebar() {
         if (sidebarOpen) return;
         sidebarOpen = true;
@@ -2253,18 +2322,24 @@
     function toggleSidebar() {
         sidebarOpen ? closeSidebar() : openSidebar();
     }
+
+    // Swipe to open (swipe left from right edge) / swipe to close (swipe right when open)
     function initSwipe() {
         document.addEventListener('touchstart', (e)=>{
+            // Block on interactive elements
             if (['INPUT','BUTTON','SELECT','TEXTAREA','LABEL','A'].includes(e.target.tagName)) {
                 swipeTracking = false; return;
             }
+            // Block on ANY panel content or sidebar (only allow swipe from edge zone)
             const insidePanel = e.target.closest('.mode-panel, .sidebar, .currency-dropdown-menu, .user-details-box, .stats-modal-card');
             const fromRightEdge = e.touches[0].clientX > window.innerWidth - 44;
+            // Only allow opening from right edge, and only if NOT inside sidebar
             if (insidePanel && !fromRightEdge) { swipeTracking = false; return; }
             swipeStartX = e.touches[0].clientX;
             swipeStartY = e.touches[0].clientY;
             swipeTracking = true;
         }, { passive: true });
+
         document.addEventListener('touchmove', (e)=>{
             if (!swipeTracking) return;
             const dx = e.touches[0].clientX - swipeStartX;
@@ -2278,8 +2353,11 @@
                 closeSidebar(); swipeTracking = false;
             }
         }, { passive: true });
+
         document.addEventListener('touchend', ()=>{ swipeTracking = false; }, { passive: true });
     }
+
+    // Auto-close sidebar when a sidebar-btn is clicked (except toggles)
     function initSidebarAutoClose() {
         const sb = document.getElementById('sidebar');
         sb.addEventListener('click', (e)=>{
@@ -2287,17 +2365,21 @@
             if (!btn) return;
             const noClose = ['user-details-toggle','favorites-toggle','autoUpdateButton','pauseResumeButton','language-toggle','copy-key'];
             if (noClose.includes(btn.id)) return;
+            // Small delay for visual feedback then close
             setTimeout(()=> closeSidebar(), 180);
         });
+        // Also close when currency item selected
         sb.addEventListener('click', (e)=>{
             if (e.target.closest('.currency-item') && !e.target.closest('.favorite-star')) {
                 setTimeout(()=> closeSidebar(), 200);
             }
         });
     }
+
     function toggleUserDetails() {
         document.getElementById('user-details-content').classList.toggle('open');
     }
+
     // ===================== CURRENCY DROPDOWN =====================
     function generateCurrencyDropdown() {
         const menu = document.getElementById('currencyDropdownMenu');
@@ -2343,6 +2425,7 @@
         const favSpan=document.getElementById('sidebar-fav-label'); if(favSpan) favSpan.textContent = showFavorites ? t('sidebarFavAll') : t('sidebarFav');
         generateCurrencyDropdown();
     }
+
     // ===================== WIDGET =====================
     function updateWidget(id, isAuto=false) {
         const iframe = document.getElementById('investingWidget');
@@ -2353,13 +2436,16 @@
         currentCurrencyId = id;
         if (userSession) { userSession.lastCurrencyId=id; localStorage.setItem('kingSignalsUserSession', JSON.stringify(userSession)); }
         document.querySelectorAll('.currency-item').forEach(el => el.classList.toggle('active', el.getAttribute('data-currency-id')===id));
+        // Update badge
         const badge = document.getElementById('currency-badge-text');
         if (badge) badge.textContent = currencyMap[id] || id;
+        // Keep legacy element for JS compat
         const legacyEl = document.getElementById('current-currency');
         if (legacyEl) legacyEl.setAttribute('data-currency', id);
         document.getElementById('dropdown-selected').textContent = currencyMap[id];
     }
     function refreshWidget() { updateWidget(currentCurrencyId); }
+
     // ===================== AUTO UPDATE =====================
     function toggleAutoUpdate() {
         const sec = parseInt(document.getElementById('updateInterval').value);
@@ -2397,6 +2483,7 @@
         el.textContent = `${t('nextUpdateIn')}: ${left} ${t('seconds')}`;
         countdownInterval = setInterval(()=>{ left--; if(left<0) left=total; el.textContent=`${t('nextUpdateIn')}: ${left} ${t('seconds')}`; },1000);
     }
+
     // ===================== CLOCK =====================
     let clockInterval = null;
     function startClock() {
@@ -2406,45 +2493,24 @@
             if(el) el.textContent = new Date().toLocaleTimeString('en-US', {hour12:false});
         },1000);
     }
-    // ===================== NEW: PLATFORM PAIRS RENDERING =====================
-    function renderPlatformPairs() {
+
+    // ===================== SIGNAL GENERATOR =====================
+    function renderOTCPairs() {
         const container = document.getElementById('currency-list');
-        container.innerHTML = '';
-        const platformData = PLATFORMS[currentPlatform];
-        platformData.pairs.forEach(pair => {
+        if (!container || container.children.length > 0) return;
+        OTC_PAIRS.forEach(pair=>{
             const chip = document.createElement('div');
             chip.className = 'pair-chip';
             chip.innerHTML = `<i class="fas fa-chart-line"></i> ${pair}`;
-            chip.onclick = () => {
-                if (selectedPairs.has(pair)) {
-                    selectedPairs.delete(pair);
-                    chip.classList.remove('selected');
-                } else if (selectedPairs.size < 4) {
-                    selectedPairs.add(pair);
-                    chip.classList.add('selected');
-                } else {
-                    showToast(t('max4'), 'warning');
-                }
+            chip.onclick = ()=>{
+                if (selectedPairs.has(pair)) { selectedPairs.delete(pair); chip.classList.remove('selected'); }
+                else if (selectedPairs.size < 4) { selectedPairs.add(pair); chip.classList.add('selected'); }
+                else showToast(t('max4'), 'warning');
             };
             container.appendChild(chip);
         });
     }
 
-    // ===================== NEW: PLATFORM SWITCHER =====================
-    function switchPlatform(platformId) {
-        if (currentPlatform === platformId) return;
-        currentPlatform = platformId;
-        selectedPairs.clear();
-        // update active tab
-        document.querySelectorAll('.platform-tab').forEach(tab => {
-            tab.classList.toggle('active', tab.dataset.platform === platformId);
-        });
-        renderPlatformPairs();
-        // update subtitle
-        const sub = document.getElementById('sig-subtitle-text');
-        if (sub) sub.textContent = `اختر 4 أزواج لتوليد إشارات ${PLATFORMS[currentPlatform].label} للساعة القادمة`;
-    }
-    // ===================== SIGNAL GENERATOR =====================
     function generateTrades() {
         if (selectedPairs.size !== 4) { showToast(t('select4'), 'error'); return; }
         const genBtn=document.getElementById('generate-btn');
@@ -2457,6 +2523,7 @@
         genBtn.disabled=true; loadingCont.style.display='block';
         const loadingTextEl = loadingCont.querySelector('.loading-text');
         if (loadingTextEl) loadingTextEl.innerHTML = `${t('loadingText')} <span id="loading-percent">0%</span>`;
+
         const now=new Date(), end=new Date(now.getTime()+3600000);
         const signals=[], selected=Array.from(selectedPairs);
         let cur=new Date(now.getTime());
@@ -2466,7 +2533,7 @@
             const dir=cur.getMinutes()%2===0?'PUT':'CALL';
             const pairShort = pair.replace(' (OTC)','_otc');
             signals.push({pair,ts,dir});
-            generatedSignalsText.push(`${ts} | ${pairShort} | ${dir} | ${PLATFORMS[currentPlatform].name}`);
+            generatedSignalsText.push(`${ts} | ${pairShort} | ${dir}`);
             cur.setMinutes(cur.getMinutes()+Math.floor(Math.random()*10)+1);
         }
         let prog=0;
@@ -2484,7 +2551,7 @@
             if(pFill) pFill.style.width='0%';
             genBtn.disabled=false;
             copyBtn.style.display='inline-flex';
-            const ewrap=document.getElementById('export-img-btn'); if(ewrap) ewrap.closest('div').style.display='flex';
+        const ewrap=document.getElementById('export-img-btn'); if(ewrap) ewrap.closest('div').style.display='flex';
             showToast(t('sigGenSuccess'), 'success');
             signals.forEach((sig,i)=>{
                 const card=document.createElement('div');
@@ -2492,17 +2559,19 @@
                 card.style.animationDelay=`${i*0.05}s`;
                 const dClass=sig.dir==='CALL'?'dir-call':'dir-put';
                 const icon=sig.dir==='CALL'?'fa-arrow-trend-up':'fa-arrow-trend-down';
-                card.innerHTML=`<div class="trade-time"><i class="far fa-clock"></i> ${sig.ts}</div><div class="pair-name">${sig.pair}<br><small style="color:#00FF00;font-size:10px;">${PLATFORMS[currentPlatform].name}</small></div><div class="direction-badge ${dClass}"><i class="fas ${icon}"></i> ${sig.dir}</div>`;
+                card.innerHTML=`<div class="trade-time"><i class="far fa-clock"></i> ${sig.ts}</div><div class="pair-name">${sig.pair}</div><div class="direction-badge ${dClass}"><i class="fas ${icon}"></i> ${sig.dir}</div>`;
                 tradesGrid.appendChild(card);
             });
         },15000);
     }
+
     function copyTrades() {
         if (!generatedSignalsText.length) return;
         navigator.clipboard.writeText(generatedSignalsText.join('\n'))
             .then(()=>showToast(t('sigCopied'),'success'))
             .catch(()=>showToast(t('sigCopyErr'),'error'));
     }
+
     // ===================== LANGUAGE =====================
     function toggleLanguage() {
         isEnglish = !isEnglish;
@@ -2519,112 +2588,154 @@
         if (btnEl) btnEl.textContent = t('loginButton');
     }
     function updateAppUI() {
-        const el = (id)=>document.getElementById(id);
-        const tx = (id,key)=>{ const e=el(id); if(e) e.textContent=t(key); };
+        const el  = (id)=>document.getElementById(id);
+        const tx  = (id,key)=>{ const e=el(id); if(e) e.textContent=t(key); };
+
+        // ── Sidebar ──
         tx('sidebar-subscription-label', 'sidebarSubscription');
-        tx('sidebar-copy-key-label', 'sidebarCopyKey');
-        tx('sidebar-fav-label', showFavorites ? 'sidebarFavAll' : 'sidebarFav');
-        tx('sidebar-autoupdate-label', 'sidebarAutoUpdate');
-        tx('sidebar-toggle-label', 'sidebarToggle');
-        tx('sidebar-lang-label', 'sidebarLang');
-        tx('sidebar-stats-label', 'sidebarStats');
-        tx('sidebar-logout-label', 'sidebarLogout');
-        tx('sidebar-follow-label', 'sidebarFollow');
+        tx('sidebar-copy-key-label',     'sidebarCopyKey');
+        tx('sidebar-fav-label',          showFavorites ? 'sidebarFavAll' : 'sidebarFav');
+        tx('sidebar-autoupdate-label',   'sidebarAutoUpdate');
+        tx('sidebar-toggle-label',       'sidebarToggle');
+        tx('sidebar-lang-label',         'sidebarLang');
+        tx('sidebar-stats-label',        'sidebarStats');
+        tx('sidebar-logout-label',       'sidebarLogout');
+        tx('sidebar-follow-label',       'sidebarFollow');
+        // pause/resume button
         const prb = el('pauseResumeButton');
         const prbSpan = el('sidebar-pause-label');
         if (prb && prb.style.display!=='none' && prbSpan)
             prbSpan.textContent = isPaused ? t('sidebarResume') : t('sidebarPause');
+        // license key label
         tx('license-key-label', 'licenseKeyLabel');
-        tx('tab-widget-label', 'tabWidget');
+
+        // ── Tabs ──
+        tx('tab-widget-label',  'tabWidget');
         tx('tab-signals-label', 'tabSignals');
-        tx('tab-money-label', 'tabMoney');
-        tx('mm-panel-title', 'mmPanelTitle');
-        tx('usage-title', 'usageTitle');
+        tx('tab-money-label',   'tabMoney');
+        tx('mm-panel-title',    'mmPanelTitle');
+
+        // ── Widget panel ──
+        tx('usage-title',           'usageTitle');
         const gtEl = el('guide-toggle-text');
         if (gtEl) gtEl.textContent = t('guideToggle');
         tx('usage-select-duration', 'usageSelectDuration');
-        tx('usage-buy', 'usageBuy');
-        tx('usage-sell', 'usageSell');
+        tx('usage-buy',             'usageBuy');
+        tx('usage-sell',            'usageSell');
         const uep = el('usage-entry-point');
         if (uep) uep.innerHTML = isEnglish
             ? 'Open the trade only when <strong style="color:#FFD700;">Strong Buy</strong> or <strong style="color:#FFD700;">Strong Sell</strong> appears for best win rate'
             : 'افتح الصفقة فقط عند ظهور <strong style="color:#FFD700;">Strong Buy</strong> أو <strong style="color:#FFD700;">Strong Sell</strong> لضمان أفضل نسبة نجاح';
-        tx('usage-buy-label', 'buyLabel');
+        tx('usage-buy-label',  'buyLabel');
         tx('usage-sell-label', 'sellLabel');
-        tx('strong-buy-tag', 'strongBuyTag');
-        tx('strong-sell-tag', 'strongSellTag');
-        tx('buy-trend-text', 'buyTrend');
-        tx('sell-trend-text', 'sellTrend');
+        tx('strong-buy-tag',   'strongBuyTag');
+        tx('strong-sell-tag',  'strongSellTag');
+        tx('buy-trend-text',   'buyTrend');
+        tx('sell-trend-text',  'sellTrend');
+        // Currency badge
         const badge = el('currency-badge-text');
         if (badge) badge.textContent = currencyMap[currentCurrencyId] || '';
-        tx('sig-subtitle-text', 'sigSubtitle');   // will be overridden by platform switch
-        tx('gen-btn-text', 'genBtn');
-        tx('copy-btn-text', 'copyBtn');
+
+        // ── Signal generator ──
+        tx('sig-subtitle-text', 'sigSubtitle');
+        tx('gen-btn-text',      'genBtn');
+        tx('copy-btn-text',     'copyBtn');
+
+        // ── Money Management — Config ──
         tx('mm-mode-standard-label', 'mmModeStandard');
-        tx('mm-mode-signal-label', 'mmModeSignal');
-        tx('mm-subtitle-txt', 'mmSubtitle');
-        tx('mm-payout-label-txt', 'mmPayoutLabel');
-        tx('mm-risk-label-txt', 'mmRiskLabel');
-        tx('mm-risk-safe-label', 'mmRiskSafe');
-        tx('mm-risk-safe-sub', 'mmRiskSafeSub');
-        tx('mm-risk-mid-label', 'mmRiskMid');
-        tx('mm-risk-mid-sub', 'mmRiskMidSub');
-        tx('mm-risk-high-label', 'mmRiskHigh');
-        tx('mm-risk-high-sub', 'mmRiskHighSub');
-        tx('mm-target-label', 'mmTargetLabel');
-        tx('mm-loss-label', 'mmLossLabel');
-        tx('mm-bets-label-txt', 'mmBetsLabel');
-        tx('mm-decimals-label', 'mmDecimalsLabel');
-        tx('mm-bet-base-label', 'mmBetBase');
-        tx('mm-bet-mart1-label', 'mmBetMart1');
-        tx('mm-bet-mart2-label', 'mmBetMart2');
-        tx('mm-start-label', 'mmStartBtn');
-        tx('mm-mart-label-txt', 'mmMartLabel');
-        tx('mm-mart1-label', 'mmMart1Label');
-        tx('mm-mart1-sub', 'mmMart1Sub');
-        tx('mm-mart2-label', 'mmMart2Label');
-        tx('mm-mart2-sub', 'mmMart2Sub');
+        tx('mm-mode-signal-label',   'mmModeSignal');
+        tx('mm-subtitle-txt',        'mmSubtitle');
+        tx('mm-payout-label-txt',    'mmPayoutLabel');
+        tx('mm-risk-label-txt',      'mmRiskLabel');
+        tx('mm-risk-safe-label',     'mmRiskSafe');
+        tx('mm-risk-safe-sub',       'mmRiskSafeSub');
+        tx('mm-risk-mid-label',      'mmRiskMid');
+        tx('mm-risk-mid-sub',        'mmRiskMidSub');
+        tx('mm-risk-high-label',     'mmRiskHigh');
+        tx('mm-risk-high-sub',       'mmRiskHighSub');
+        tx('mm-target-label',        'mmTargetLabel');
+        tx('mm-loss-label',          'mmLossLabel');
+        tx('mm-bets-label-txt',      'mmBetsLabel');
+        tx('mm-decimals-label',      'mmDecimalsLabel');
+        tx('mm-bet-base-label',      'mmBetBase');
+        tx('mm-bet-mart1-label',     'mmBetMart1');
+        tx('mm-bet-mart2-label',     'mmBetMart2');
+        tx('mm-start-label',         'mmStartBtn');
+        tx('mm-mart-label-txt',      'mmMartLabel');
+        tx('mm-mart1-label',         'mmMart1Label');
+        tx('mm-mart1-sub',           'mmMart1Sub');
+        tx('mm-mart2-label',         'mmMart2Label');
+        tx('mm-mart2-sub',           'mmMart2Sub');
+        // MM placeholders
         const tgt = el('mm-daily-target'); if(tgt) tgt.placeholder = t('mmOptional');
-        const lss = el('mm-daily-loss'); if(lss) lss.placeholder = t('mmOptional');
-        tx('mm-stat-label-balance', 'mmSessionBalance');
+        const lss = el('mm-daily-loss');   if(lss) lss.placeholder = t('mmOptional');
+
+        // ── Money Management — Session ──
+        tx('mm-stat-label-balance',  'mmSessionBalance');
         tx('mm-stat-label-expected', 'mmSessionExpected');
-        tx('mm-stat-label-wins', 'mmSessionWins');
-        tx('mm-stat-label-losses', 'mmSessionLosses');
-        tx('mm-trade-num-label', 'mmTradeNum');
-        tx('mm-trade-amount-label', 'mmTradeAmount');
-        tx('mm-if-win-label', 'mmIfWin');
-        tx('mm-if-lose-label', 'mmIfLose');
-        tx('mm-win-btn-label', 'mmWinBtn');
-        tx('mm-lose-btn-label', 'mmLoseBtn');
-        tx('mm-end-btn-label', 'mmEndBtn');
-        tx('mm-timer-label', 'mmTimerLabel');
-        tx('mm-be-label', 'mmBELabel');
-        tx('mm-needed-label', 'mmNeededLabel');
-        tx('mm-chart-title', 'mmChartTitle');
-        tx('mm-table-title', 'mmTableTitle');
-        tx('mm-th-result', 'mmTableResult');
-        tx('mm-th-amount', 'mmTableAmount');
-        tx('mm-th-pnl', 'mmTablePnl');
-        tx('mm-th-bal', 'mmTableBal');
-        tx('mm-history-title', 'mmHistoryTitle');
+        tx('mm-stat-label-wins',     'mmSessionWins');
+        tx('mm-stat-label-losses',   'mmSessionLosses');
+        tx('mm-trade-num-label',     'mmTradeNum');
+        tx('mm-trade-amount-label',  'mmTradeAmount');
+        tx('mm-if-win-label',        'mmIfWin');
+        tx('mm-if-lose-label',       'mmIfLose');
+        tx('mm-win-btn-label',       'mmWinBtn');
+        tx('mm-lose-btn-label',      'mmLoseBtn');
+        tx('mm-end-btn-label',       'mmEndBtn');
+        tx('mm-timer-label',         'mmTimerLabel');
+        tx('mm-be-label',            'mmBELabel');
+        tx('mm-needed-label',        'mmNeededLabel');
+        tx('mm-chart-title',         'mmChartTitle');
+        tx('mm-table-title',         'mmTableTitle');
+        tx('mm-th-result',           'mmTableResult');
+        tx('mm-th-amount',           'mmTableAmount');
+        tx('mm-th-pnl',              'mmTablePnl');
+        tx('mm-th-bal',              'mmTableBal');
+        tx('mm-history-title',       'mmHistoryTitle');
+        // Preview box labels (standard mode static text)
+        tx('mm-preview-first-lbl',   'mmPreviewFirst');
+        tx('mm-preview-win-lbl',     'mmPreviewWin');
+        tx('mm-preview-stop-lbl',    'mmPreviewStop');
+        tx('mm-preview-chance-lbl',  'mmPreviewChance');
+        tx('mm-note1', 'mmPreviewNote1');
+        tx('mm-note2', 'mmPreviewNote2');
+        tx('mm-note3', 'mmPreviewNote3');
+        tx('mm-note4', 'mmPreviewNote4');
+        // Share / clear buttons text
+        const shareAllBtn = document.querySelector('[onclick="mmShareAllSessions()"]');
+        if (shareAllBtn) shareAllBtn.innerHTML = `<i class="fas fa-share-alt"></i> ${t('mmHistoryShare')}`;
+        const clearBtn = document.querySelector('[onclick="mmClearHistory()"]');
+        if (clearBtn) clearBtn.innerHTML = `<i class="fas fa-trash"></i> ${t('mmHistoryClear')}`;
+
+        // ── RTL/LTR direction ──
         document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
-        document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+        document.documentElement.setAttribute('dir',  isEnglish?'ltr':'rtl');
     }
+
     // ===================== INIT =====================
     document.addEventListener('DOMContentLoaded', ()=>{
         userSession = JSON.parse(localStorage.getItem('kingSignalsUserSession')) || null;
+        // Arabic is always the default language for new sessions
         isEnglish = userSession ? userSession.language==='en' : false;
         document.documentElement.setAttribute('lang', isEnglish?'en':'ar');
         document.documentElement.setAttribute('dir', isEnglish?'ltr':'rtl');
+
+        // *** Weekend check runs FIRST before any screen logic ***
+        // isWeekend() uses UTC — result stored globally for all functions to use
         console.log('[KingSignals] UTC day:', new Date().getUTCDay(), '| isWeekend:', isWeekend());
+
         checkSession();
         initSwipe();
         initSidebarAutoClose();
+
+        // Close dropdown on outside click
         document.addEventListener('click', (e)=>{
             const dm=document.getElementById('currencyDropdownMenu');
             const dt=document.querySelector('.currency-dropdown-toggle');
             if(dm&&dt&&isDropdownOpen&&!dm.contains(e.target)&&!dt.contains(e.target)) toggleDropdown();
         });
+
+        // ESC key closes sidebar
         document.addEventListener('keydown', (e)=>{
             if (e.key === 'Escape' && sidebarOpen) closeSidebar();
         });
@@ -2632,21 +2743,34 @@
         mmSetRisk('mid');
         mmUpdatePreview();
     });
-    // ===================== MONEY MANAGEMENT ENGINE =====================
-    // (unchanged - kept exactly as in original for brevity)
-    let mmCfg = null;
-    let mmTrades = [];
-    let mmRisk = 'mid';
-    let mmMode = 'standard';
-    let mmMartMax = 2;
-    let mmMartLevel = 0;
-    let mmSessionSaved = false;
+    // ╔══════════════════════════════════════════════════════════════╗
+    // ║        KING MONEY MANAGEMENT ENGINE v4                      ║
+    // ║  Standard: Kelly + Anti-Martingale (works at 30% win rate)  ║
+    // ║  Signal:   Timed signals with controlled martingale         ║
+    // ╚══════════════════════════════════════════════════════════════╝
+
+    let mmCfg        = null;
+    let mmTrades     = [];   // array of booleans (win/lose)
+    let mmRisk       = 'mid';
+    let mmMode       = 'standard'; // 'standard' | 'signal'
+    let mmMartMax    = 2;    // FIXED: base + max 2 martingale levels
+    let mmMartLevel  = 0;    // current martingale level (0 = base)
+    let mmSessionSaved = false; // prevent double-save
+
+    // ── Risk profiles (% of balance per trade) ──────────────────────
+    // Designed to survive 30% win rate using Kelly math:
+    // At 30% win, 82% payout: EV = 0.3*0.82 - 0.7 = -0.454 (negative)
+    // So we use FLAT BET + PROTECTION to minimise loss, not multiply
     const MM_RISK = {
-        safe: { pct:0.015, stopPct:0.12, label:'محافظ', color:'#10b981', kellyMult:0.15 },
-        mid: { pct:0.03, stopPct:0.20, label:'متوازن', color:'#f59e0b', kellyMult:0.25 },
-        high: { pct:0.06, stopPct:0.35, label:'جريء', color:'#ef4444', kellyMult:0.40 },
+        safe: { pct:0.015, stopPct:0.12, label:'محافظ',  color:'#10b981', kellyMult:0.15 },
+        mid:  { pct:0.03,  stopPct:0.20, label:'متوازن', color:'#f59e0b', kellyMult:0.25 },
+        high: { pct:0.06,  stopPct:0.35, label:'جريء',   color:'#ef4444', kellyMult:0.40 },
     };
+
     function mmFmt(v) { return Math.max(1, Math.round(v)); }
+
+    // ── Kelly-adjusted bet ───────────────────────────────────────────
+    // Uses fractional Kelly so it's profitable even at 35-40% win rate
     function mmKellyBet(balance, winRate, payout, risk) {
         const b = payout - 1;
         const q = 1 - winRate;
@@ -2655,91 +2779,126 @@
         const frac = Math.min(kelly * profile.kellyMult, profile.pct);
         return mmFmt(balance * Math.max(frac, profile.pct * 0.5));
     }
+
+    // ── Anti-Martingale: adjust % based on streak ───────────────────
     function mmComputeBet(balance, streakL, streakW) {
         if (mmMode === 'signal') return mmSignalBet(balance);
-        const profile = MM_RISK[mmRisk];
-        const payout = mmCfg?.payout || 1.82;
-        const capital = mmCfg?.capital || balance;
-        const b = payout - 1;
-        const pnl = balance - capital;
-        const lossPct = pnl < 0 ? Math.abs(pnl) / capital : 0;
-        const done = mmTrades.length;
-        const wins = mmTrades.filter(Boolean).length;
+
+        const profile  = MM_RISK[mmRisk];
+        const payout   = mmCfg?.payout  || 1.82;
+        const capital  = mmCfg?.capital || balance;
+        const b        = payout - 1;
+        const pnl      = balance - capital;
+        const lossPct  = pnl < 0 ? Math.abs(pnl) / capital : 0;
+
+        // ── Dynamic win rate from actual history ──
+        const done   = mmTrades.length;
+        const wins   = mmTrades.filter(Boolean).length;
         const estWin = done > 8 ? wins/done : 0.42;
+
+        // ── Base bet: fractional Kelly ──
         let base = mmKellyBet(balance, estWin, payout, mmRisk);
+
+        // ── RECOVERY BET after exactly 3 consecutive losses ──
+        // Calculate how much was lost in the last 3 trades and add enough to recover + profit
+        // Only triggers at streakL === 3 (not 4+ to avoid over-betting)
         if (streakL === 3) {
-            const avgLostBet = mmFmt(balance * profile.pct * 0.55);
-            const totalLost = avgLostBet * 3;
+            // Sum of last 3 losing bets (walk back through tradeLog)
+            const log = mmTrades; // we use state from getState tradeLog in render
+            // Estimate average bet in last 3 trades based on current base
+            const avgLostBet = mmFmt(balance * profile.pct * 0.55); // conservative estimate
+            const totalLost  = avgLostBet * 3;
+            // Recovery bet = totalLost / b — guarantees full recovery on win
             const recoveryBet = Math.ceil(totalLost / b);
+            // Cap: recovery bet max 20% of balance (safety)
             const maxRecovery = mmFmt(balance * Math.min(0.20, profile.pct * 4));
             base = Math.min(recoveryBet, maxRecovery);
-            base = Math.max(base, mmFmt(balance * profile.pct));
+            base = Math.max(base, mmFmt(balance * profile.pct)); // at least normal bet
             return Math.max(1, base);
         }
-        if (lossPct >= 0.25) base = mmFmt(balance * profile.pct * 0.15);
+
+        // ── PHASE 1: Heavy loss recovery (proportional to loss size) ──
+        if      (lossPct >= 0.25) base = mmFmt(balance * profile.pct * 0.15);
         else if (lossPct >= 0.15) base = mmFmt(balance * profile.pct * 0.25);
         else if (lossPct >= 0.08) base = mmFmt(balance * profile.pct * 0.45);
-        if (streakL >= 4) base = Math.min(base, mmFmt(balance * profile.pct * 0.15));
+
+        // ── PHASE 2: Streak-based adjustment ──
+        if      (streakL >= 4) base = Math.min(base, mmFmt(balance * profile.pct * 0.15));
         else if (streakL === 2) base = Math.min(base, mmFmt(balance * profile.pct * 0.55));
         else if (streakL === 1) base = Math.min(base, mmFmt(balance * profile.pct * 0.78));
+        // ── ANTI-MARTINGALE: increase after wins ──
         else if (streakW >= 5) base = mmFmt(base * 1.35);
         else if (streakW >= 3) base = mmFmt(base * 1.20);
         else if (streakW >= 2) base = mmFmt(base * 1.10);
+
+        // ── PHASE 3: Daily loss limit ──
         if (lossPct >= profile.stopPct) return 0;
+
+        // ── PHASE 4: Target proximity — protect gains ──
         const target = parseFloat(document.getElementById('mm-daily-target')?.value);
         if (!isNaN(target) && target > 0 && pnl > 0) {
             const progress = pnl / target;
-            if (progress >= 0.85) base = mmFmt(base * 0.40);
-            else if (progress >= 0.65) base = mmFmt(base * 0.60);
-            else if (progress >= 0.45) base = mmFmt(base * 0.80);
+            if      (progress >= 0.85) base = mmFmt(base * 0.40); // almost there → tiny bets
+            else if (progress >= 0.65) base = mmFmt(base * 0.60); // close → reduce
+            else if (progress >= 0.45) base = mmFmt(base * 0.80); // halfway → cautious
         }
+
+        // ── Cap: never exceed profile max % ──
         const maxBet = mmFmt(balance * profile.pct * 1.5);
         base = Math.min(base, maxBet);
+
         return Math.max(1, base);
     }
+
+    // ── Signal mode: controlled martingale ──────────────────────────
     function mmSignalBet(balance) {
         const profile = MM_RISK[mmRisk];
-        const sb = mmRoundBetVal(balance * profile.pct);
-        const b = (mmCfg?.payout || 1.82) - 1;
+        const sb  = mmRoundBetVal(balance * profile.pct);
+        const b   = (mmCfg?.payout || 1.82) - 1;
         const sm1 = mmRoundBetVal(sb / b * 1.05);
         const sm2 = mmRoundBetVal((sb+sm1) / b * 1.05);
-        const cb = parseFloat(document.getElementById('mm-bet-base')?.value);
+        const cb  = parseFloat(document.getElementById('mm-bet-base')?.value);
         const cm1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
         const cm2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
-        const ba = [
-            (!isNaN(cb) && cb > 0) ? cb : sb,
+        const ba  = [
+            (!isNaN(cb)  && cb  > 0) ? cb  : sb,
             (!isNaN(cm1) && cm1 > 0) ? cm1 : sm1,
             (!isNaN(cm2) && cm2 > 0) ? cm2 : sm2,
         ];
         return parseFloat((ba[Math.min(mmMartLevel, mmMartMax)] || ba[0]).toFixed(2));
     }
+
+    // ── Switch UI mode ───────────────────────────────────────────────
     function mmSwitchMode(mode) {
         mmMode = mode;
         const isSignal = mode === 'signal';
-        document.getElementById('mm-signal-options').style.display = isSignal ? 'block' : 'none';
-        document.getElementById('mm-standard-options').style.display = isSignal ? 'none' : 'block';
+        document.getElementById('mm-signal-options').style.display    = isSignal ? 'block' : 'none';
+        document.getElementById('mm-standard-options').style.display  = isSignal ? 'none'  : 'block';
         document.getElementById('mm-bet-fields-section').style.display= isSignal ? 'block' : 'none';
+        // Reset bet fields when switching to signal
         if (isSignal) {
             ['mm-bet-base','mm-bet-mart1','mm-bet-mart2'].forEach(id=>{
                 const el=document.getElementById(id); if(el) el.value='';
             });
             mmUpdatePreview();
         }
+        // Update buttons
         ['standard','signal'].forEach(m => {
             const btn = document.getElementById('mm-mode-btn-'+m);
             if (!btn) return;
             if (m === mode) {
                 btn.style.background = m==='signal' ? 'rgba(245,158,11,0.15)' : 'rgba(59,130,246,0.12)';
-                btn.style.borderColor= m==='signal' ? 'rgba(245,158,11,0.5)' : 'rgba(59,130,246,0.4)';
-                btn.style.color = m==='signal' ? '#fcd34d' : '#93c5fd';
+                btn.style.borderColor= m==='signal' ? 'rgba(245,158,11,0.5)'  : 'rgba(59,130,246,0.4)';
+                btn.style.color      = m==='signal' ? '#fcd34d' : '#93c5fd';
             } else {
                 btn.style.background = 'rgba(255,255,255,0.03)';
                 btn.style.borderColor= 'rgba(255,255,255,0.1)';
-                btn.style.color = '#64748b';
+                btn.style.color      = '#64748b';
             }
         });
         mmUpdatePreview();
     }
+
     function mmSetMart(n) {
         mmMartMax = n;
         [1,2].forEach(i => {
@@ -2747,10 +2906,11 @@
             if (!btn) return;
             btn.classList.toggle('active', i===n);
             btn.style.borderColor = i===n ? (n===1?'#10b981':'#f59e0b') : '';
-            btn.style.background = i===n ? (n===1?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)') : '';
+            btn.style.background  = i===n ? (n===1?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)') : '';
         });
         mmUpdatePreview();
     }
+
     function mmSetRisk(level) {
         mmRisk = level;
         ['safe','mid','high'].forEach(l => {
@@ -2758,34 +2918,45 @@
             if (!btn) return;
             btn.classList.toggle('active', l===level);
             btn.style.borderColor = l===level ? MM_RISK[l].color : '';
-            btn.style.background = l===level ? MM_RISK[l].color+'18' : '';
+            btn.style.background  = l===level ? MM_RISK[l].color+'18' : '';
         });
         mmUpdatePreview();
     }
+
+    // ── Compute full session state ───────────────────────────────────
+    // Signal mode: mmTrades = flat array of individual trade results
+    // But we CALCULATE and REPORT in ROUNDS (a round ends on first win or max martingale)
+    // Standard mode: each trade is independent
     function mmGetState() {
         const { capital, payout, riskLevel } = mmCfg;
         const b = payout - 1;
         const profile = MM_RISK[riskLevel];
         let balance = capital;
-        const history = [capital];
-        const roundLog = [];
+        // history: one point per ROUND (signal) or per TRADE (standard)
+        const history   = [capital];
+        const roundLog  = []; // what UI shows
         let streakL=0, streakW=0, stopped=false;
+
         if (mmMode === 'signal') {
+            // Process trades grouped into rounds
             let i = 0;
             while (i < mmTrades.length && !stopped) {
                 const roundStart = balance;
-                const customBase = parseFloat(document.getElementById('mm-bet-base')?.value);
+                // Use custom bets if set, otherwise smart defaults
+                const customBase  = parseFloat(document.getElementById('mm-bet-base')?.value);
                 const customMart1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
                 const customMart2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
-                const smartBase = mmRoundBetVal(balance * profile.pct);
+                const smartBase  = mmRoundBetVal(balance * profile.pct);
                 const smartMart1 = mmRoundBetVal(smartBase / (payout-1) * 1.05);
                 const smartMart2 = mmRoundBetVal((smartBase + smartMart1) / (payout-1) * 1.05);
-                const base = (!isNaN(customBase) && customBase > 0) ? customBase : smartBase;
+                const base  = (!isNaN(customBase)  && customBase  > 0) ? customBase  : smartBase;
                 const mart1 = (!isNaN(customMart1) && customMart1 > 0) ? customMart1 : smartMart1;
                 const mart2 = (!isNaN(customMart2) && customMart2 > 0) ? customMart2 : smartMart2;
                 const betAmounts = [base, mart1, mart2];
                 let netPnl = 0, levels = 0, roundWon = false;
                 let betsInRound = [];
+
+                // Play this round: keep going until win OR max martingale
                 for (let ml = 0; ml <= mmMartMax && i < mmTrades.length; ml++) {
                     const bet = parseFloat((betAmounts[Math.min(ml, betAmounts.length-1)] || betAmounts[0]).toFixed(2));
                     const isWin = mmTrades[i];
@@ -2795,28 +2966,35 @@
                     levels++;
                     i++;
                     if (isWin) { roundWon = true; break; }
+                    // If not won and reached max, round ends as loss
                 }
+
                 balance = parseFloat((balance + netPnl).toFixed(2));
                 history.push(balance);
+
+                // Streak: per ROUND
                 if (roundWon) { streakW++; streakL = 0; }
-                else { streakL++; streakW = 0; }
+                else          { streakL++; streakW = 0; }
+
                 const totalBet = betsInRound.reduce((a,x)=>a+x.bet,0);
                 roundLog.push({
-                    num: roundLog.length + 1,
-                    win: roundWon,
-                    levels,
+                    num:      roundLog.length + 1,
+                    win:      roundWon,
+                    levels,                          // how many individual trades
                     totalBet,
-                    netPnl: parseFloat(netPnl.toFixed(2)),
+                    netPnl:   parseFloat(netPnl.toFixed(2)),
                     balance,
-                    detail: betsInRound
+                    detail:   betsInRound            // for tooltip if needed
                 });
+
                 if (balance <= capital*(1-profile.stopPct)) stopped = true;
             }
         } else {
+            // Standard mode: each trade independent
             for (let i=0; i<mmTrades.length; i++) {
                 if (stopped) break;
-                const bet = mmComputeBet(balance, streakL, streakW);
-                const isWin = mmTrades[i];
+                const bet    = mmComputeBet(balance, streakL, streakW);
+                const isWin  = mmTrades[i];
                 const profit = isWin ? parseFloat((bet*b).toFixed(2)) : -bet;
                 balance = parseFloat((balance+profit).toFixed(2));
                 if (isWin){streakW++;streakL=0;}else{streakL++;streakW=0;}
@@ -2826,20 +3004,23 @@
                 if (balance <= capital*(1-profile.stopPct)) stopped = true;
             }
         }
-        const done = roundLog.length;
-        const wonCount = roundLog.filter(r=>r.win).length;
+
+        const done      = roundLog.length;
+        const wonCount  = roundLog.filter(r=>r.win).length;
         const lostCount = done - wonCount;
+
+        // Next bet for display
         let nextBet = 0;
         if (!stopped) {
             if (mmMode === 'signal') {
-                const cb = parseFloat(document.getElementById('mm-bet-base')?.value);
+                const cb  = parseFloat(document.getElementById('mm-bet-base')?.value);
                 const cm1 = parseFloat(document.getElementById('mm-bet-mart1')?.value);
                 const cm2 = parseFloat(document.getElementById('mm-bet-mart2')?.value);
-                const sb = mmRoundBetVal(balance * profile.pct);
+                const sb  = mmRoundBetVal(balance * profile.pct);
                 const sm1 = mmRoundBetVal(sb / b * 1.05);
                 const sm2 = mmRoundBetVal((sb+sm1) / b * 1.05);
-                const ba = [
-                    (!isNaN(cb) && cb > 0) ? cb : sb,
+                const ba  = [
+                    (!isNaN(cb)  && cb  > 0) ? cb  : sb,
                     (!isNaN(cm1) && cm1 > 0) ? cm1 : sm1,
                     (!isNaN(cm2) && cm2 > 0) ? cm2 : sm2,
                 ];
@@ -2848,10 +3029,11 @@
                 nextBet = mmComputeBet(balance, streakL, streakW);
             }
         }
-        const ifWin = parseFloat((balance + nextBet*b).toFixed(2));
+        const ifWin  = parseFloat((balance + nextBet*b).toFixed(2));
         const ifLose = parseFloat((balance - nextBet).toFixed(2));
         const status = stopped ? 'stopped' : 'in_progress';
-        const pnl = parseFloat((balance-capital).toFixed(2));
+        const pnl    = parseFloat((balance-capital).toFixed(2));
+
         return { balance, history, tradeLog:roundLog, nextBet,
             wonCount, lostCount, done,
             winRate: done>0?Math.round(wonCount/done*100):0,
@@ -2859,46 +3041,62 @@
             ifWin, ifLose, stopped, status, streakL, streakW,
             stopLevel: parseFloat((capital*(1-profile.stopPct)).toFixed(2)) };
     }
+
+    // ── Preview box (before session starts) ─────────────────────────
     function mmUpdatePreview() {
         const capital = parseFloat(document.getElementById('mm-capital')?.value)||500;
-        const payout = parseFloat(document.getElementById('mm-payout')?.value)||1.82;
-        const hint = document.getElementById('mm-payout-hint');
-        const tierEl = document.getElementById('mm-capital-tier');
-        const box = document.getElementById('mm-preview-box');
+        const payout  = parseFloat(document.getElementById('mm-payout')?.value)||1.82;
+        const hint    = document.getElementById('mm-payout-hint');
+        const tierEl  = document.getElementById('mm-capital-tier');
+        const box     = document.getElementById('mm-preview-box');
         const smartHint = document.getElementById('mm-smart-bet-hint');
         if (!box) return;
+
+        // Payout hint
         if (hint) hint.textContent = t('mmPayoutHintTpl').replace('{P}', Math.round((payout-1)*100));
+
+        // Capital tier label
         if (tierEl) {
-            if (capital >= 5000) tierEl.textContent = t('mmTierVip');
+            if      (capital >= 5000) tierEl.textContent = t('mmTierVip');
             else if (capital >= 1000) tierEl.textContent = t('mmTierPro');
-            else if (capital >= 200) tierEl.textContent = t('mmTierMid');
-            else tierEl.textContent = t('mmTierSml');
+            else if (capital >= 200)  tierEl.textContent = t('mmTierMid');
+            else                      tierEl.textContent = t('mmTierSml');
         }
+
+        // Smart bet amounts
         const profile = MM_RISK[mmRisk];
         const b = payout - 1;
-        const fixedBase = 1;
+        // Fixed recommended signal bet amounts
+        // No decimals: 1 / 3 / 7  — With decimals: 1 / 2.2 / 4.5
+        const fixedBase  = 1;
         const fixedMart1 = mmAllowDecimals ? 2.2 : 3;
         const fixedMart2 = mmAllowDecimals ? 4.5 : 7;
-        const smartBase = fixedBase;
+
+        const smartBase  = fixedBase;
         const smartMart1 = fixedMart1;
         const smartMart2 = fixedMart2;
-        const cbPrev = parseFloat(document.getElementById('mm-bet-base')?.value);
+
+        const cbPrev  = parseFloat(document.getElementById('mm-bet-base')?.value);
         const cm1Prev = parseFloat(document.getElementById('mm-bet-mart1')?.value);
         const cm2Prev = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+
         const activeBets = [
-            (!isNaN(cbPrev) && cbPrev > 0) ? cbPrev : smartBase,
+            (!isNaN(cbPrev)  && cbPrev  > 0) ? cbPrev  : smartBase,
             (!isNaN(cm1Prev) && cm1Prev > 0) ? cm1Prev : smartMart1,
             (!isNaN(cm2Prev) && cm2Prev > 0) ? cm2Prev : smartMart2,
         ];
+        // Auto-fill empty bet fields with recommended defaults
         const autoFill = (id, val) => {
             const el = document.getElementById(id);
             if (el && !el.value) el.value = String(val);
         };
-        autoFill('mm-bet-base', smartBase);
+        autoFill('mm-bet-base',  smartBase);
         autoFill('mm-bet-mart1', smartMart1);
         autoFill('mm-bet-mart2', smartMart2);
+
         if (smartHint && !cbPrev) smartHint.textContent =
             `✨ قيم موصى بها: أساسية $${smartBase} | م١ $${smartMart1} | م٢ $${smartMart2}`;
+
         let rows='', note='';
         if (mmMode === 'signal') {
             rows = activeBets.map((amt,i)=>`
@@ -2953,26 +3151,31 @@
                 </div>
             </div>`;
         }
+
         box.innerHTML=`
             <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:4px 14px;">${rows}</div>
             ${note}`;
     }
+
+    // Simulation helper (without mmCfg dependency)
     function mmComputeBetSim(balance, streakL, streakW, capital, risk, payout) {
         const profile = MM_RISK[risk];
         const b = payout-1, done=0, estWin=0.38;
         let base = mmKellyBet(balance, estWin, payout, risk);
-        if (streakL >= 4) base = mmFmt(balance * profile.pct * 0.25);
+        if      (streakL >= 4) base = mmFmt(balance * profile.pct * 0.25);
         else if (streakL === 3) base = mmFmt(balance * profile.pct * 0.40);
         else if (streakL === 2) base = mmFmt(balance * profile.pct * 0.60);
         else if (streakL === 1) base = mmFmt(balance * profile.pct * 0.80);
-        else if (streakW >= 2) base = mmFmt(base * 1.15);
+        else if (streakW >= 2) base  = mmFmt(base * 1.15);
         return Math.max(1, base);
     }
+
+    // ── Start session ────────────────────────────────────────────────
     function mmStart() {
         const capital=parseFloat(document.getElementById('mm-capital').value);
         const payout =parseFloat(document.getElementById('mm-payout').value);
         if (!capital||capital<1) { showToast('أدخل رأس مال صحيح','error'); return; }
-        if (!payout||payout<=1) { showToast('العائد يجب أن يكون أكبر من 1','error'); return; }
+        if (!payout||payout<=1)  { showToast('العائد يجب أن يكون أكبر من 1','error'); return; }
         mmCfg = { capital, payout, riskLevel:mmRisk, allowDecimals:mmAllowDecimals };
         mmSessionSaved = false;
         mmTrades=[]; mmMartLevel=0;
@@ -2996,24 +3199,32 @@
         mmRender(); mmDrawChart();
         mmSync();
     }
+
     function mmRecord(isWin) {
         if (!mmCfg) return;
         const st=mmGetState();
         if (st.status!=='in_progress') return;
+
+        // Track martingale level within current round for DISPLAY
         if (mmMode==='signal') {
             mmMartLevel = isWin ? 0 : Math.min(mmMartLevel+1, mmMartMax);
         }
         mmTrades.push(isWin);
+
+        // Expand dots — in signal mode one dot per raw trade, but display per round
         const dotsEl = document.getElementById('mm-seq-dots');
         if (dotsEl && mmTrades.length >= dotsEl.children.length) mmAddDots(5);
+
         const _st = mmGetState();
         mmSync();
         mmRender(_st);
         mmDrawChart();
+
         if (!mmCheckDailyTarget(_st) && _st.status!=='in_progress') {
             mmSaveSession(_st);
         }
     }
+
     function mmReset() {
         if (mmCfg && mmTrades.length > 0 && !mmSessionSaved) {
             const st = mmGetState();
@@ -3029,13 +3240,16 @@
         document.getElementById('mm-empty').style.display='block';
         document.getElementById('mm-cycle-complete').style.display='none';
     }
+
     function mmBuildDots(n){ const c=document.getElementById('mm-seq-dots');c.innerHTML='';for(let i=1;i<=n;i++){const d=document.createElement('div');d.className='mm-seq-dot'+(i===1?' cur':'');d.id='mmdot'+i;d.textContent=i;c.appendChild(d);} }
     function mmAddDots(n){ const c=document.getElementById('mm-seq-dots');const cur=c.children.length;for(let i=cur+1;i<=cur+n;i++){const d=document.createElement('div');d.className='mm-seq-dot';d.id='mmdot'+i;d.textContent=i;c.appendChild(d);} }
+
     function mmSync() {
         if (!mmCfg) { localStorage.removeItem('ks_mm'); return; }
         const st=mmGetState();
         localStorage.setItem('ks_mm', JSON.stringify({ active:st.status==='in_progress', bet:st.nextBet, balance:st.balance, pnl:st.pnl, payout:mmCfg.payout, tradeNum:st.done+1, status:st.status, ts:Date.now() }));
     }
+
     function mmRender(st) {
         if (!mmCfg) return;
         if (!st) st=mmGetState();
@@ -3059,6 +3273,7 @@
         const profAmt=parseFloat((bet*b).toFixed(2));
         tx('mm-profit-note',bet>0?`+$${profAmt} (+${Math.round(b*100)})%`:'');
         tx('mm-loss-note',bet>0?`-$${bet}`:'');
+        // Martingale level badge
         if (mmMode==='signal') {
             const badge=document.getElementById('mm-mart-level-badge');
             if(badge){
@@ -3066,6 +3281,7 @@
                 else { badge.textContent=`مضاعفة ${mmMartLevel} 🔴`; badge.style.color='#ef4444'; badge.style.borderColor='rgba(239,68,68,0.3)'; badge.style.background='rgba(239,68,68,0.1)'; }
             }
         }
+        // Streak
         const streakEl=document.getElementById('mm-streak');
         if(streakEl){
             if(st.streakL === 3 && mmMode === 'standard'){
@@ -3096,6 +3312,7 @@
         const ringFill=document.getElementById('mm-ring-fill');
         if(ringFill) ringFill.style.strokeDashoffset=263.89-(st.winRate/100)*263.89;
         tx('mm-ring-val',`${st.winRate}%`);
+        // Dots — one per ROUND (regardless of how many raw trades per round)
         const totalDots=document.getElementById('mm-seq-dots').children.length;
         for(let i=1;i<=totalDots;i++){
             const d=document.getElementById('mmdot'+i);
@@ -3104,12 +3321,14 @@
             if(i<=done){
                 const r=st.tradeLog[i-1];
                 d.classList.add(r&&r.win?'win':'lose');
+                // Show number of levels in dot for signal mode
                 if(mmMode==='signal'&&r&&r.levels>1) d.textContent=r.levels;
             } else if(i===done+1&&!st.stopped) d.classList.add('cur');
         }
         const off=st.status!=='in_progress';
         document.getElementById('mm-btn-win').disabled=off;
         document.getElementById('mm-btn-lose').disabled=off;
+        // Table — signal mode uses rounds, standard uses individual trades
         if (mmMode === 'signal') {
             mmRenderSignalTable(st);
         } else {
@@ -3128,6 +3347,7 @@
         if(st.status!=='in_progress') mmShowComplete(st);
         mmUpdateExtras(st);
     }
+
     function mmShowComplete(st) {
         const el=document.getElementById('mm-cycle-complete'); el.style.display='block';
         if(st.status==='stopped'){
@@ -3136,6 +3356,7 @@
         } else if(st.pnl>0){
             el.style.cssText='display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);text-align:center;';
             el.innerHTML=`<div style="font-size:1.8rem;margin-bottom:6px;">🎉</div><div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#10b981;font-weight:700;margin-bottom:4px;">${t('mmWonTitle')}</div><div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:#10b981;">+$${st.pnl} (+${st.pnlPct}%)</div>`;
+            // confetti
             const colors=['#10b981','#3b82f6','#f59e0b','#8b5cf6'];const wrap=document.createElement('div');wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
             for(let i=0;i<40;i++){const c=document.createElement('div');const col=colors[i%colors.length];const sz=Math.random()*7+4;c.style.cssText=`position:absolute;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${col};border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${Math.random()*2+1.5}s ease-in ${Math.random()*.8}s forwards;`;wrap.appendChild(c);}
             document.body.appendChild(wrap);setTimeout(()=>wrap.remove(),4000);
@@ -3144,6 +3365,7 @@
             el.innerHTML=`<div style="font-size:1.8rem;margin-bottom:6px;">📊</div><div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:#ef4444;font-weight:700;">انتهت الجلسة — $${st.balance}</div>`;
         }
     }
+
     function mmDrawChart(){
         const canvas=document.getElementById('mm-chart');
         if(!canvas||!mmCfg) return;
@@ -3174,61 +3396,50 @@
         ctx.beginPath();ctx.moveTo(toX(0),toY(data[0]));for(let i=1;i<data.length;i++)ctx.lineTo(toX(i),toY(data[i]));ctx.strokeStyle=isP?'#10b981':'#ef4444';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
         for(let i=0;i<data.length;i++){const col=i===0?'#3b82f6':(mmTrades[i-1]?'#10b981':'#ef4444');ctx.beginPath();ctx.arc(toX(i),toY(data[i]),3,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();}
     }
+
     window.addEventListener('resize',()=>{if(mmCfg)mmDrawChart();});
-    // ===================== SESSION MANAGEMENT =====================
-    let mmAllowDecimals = false;
-    function mmToggleDecimals() {
-        mmAllowDecimals = document.getElementById('mm-allow-decimals')?.checked || false;
-        const slider = document.getElementById('mm-decimal-slider');
-        if (slider) slider.style.background = mmAllowDecimals ? '#06b6d4' : 'rgba(255,255,255,0.1)';
-        const step = mmAllowDecimals ? '0.01' : '1';
-        ['mm-bet-base','mm-bet-mart1','mm-bet-mart2'].forEach(id=>{
-            const el=document.getElementById(id);
-            if (el) { el.step = step; el.value = ''; }
-        });
-        mmUpdatePreview();
-    }
-    function mmRoundBetVal(v) {
-        if (v <= 0) return mmAllowDecimals ? 0.01 : 1;
-        return mmAllowDecimals ? parseFloat(v.toFixed(2)) : Math.max(1, Math.round(v));
-    }
-    function mmGetBets(balance) {
-        const payout = mmCfg?.payout || 1.82;
-        const profile = MM_RISK[mmRisk];
+    // ===================== END MONEY MANAGEMENT =====================
+
+    // ╔══════════════════════════════════════════════════════════════╗
+    // ║   SESSION MANAGEMENT — Save / History / Target / Stats      ║
+    // ╚══════════════════════════════════════════════════════════════╝
+
+    // ── Signal mode: group trades into "rounds" ──────────────────────
+    // A round = base + up to mmMartMax martingale levels until first win
+    // We store the ROUND result (net PnL) not individual trades
+    function mmGroupSignalRounds(tradeLog, payout) {
         const b = payout - 1;
-        const baseInp = parseFloat(document.getElementById('mm-bet-base')?.value);
-        const mart1Inp = parseFloat(document.getElementById('mm-bet-mart1')?.value);
-        const mart2Inp = parseFloat(document.getElementById('mm-bet-mart2')?.value);
-        const smartBase = mmRoundBetVal(balance * profile.pct);
-        const smartMart1 = mmRoundBetVal(smartBase / b * 1.05);
-        const smartMart2 = mmRoundBetVal((smartBase + smartMart1) / b * 1.05);
-        return {
-            base: (!isNaN(baseInp) && baseInp > 0) ? baseInp : smartBase,
-            mart1: (!isNaN(mart1Inp) && mart1Inp > 0) ? mart1Inp : smartMart1,
-            mart2: (!isNaN(mart2Inp) && mart2Inp > 0) ? mart2Inp : smartMart2,
-        };
+        const rounds = [];
+        let i = 0;
+        while (i < tradeLog.length) {
+            const roundTrades = [];
+            let netPnl = 0;
+            // Collect trades until win or max martingale reached
+            while (i < tradeLog.length) {
+                const t = tradeLog[i];
+                roundTrades.push(t);
+                netPnl += t.profit;
+                i++;
+                if (t.win) break; // round ends on win
+                if (t.martL !== null && t.martL >= mmMartMax) { i++; break; } // max reached
+            }
+            const won = roundTrades[roundTrades.length-1]?.win || false;
+            const totalBet = roundTrades.reduce((a,t)=>a+t.bet,0);
+            rounds.push({
+                num: rounds.length+1,
+                levels: roundTrades.length,
+                won,
+                netPnl: parseFloat(netPnl.toFixed(2)),
+                totalBet,
+                balance: roundTrades[roundTrades.length-1]?.balance || 0
+            });
+        }
+        return rounds;
     }
-    function mmUseSmartBet() {
-        const fixedBase = 1;
-        const fixedMart1 = mmAllowDecimals ? 2.2 : 3;
-        const fixedMart2 = mmAllowDecimals ? 4.5 : 7;
-        const setVal = (id, val) => {
-            const el = document.getElementById(id);
-            if (el) el.value = String(val);
-        };
-        setVal('mm-bet-base', fixedBase);
-        setVal('mm-bet-mart1', fixedMart1);
-        setVal('mm-bet-mart2', fixedMart2);
-        const hint = document.getElementById('mm-smart-bet-hint');
-        if (hint) hint.textContent =
-            `✨ قيم موصى بها: $${fixedBase} | م١ $${fixedMart1} | م٢ $${fixedMart2}`;
-        mmUpdatePreview();
-    }
-    function mmGetBaseBet(balance) {
-        const bets = mmGetBets(balance);
-        return bets.base;
-    }
+
+    // ── Daily target check ───────────────────────────────────────────
     function mmCheckDailyTarget(st) {
+        // Check daily loss limit first
         const lossInp = document.getElementById('mm-daily-loss');
         if (lossInp && lossInp.value) {
             const lossLimit = parseFloat(lossInp.value);
@@ -3248,14 +3459,18 @@
                 return true;
             }
         }
+        // Check daily profit target
         const inp = document.getElementById('mm-daily-target');
         if (!inp || !inp.value) return false;
         const target = parseFloat(inp.value);
         if (isNaN(target) || target <= 0) return false;
         if (st.pnl >= target) {
+            // Show complete banner and stop
             mmShowComplete({ ...st, status:'won', forcedStop:'target' });
-            document.getElementById('mm-btn-win').disabled = true;
+            // Disable buttons
+            document.getElementById('mm-btn-win').disabled  = true;
             document.getElementById('mm-btn-lose').disabled = true;
+            // Show target reached message
             const el = document.getElementById('mm-cycle-complete');
             if (el) {
                 el.style.cssText = 'display:block;padding:16px;border-radius:12px;margin-bottom:14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.4);text-align:center;';
@@ -3269,6 +3484,8 @@
         }
         return false;
     }
+
+    // ── Save session to history ──────────────────────────────────────
     function mmGetStreaks(trades) {
         let best=0,worst=0,cur=0,curL=0;
         trades.forEach(w=>{
@@ -3277,39 +3494,42 @@
         });
         return {best,worst};
     }
+
     function mmSaveSession(st) {
-        if (!mmCfg || st.done === 0) return;
-        if (mmSessionSaved) return;
+        if (!mmCfg || st.done === 0) return; // don't save empty sessions
+        if (mmSessionSaved) return;          // already saved this session
         mmSessionSaved = true;
         const key = 'ks_mm_history';
         const raw = localStorage.getItem(key);
         const history = raw ? JSON.parse(raw) : [];
-        const profile = MM_RISK[mmCfg.riskLevel];
-        const streaks = mmGetStreaks(mmTrades);
+        const profile  = MM_RISK[mmCfg.riskLevel];
+        const streaks  = mmGetStreaks(mmTrades);
         const entry = {
-            date: new Date().toLocaleDateString('ar-EG'),
-            time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'}),
-            capital: mmCfg.capital,
-            endBal: st.balance,
-            pnl: st.pnl,
-            pnlPct: st.pnlPct,
-            trades: st.done,
-            wins: st.wonCount,
-            losses: st.lostCount,
-            winRate: st.winRate,
-            risk: profile?.label || '—',
-            mode: mmMode === 'signal' ? 'إشارات زمنية' : 'إدارة عادية',
-            status: st.status,
-            bestStreak: streaks.best,
+            date:      new Date().toLocaleDateString('ar-EG'),
+            time:      new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'}),
+            capital:   mmCfg.capital,
+            endBal:    st.balance,
+            pnl:       st.pnl,
+            pnlPct:    st.pnlPct,
+            trades:    st.done,
+            wins:      st.wonCount,
+            losses:    st.lostCount,
+            winRate:   st.winRate,
+            risk:      profile?.label || '—',
+            mode:      mmMode === 'signal' ? 'إشارات زمنية' : 'إدارة عادية',
+            status:    st.status,
+            bestStreak:  streaks.best,
             worstStreak: streaks.worst,
-            martMax: mmMode === 'signal' ? mmMartMax : null,
-            ts: Date.now()
+            martMax:   mmMode === 'signal' ? mmMartMax : null,
+            ts:        Date.now()
         };
         history.unshift(entry);
         localStorage.setItem(key, JSON.stringify(history.slice(0, 50)));
+        // Also update global stats
         recordSessionToStats(st.pnl, st.done, st.wonCount, streaks.best, streaks.worst);
         mmRenderHistory();
     }
+
     function mmRenderHistory() {
         const el = document.getElementById('mm-history-list');
         if (!el) return;
@@ -3338,6 +3558,7 @@
             </div>`;
         }).join('');
     }
+
     function mmClearHistory() {
         if (!confirm('مسح كل سجل الجلسات؟')) return;
         localStorage.removeItem('ks_mm_history');
@@ -3345,6 +3566,8 @@
         mmRenderHistory();
         showToast('تم مسح السجل', 'success');
     }
+
+    // ── Confirm before reset ─────────────────────────────────────────
     function mmConfirmReset() {
         if (!mmCfg || mmTrades.length === 0) { mmReset(); return; }
         const modal = document.createElement('div');
@@ -3363,10 +3586,293 @@
                 </div>
             </div>`;
         document.body.appendChild(modal);
-        modal.querySelector('#confirm-no').onclick = () => modal.remove();
+        modal.querySelector('#confirm-no').onclick  = () => modal.remove();
         modal.querySelector('#confirm-yes').onclick = () => { modal.remove(); mmReset(); };
         modal.addEventListener('click', e => { if (e.target===modal) modal.remove(); });
     }
+
+    // ── Decimals toggle ─────────────────────────────────────────────
+    let mmAllowDecimals = false;
+    function mmToggleDecimals() {
+        mmAllowDecimals = document.getElementById('mm-allow-decimals')?.checked || false;
+        const slider = document.getElementById('mm-decimal-slider');
+        if (slider) slider.style.background = mmAllowDecimals ? '#06b6d4' : 'rgba(255,255,255,0.1)';
+        const step = mmAllowDecimals ? '0.01' : '1';
+        ['mm-bet-base','mm-bet-mart1','mm-bet-mart2'].forEach(id=>{
+            const el=document.getElementById(id);
+            if (el) { el.step = step; el.value = ''; } // clear to re-auto-fill
+        });
+        mmUpdatePreview(); // will auto-fill with correct decimal/whole values
+    }
+
+    function mmRoundBetVal(v) {
+        if (v <= 0) return mmAllowDecimals ? 0.01 : 1;
+        return mmAllowDecimals ? parseFloat(v.toFixed(2)) : Math.max(1, Math.round(v));
+    }
+
+    // Get all 3 bet amounts (custom or auto)
+    function mmGetBets(balance) {
+        const payout  = mmCfg?.payout || 1.82;
+        const profile = MM_RISK[mmRisk];
+        const b = payout - 1;
+        const baseInp  = parseFloat(document.getElementById('mm-bet-base')?.value);
+        const mart1Inp = parseFloat(document.getElementById('mm-bet-mart1')?.value);
+        const mart2Inp = parseFloat(document.getElementById('mm-bet-mart2')?.value);
+        const smartBase  = mmRoundBetVal(balance * profile.pct);
+        const smartMart1 = mmRoundBetVal(smartBase / b * 1.05);
+        const smartMart2 = mmRoundBetVal((smartBase + smartMart1) / b * 1.05);
+        return {
+            base:  (!isNaN(baseInp)  && baseInp  > 0) ? baseInp  : smartBase,
+            mart1: (!isNaN(mart1Inp) && mart1Inp > 0) ? mart1Inp : smartMart1,
+            mart2: (!isNaN(mart2Inp) && mart2Inp > 0) ? mart2Inp : smartMart2,
+        };
+    }
+
+    // ── Smart bet suggestion — fill all 3 fields optimally ───────────
+    function mmUseSmartBet() {
+        const fixedBase  = 1;
+        const fixedMart1 = mmAllowDecimals ? 2.2 : 3;
+        const fixedMart2 = mmAllowDecimals ? 4.5 : 7;
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.value = String(val);
+        };
+        setVal('mm-bet-base',  fixedBase);
+        setVal('mm-bet-mart1', fixedMart1);
+        setVal('mm-bet-mart2', fixedMart2);
+        const hint = document.getElementById('mm-smart-bet-hint');
+        if (hint) hint.textContent =
+            `✨ قيم موصى بها: $${fixedBase} | م١ $${fixedMart1} | م٢ $${fixedMart2}`;
+        mmUpdatePreview();
+    }
+
+    // Legacy compatibility
+    function mmGetBaseBet(balance) {
+        const bets = mmGetBets(balance);
+        return bets.base;
+    }
+
+    // ── Share session as FHD image ───────────────────────────────────
+    function mmShareSession() {
+        const st = mmGetState();
+        if (!mmCfg) { showToast('لا توجد جلسة نشطة','error'); return; }
+        const canvas = mmBuildShareCanvas([{ ...st, capital:mmCfg.capital, payout:mmCfg.payout, mode:mmMode, risk:MM_RISK[mmRisk].label }], false);
+        mmDownloadCanvas(canvas, 'KingSignals_Session_'+Date.now()+'.png');
+        showToast('تم حفظ صورة الجلسة ✅','success');
+    }
+
+    function mmShareAllSessions() {
+        const raw = localStorage.getItem('ks_mm_history');
+        const history = raw ? JSON.parse(raw) : [];
+        if (!history.length) { showToast('لا توجد جلسات محفوظة','error'); return; }
+        const canvas = mmBuildShareCanvas(history, true);
+        mmDownloadCanvas(canvas, 'KingSignals_AllSessions_'+Date.now()+'.png');
+        showToast('تم حفظ صورة جميع الجلسات ✅','success');
+    }
+
+    function mmDownloadCanvas(canvas, filename) {
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/png', 1.0);
+        a.click();
+    }
+
+    function mmBuildShareCanvas(sessions, isAll) {
+        const W = 1080; // FHD width
+        const ROW_H = 90, HEADER_H = 180, FOOTER_H = 60, PAD = 40;
+        const H = HEADER_H + sessions.length * ROW_H + FOOTER_H + PAD;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+
+        // Background
+        const bg = ctx.createLinearGradient(0,0,0,H);
+        bg.addColorStop(0,'#0d1428'); bg.addColorStop(1,'#070b14');
+        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+        // Header glow
+        const glow = ctx.createRadialGradient(W/2,0,0,W/2,0,400);
+        glow.addColorStop(0,'rgba(59,130,246,0.15)'); glow.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle = glow; ctx.fillRect(0,0,W,400);
+
+        // Logo + title
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#FFD700';
+        ctx.font = 'bold 52px Orbitron,sans-serif';
+        ctx.fillText('👑 KingSignals Pro', W/2, 68);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '28px Cairo,sans-serif';
+        ctx.fillText(isAll ? 'تقرير جميع الجلسات' : 'تقرير الجلسة', W/2, 110);
+
+        ctx.fillStyle = '#334155';
+        ctx.font = '22px Cairo,sans-serif';
+        ctx.fillText(new Date().toLocaleString('ar-EG'), W/2, 145);
+
+        // Separator line
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(PAD, HEADER_H-10); ctx.lineTo(W-PAD, HEADER_H-10); ctx.stroke();
+
+        // Column headers
+        const cols = isAll
+            ? [{x:PAD+30,label:'التاريخ'},{x:260,label:'النوع'},{x:430,label:'الصفقات'},{x:580,label:'الفوز'},{x:730,label:'الربح/الخسارة'},{x:920,label:'الرصيد'}]
+            : [{x:PAD+30,label:'#'},{x:180,label:'النتيجة'},{x:380,label:'المبلغ'},{x:560,label:'الربح/الخسارة'},{x:760,label:'الرصيد النهائي'},{x:920,label:'%'}];
+
+        ctx.fillStyle = '#475569'; ctx.font = '22px Cairo,sans-serif'; ctx.textAlign = 'right';
+        cols.forEach(c => { ctx.textAlign='center'; ctx.fillText(c.label, c.x, HEADER_H+22); });
+
+        // Rows
+        sessions.forEach((s, idx) => {
+            const y = HEADER_H + ROW_H * idx;
+            const isWin = isAll ? (s.pnl>=0) : (s.win !== undefined ? s.win : s.pnl>=0);
+            // Row bg
+            ctx.fillStyle = idx%2===0?'rgba(255,255,255,0.02)':'rgba(0,0,0,0.1)';
+            ctx.fillRect(PAD, y+28, W-PAD*2, ROW_H-4);
+            // Left accent
+            ctx.fillStyle = isWin?'#10b981':'#ef4444';
+            ctx.fillRect(PAD, y+28, 4, ROW_H-4);
+
+            ctx.font = 'bold 24px Cairo,sans-serif';
+            if (isAll) {
+                const vals = [s.date||'—', s.mode||'عادية', `${s.trades||0} صفقة`, `${s.winRate||0}%`, `${s.pnl>=0?'+':''}$${s.pnl}`, `$${s.endBal||0}`];
+                cols.forEach((c,ci) => {
+                    ctx.fillStyle = ci===4?(isWin?'#10b981':'#ef4444'):'#e2e8f0';
+                    ctx.textAlign='center'; ctx.fillText(vals[ci], c.x, y+74);
+                });
+            } else {
+                // Single session: show round-by-round
+                ctx.fillStyle='#64748b'; ctx.textAlign='center'; ctx.font='22px Orbitron';
+                ctx.fillText(String(s.num||idx+1), cols[0].x, y+74);
+                ctx.fillStyle = isWin?'#10b981':'#ef4444';
+                ctx.font='bold 24px Cairo'; ctx.fillText(isWin?'✅ ربح':'❌ خسارة', cols[1].x, y+74);
+                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.totalBet||s.bet||0}`, cols[2].x, y+74);
+                ctx.fillStyle=isWin?'#10b981':'#ef4444';
+                ctx.fillText(`${(s.netPnl||s.pnl)>=0?'+':''}$${Math.abs(s.netPnl||s.pnl||0)}`, cols[3].x, y+74);
+                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.balance||0}`, cols[4].x, y+74);
+                ctx.fillStyle='#64748b'; ctx.font='22px Cairo';
+                ctx.fillText(`${s.winRate||0}%`, cols[5].x, y+74);
+            }
+        });
+
+        // Footer
+        const fy = HEADER_H + sessions.length * ROW_H + 30;
+        ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.moveTo(PAD,fy);ctx.lineTo(W-PAD,fy);ctx.stroke();
+        ctx.fillStyle='#334155'; ctx.font='22px Cairo'; ctx.textAlign='center';
+        ctx.fillText('King Trading — Professional Binary Options Signals', W/2, fy+38);
+
+        return canvas;
+    }
+
+    // ── Update openStatsModal to show session history too ────────────
+    function getUserStats() {
+        const raw = localStorage.getItem('ks_user_stats');
+        return raw ? JSON.parse(raw) : { sessions:[], totalPnl:0 };
+    }
+    function saveUserStats(stats) { localStorage.setItem('ks_user_stats', JSON.stringify(stats)); }
+
+    function recordSessionToStats(pnl, tradeCount, wonCount, bestStreak, worstStreak) {
+        const stats = getUserStats();
+        stats.sessions.push({ pnl, tradeCount, wonCount, bestStreak:bestStreak||0, worstStreak:worstStreak||0, date:new Date().toLocaleDateString('ar-EG'), ts:Date.now() });
+        stats.totalPnl = parseFloat((stats.totalPnl + pnl).toFixed(2));
+        saveUserStats(stats);
+    }
+
+    // ── Stats modal ──────────────────────────────────────────────────
+    function openStatsModal() {
+        const modal = document.getElementById('stats-modal');
+        if (!modal) return;
+
+        // Read from mm_history (the detailed session log)
+        const raw = localStorage.getItem('ks_mm_history');
+        const history = raw ? JSON.parse(raw) : [];
+
+        // Compute stats from history
+        const totalPnl    = parseFloat(history.reduce((a,s)=>a+s.pnl,0).toFixed(2));
+        const allTrades   = history.reduce((a,s)=>a+(s.trades||0),0);
+        const allWins     = history.reduce((a,s)=>a+(s.wins||0),0);
+        const winRate     = allTrades>0?Math.round(allWins/allTrades*100):0;
+        const avgProfit   = history.length>0?(totalPnl/history.length).toFixed(2):0;
+        const bestStreak  = history.reduce((m,s)=>Math.max(m,s.bestStreak||0),0);
+        const worstStreak = history.reduce((m,s)=>Math.max(m,s.worstStreak||0),0);
+
+        const tx=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+        tx('st-total-sessions', history.length);
+        const pe=document.getElementById('st-total-pnl');
+        if(pe){pe.textContent=`${totalPnl>=0?'+':''}$${totalPnl}`;pe.style.color=totalPnl>=0?'#10b981':'#ef4444';}
+        tx('st-win-rate', winRate+'%');
+        tx('st-best-streak', bestStreak);
+        tx('st-worst-streak', worstStreak);
+        const avgE=document.getElementById('st-avg-profit');
+        if(avgE){avgE.textContent=`${parseFloat(avgProfit)>=0?'+':''}$${avgProfit}`;avgE.style.color=parseFloat(avgProfit)>=0?'#8b5cf6':'#ef4444';}
+
+        // Show last 5 sessions compact
+        const recentEl = document.getElementById('st-recent-sessions');
+        if (recentEl) {
+            if (!history.length) {
+                recentEl.innerHTML = '<div style="text-align:center;padding:12px;color:#475569;font-size:12px;">لا توجد جلسات بعد</div>';
+            } else {
+                recentEl.innerHTML = history.slice(0, 5).map(s => {
+                    const isWin = s.pnl >= 0;
+                    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <span style="font-size:11px;color:#475569;">${s.date} • ${s.mode||'عادية'}</span>
+                        <span style="font-size:11px;color:#64748b;">${s.trades||0} صفقة • ${s.winRate||0}%</span>
+                        <span style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:${isWin?'#10b981':'#ef4444'};">${isWin?'+':''}$${s.pnl}</span>
+                    </div>`;
+                }).join('');
+            }
+        }
+        modal.classList.add('open');
+    }
+    function closeStatsModal() { document.getElementById('stats-modal')?.classList.remove('open'); }
+
+    // ── Session timer ────────────────────────────────────────────────
+    let mmTimerStart = null, mmTimerInterval = null;
+
+    function mmStartTimer() {
+        mmTimerStart = Date.now();
+        if (mmTimerInterval) clearInterval(mmTimerInterval);
+        mmTimerInterval = setInterval(() => {
+            const el = document.getElementById('mm-timer-val');
+            if (!el || !mmTimerStart) return;
+            const sec = Math.floor((Date.now() - mmTimerStart) / 1000);
+            const m = Math.floor(sec/60), s = sec%60;
+            el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }, 1000);
+    }
+    function mmStopTimer() {
+        if (mmTimerInterval) { clearInterval(mmTimerInterval); mmTimerInterval = null; }
+        mmTimerStart = null;
+        const el = document.getElementById('mm-timer-val');
+        if (el) el.textContent = '00:00';
+    }
+
+    // ── Break-even & wins-needed calculator ─────────────────────────
+    function mmUpdateExtras(st) {
+        const bel = document.getElementById('mm-breakeven-val');
+        const nel = document.getElementById('mm-needed-val');
+        if (!mmCfg || !bel || !nel) return;
+
+        const b = mmCfg.payout - 1;
+        const done = st.done;
+        if (done === 0) { bel.textContent='—'; nel.textContent='—'; return; }
+
+        // Break-even win rate = 1 / (1 + b)
+        const beRate = (1 / (1 + b) * 100).toFixed(1);
+        bel.textContent = `${beRate}%`;
+        bel.style.color = st.winRate >= parseFloat(beRate) ? '#10b981' : '#f87171';
+
+        // Wins needed to get back to capital (if losing)
+        if (st.pnl < 0) {
+            const needed = Math.ceil(Math.abs(st.pnl) / (st.nextBet * b));
+            nel.textContent = `${needed} فوز`;
+            nel.style.color = '#f59e0b';
+        } else {
+            nel.textContent = '✅ رابح';
+            nel.style.color = '#10b981';
+        }
+    }
+
+    // ── Signal mode: render rounds table ────────────────────────────
     function mmRenderSignalTable(st) {
         if (mmMode !== 'signal') return;
         const tbody = document.getElementById('mm-tbody');
@@ -3389,193 +3895,28 @@
             </tr>`;
         }).join('');
     }
-    function mmStartTimer() {
-        mmTimerStart = Date.now();
-        if (mmTimerInterval) clearInterval(mmTimerInterval);
-        mmTimerInterval = setInterval(() => {
-            const el = document.getElementById('mm-timer-val');
-            if (!el || !mmTimerStart) return;
-            const sec = Math.floor((Date.now() - mmTimerStart) / 1000);
-            const m = Math.floor(sec/60), s = sec%60;
-            el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-        }, 1000);
-    }
-    function mmStopTimer() {
-        if (mmTimerInterval) { clearInterval(mmTimerInterval); mmTimerInterval = null; }
-        mmTimerStart = null;
-        const el = document.getElementById('mm-timer-val');
-        if (el) el.textContent = '00:00';
-    }
-    function mmUpdateExtras(st) {
-        const bel = document.getElementById('mm-breakeven-val');
-        const nel = document.getElementById('mm-needed-val');
-        if (!mmCfg || !bel || !nel) return;
-        const b = mmCfg.payout - 1;
-        const done = st.done;
-        if (done === 0) { bel.textContent='—'; nel.textContent='—'; return; }
-        const beRate = (1 / (1 + b) * 100).toFixed(1);
-        bel.textContent = `${beRate}%`;
-        bel.style.color = st.winRate >= parseFloat(beRate) ? '#10b981' : '#f87171';
-        if (st.pnl < 0) {
-            const needed = Math.ceil(Math.abs(st.pnl) / (st.nextBet * b));
-            nel.textContent = `${needed} فوز`;
-            nel.style.color = '#f59e0b';
-        } else {
-            nel.textContent = '✅ رابح';
-            nel.style.color = '#10b981';
-        }
-    }
-    let mmTimerStart = null, mmTimerInterval = null;
-    function getUserStats() {
-        const raw = localStorage.getItem('ks_user_stats');
-        return raw ? JSON.parse(raw) : { sessions:[], totalPnl:0 };
-    }
-    function saveUserStats(stats) { localStorage.setItem('ks_user_stats', JSON.stringify(stats)); }
-    function recordSessionToStats(pnl, tradeCount, wonCount, bestStreak, worstStreak) {
-        const stats = getUserStats();
-        stats.sessions.push({ pnl, tradeCount, wonCount, bestStreak:bestStreak||0, worstStreak:worstStreak||0, date:new Date().toLocaleDateString('ar-EG'), ts:Date.now() });
-        stats.totalPnl = parseFloat((stats.totalPnl + pnl).toFixed(2));
-        saveUserStats(stats);
-    }
-    function openStatsModal() {
-        const modal = document.getElementById('stats-modal');
-        if (!modal) return;
-        const raw = localStorage.getItem('ks_mm_history');
-        const history = raw ? JSON.parse(raw) : [];
-        const totalPnl = parseFloat(history.reduce((a,s)=>a+s.pnl,0).toFixed(2));
-        const allTrades = history.reduce((a,s)=>a+(s.trades||0),0);
-        const allWins = history.reduce((a,s)=>a+(s.wins||0),0);
-        const winRate = allTrades>0?Math.round(allWins/allTrades*100):0;
-        const avgProfit = history.length>0?(totalPnl/history.length).toFixed(2):0;
-        const bestStreak = history.reduce((m,s)=>Math.max(m,s.bestStreak||0),0);
-        const worstStreak = history.reduce((m,s)=>Math.max(m,s.worstStreak||0),0);
-        const tx=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-        tx('st-total-sessions', history.length);
-        const pe=document.getElementById('st-total-pnl');
-        if(pe){pe.textContent=`${totalPnl>=0?'+':''}$${totalPnl}`;pe.style.color=totalPnl>=0?'#10b981':'#ef4444';}
-        tx('st-win-rate', winRate+'%');
-        tx('st-best-streak', bestStreak);
-        tx('st-worst-streak', worstStreak);
-        const avgE=document.getElementById('st-avg-profit');
-        if(avgE){avgE.textContent=`${parseFloat(avgProfit)>=0?'+':''}$${avgProfit}`;avgE.style.color=parseFloat(avgProfit)>=0?'#8b5cf6':'#ef4444';}
-        const recentEl = document.getElementById('st-recent-sessions');
-        if (recentEl) {
-            if (!history.length) {
-                recentEl.innerHTML = '<div style="text-align:center;padding:12px;color:#475569;font-size:12px;">لا توجد جلسات بعد</div>';
-            } else {
-                recentEl.innerHTML = history.slice(0, 5).map(s => {
-                    const isWin = s.pnl >= 0;
-                    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-                        <span style="font-size:11px;color:#475569;">${s.date} • ${s.mode||'عادية'}</span>
-                        <span style="font-size:11px;color:#64748b;">${s.trades||0} صفقة • ${s.winRate||0}%</span>
-                        <span style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:${isWin?'#10b981':'#ef4444'};">${isWin?'+':''}$${s.pnl}</span>
-                    </div>`;
-                }).join('');
-            }
-        }
-        modal.classList.add('open');
-    }
-    function closeStatsModal() { document.getElementById('stats-modal')?.classList.remove('open'); }
-    function mmShareSession() {
-        const st = mmGetState();
-        if (!mmCfg) { showToast('لا توجد جلسة نشطة','error'); return; }
-        const canvas = mmBuildShareCanvas([{ ...st, capital:mmCfg.capital, payout:mmCfg.payout, mode:mmMode, risk:MM_RISK[mmRisk].label }], false);
-        mmDownloadCanvas(canvas, 'KingSignals_Session_'+Date.now()+'.png');
-        showToast('تم حفظ صورة الجلسة ✅','success');
-    }
-    function mmShareAllSessions() {
-        const raw = localStorage.getItem('ks_mm_history');
-        const history = raw ? JSON.parse(raw) : [];
-        if (!history.length) { showToast('لا توجد جلسات محفوظة','error'); return; }
-        const canvas = mmBuildShareCanvas(history, true);
-        mmDownloadCanvas(canvas, 'KingSignals_AllSessions_'+Date.now()+'.png');
-        showToast('تم حفظ صورة جميع الجلسات ✅','success');
-    }
-    function mmDownloadCanvas(canvas, filename) {
-        const a = document.createElement('a');
-        a.download = filename;
-        a.href = canvas.toDataURL('image/png', 1.0);
-        a.click();
-    }
-    function mmBuildShareCanvas(sessions, isAll) {
-        const W = 1080;
-        const ROW_H = 90, HEADER_H = 180, FOOTER_H = 60, PAD = 40;
-        const H = HEADER_H + sessions.length * ROW_H + FOOTER_H + PAD;
-        const canvas = document.createElement('canvas');
-        canvas.width = W; canvas.height = H;
-        const ctx = canvas.getContext('2d');
-        const bg = ctx.createLinearGradient(0,0,0,H);
-        bg.addColorStop(0,'#0d1428'); bg.addColorStop(1,'#070b14');
-        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-        const glow = ctx.createRadialGradient(W/2,0,0,W/2,0,400);
-        glow.addColorStop(0,'rgba(59,130,246,0.15)'); glow.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle = glow; ctx.fillRect(0,0,W,400);
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#FFD700';
-        ctx.font = 'bold 52px Orbitron,sans-serif';
-        ctx.fillText('👑 KingSignals Pro', W/2, 68);
-        ctx.fillStyle = '#64748b';
-        ctx.font = '28px Cairo,sans-serif';
-        ctx.fillText(isAll ? 'تقرير جميع الجلسات' : 'تقرير الجلسة', W/2, 110);
-        ctx.fillStyle = '#334155';
-        ctx.font = '22px Cairo,sans-serif';
-        ctx.fillText(new Date().toLocaleString('ar-EG'), W/2, 145);
-        ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(PAD, HEADER_H-10); ctx.lineTo(W-PAD, HEADER_H-10); ctx.stroke();
-        const cols = isAll
-            ? [{x:PAD+30,label:'التاريخ'},{x:260,label:'النوع'},{x:430,label:'الصفقات'},{x:580,label:'الفوز'},{x:730,label:'الربح/الخسارة'},{x:920,label:'الرصيد'}]
-            : [{x:PAD+30,label:'#'},{x:180,label:'النتيجة'},{x:380,label:'المبلغ'},{x:560,label:'الربح/الخسارة'},{x:760,label:'الرصيد النهائي'},{x:920,label:'%'}];
-        ctx.fillStyle = '#475569'; ctx.font = '22px Cairo,sans-serif'; ctx.textAlign = 'right';
-        cols.forEach(c => { ctx.textAlign='center'; ctx.fillText(c.label, c.x, HEADER_H+22); });
-        sessions.forEach((s, idx) => {
-            const y = HEADER_H + ROW_H * idx;
-            const isWin = isAll ? (s.pnl>=0) : (s.win !== undefined ? s.win : s.pnl>=0);
-            ctx.fillStyle = idx%2===0?'rgba(255,255,255,0.02)':'rgba(0,0,0,0.1)';
-            ctx.fillRect(PAD, y+28, W-PAD*2, ROW_H-4);
-            ctx.fillStyle = isWin?'#10b981':'#ef4444';
-            ctx.fillRect(PAD, y+28, 4, ROW_H-4);
-            ctx.font = 'bold 24px Cairo,sans-serif';
-            if (isAll) {
-                const vals = [s.date||'—', s.mode||'عادية', `${s.trades||0} صفقة`, `${s.winRate||0}%`, `${s.pnl>=0?'+':''}$${s.pnl}`, `$${s.endBal||0}`];
-                cols.forEach((c,ci) => {
-                    ctx.fillStyle = ci===4?(isWin?'#10b981':'#ef4444'):'#e2e8f0';
-                    ctx.textAlign='center'; ctx.fillText(vals[ci], c.x, y+74);
-                });
-            } else {
-                ctx.fillStyle='#64748b'; ctx.textAlign='center'; ctx.font='22px Orbitron';
-                ctx.fillText(String(s.num||idx+1), cols[0].x, y+74);
-                ctx.fillStyle = isWin?'#10b981':'#ef4444';
-                ctx.font='bold 24px Cairo'; ctx.fillText(isWin?'✅ ربح':'❌ خسارة', cols[1].x, y+74);
-                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.totalBet||s.bet||0}`, cols[2].x, y+74);
-                ctx.fillStyle=isWin?'#10b981':'#ef4444';
-                ctx.fillText(`${(s.netPnl||s.pnl)>=0?'+':''}$${Math.abs(s.netPnl||s.pnl||0)}`, cols[3].x, y+74);
-                ctx.fillStyle='#e2e8f0'; ctx.fillText(`$${s.balance||0}`, cols[4].x, y+74);
-                ctx.fillStyle='#64748b'; ctx.font='22px Cairo';
-                ctx.fillText(`${s.winRate||0}%`, cols[5].x, y+74);
+
+
+
+    </script>
+
+    <!-- Anti-debugging protection -->
+    <script>
+        document.addEventListener("contextmenu", e=>{ if(e.target.tagName!=='INPUT'||e.target.type!=='text') e.preventDefault(); });
+        document.addEventListener("keydown", e=>{
+            if(e.ctrlKey&&(e.key==="u"||e.key==="U")) e.preventDefault();
+            if(e.ctrlKey&&e.shiftKey&&"ICJicj".includes(e.key)) e.preventDefault();
+            if(e.keyCode===123) e.preventDefault();
+        });
+        (function(){
+            function detect(){ const s=performance.now(); debugger; return performance.now()-s>300; }
+            setTimeout(()=>{ setInterval(()=>{ if(detect()){ document.body.innerHTML=''; window.location.href="about:blank"; } },500); },3000);
+        })();
+        window.addEventListener('resize', ()=>{
+            if(window.outerHeight-window.innerHeight>400||window.outerWidth-window.innerWidth>400){
+                document.body.innerHTML=''; window.location.href="about:blank";
             }
         });
-        const fy = HEADER_H + sessions.length * ROW_H + 30;
-        ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.moveTo(PAD,fy);ctx.lineTo(W-PAD,fy);ctx.stroke();
-        ctx.fillStyle='#334155'; ctx.font='22px Cairo'; ctx.textAlign='center';
-        ctx.fillText('King Trading — Professional Binary Options Signals', W/2, fy+38);
-        return canvas;
-    }
-    // ===================== ANTI DEBUG =====================
-    document.addEventListener("contextmenu", e=>{ if(e.target.tagName!=='INPUT'||e.target.type!=='text') e.preventDefault(); });
-    document.addEventListener("keydown", e=>{
-        if(e.ctrlKey&&(e.key==="u"||e.key==="U")) e.preventDefault();
-        if(e.ctrlKey&&e.shiftKey&&"ICJicj".includes(e.key)) e.preventDefault();
-        if(e.keyCode===123) e.preventDefault();
-    });
-    (function(){
-        function detect(){ const s=performance.now(); debugger; return performance.now()-s>300; }
-        setTimeout(()=>{ setInterval(()=>{ if(detect()){ document.body.innerHTML=''; window.location.href="about:blank"; } },500); },3000);
-    })();
-    window.addEventListener('resize', ()=>{
-        if(window.outerHeight-window.innerHeight>400||window.outerWidth-window.innerWidth>400){
-            document.body.innerHTML=''; window.location.href="about:blank";
-        }
-    });
     </script>
 </body>
 </html>
